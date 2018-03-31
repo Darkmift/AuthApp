@@ -16,8 +16,9 @@ class AuthController extends Controller
         User::create([
             'name' => $request->getParam('name'),
             'email' => $request->getParam('email'),
-            'password' => $request->getParam('password')
+            'password' => $request->getParam('password'),
         ]);
-        var_dump($request->getParam('name'),$request->getParam('email'),$request->getParam('password'));
+        var_dump($request->getParam('name'), $request->getParam('email'), $request->getParam('password'));
+        var_dump($request->getParam('name'), $request->getParam('email'), $request->getParam('password'));
     }
 }
