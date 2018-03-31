@@ -16,7 +16,12 @@ class Validator
                 $this->errors[ucfirst($field)] = $exception->getMessages();
             }
         }
-        var_dump($this->errors);
-        die();
+        // var_dump($this->errors);
+        // die();
+        return $this;
+    }
+    public function failed()
+    {
+        return !empty($this->errors);
     }
 }
