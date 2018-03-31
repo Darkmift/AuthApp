@@ -13,12 +13,12 @@ class AuthController extends Controller
 
     public function postSignUp($request, $response)
     {
-        User::create([
+        $user=User::create([
             'name' => $request->getParam('name'),
             'email' => $request->getParam('email'),
-            'password' => $request->getParam('password'),
+            'password' => password_hash($request->getParam('password'),PASSWORD_DEFAULT),
         ]);
-        var_dump($request->getParam('name'), $request->getParam('email'), $request->getParam('password'));
-        var_dump($request->getParam('name'), $request->getParam('email'), $request->getParam('password'));
+       // var_dump($request->getParam('name'), $request->getParam('email'), $request->getParam('password'));
+       return $response->withRedirect($this->router->pathFor('home'));
     }
 }
