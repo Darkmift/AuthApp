@@ -13,15 +13,20 @@ class Validator
             try {
                 $rule->setName(ucfirst($field))->assert($request->getparam($field));
             } catch (NestedValidationException $exception) {
-                $this->errors[ucfirst($field)] = $exception->getMessages();
+                $this->errors[$field] = $exception->getMessages();
+                $_SESSION['errors'] = $this->errors;
             }
         }
         // var_dump($this->errors);
         // die();
+
+  
+
         return $this;
     }
     public function failed()
     {
-        return !empty($this->errors);
+     $errors = $this->errors;
+        return !empty($errors);
     }
 }

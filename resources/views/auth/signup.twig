@@ -9,26 +9,36 @@
                 </div>
                 <div class="panel-body">
                     <form method="post" class="align-items-center" action="{{ path_for('auth.signup') }}">
-                        <div class="form-group text-center">
+                        {# {% if errors is defined %}
+                            {{ errors | json_encode }}
+                        {% endif %} #}
+                        <div class="form-group {{ errors.name ? ' has-error' : '' }}">
                             <div class="input-group">
                                 <span class="input-group-addon form-span">name</span>
-                                <input id="name" name="name" class="form-control" placeholder="your name here" type="text" >
+                                <input id="name" name="name" class="form-control" placeholder="your name here" type="text">
                             </div>
-                            {# <p class="help-block">help</p> #}
+                            {% if errors.name %}
+                                <span style="margin-left:15%;" class="help-block">{{ errors.name | first }}</span>
+                            {% endif %}
                         </div>
-                        <div class="form-group text-center">
+
+                        <div class="form-group  {{ errors.email ? ' has-error' : '' }}">
                             <div class="input-group">
                                 <span class="input-group-addon form-span">email</span>
-                                <input id="email" name="email" class="form-control" placeholder="you@example.com" type="email" >
+                                <input id="email" name="email" class="form-control" placeholder="you@example.com" type="email">
                             </div>
-                            {# <p class="help-block">help</p> #}
+                            {% if errors.email %}
+                                <span style="margin-left:15%;" class="help-block">{{ errors.email | first }}</span>
+                            {% endif %}
                         </div>
-                        <div class="form-group text-center">
+                        <div class="form-group  {{ errors.password ? ' has-error' : '' }}">
                             <div class="input-group">
                                 <span class="input-group-addon form-span">password</span>
-                                <input id="password" name="password" class="form-control" placeholder="you@example.com" type="password" >
+                                <input id="password" name="password" class="form-control" placeholder="you@example.com" type="password">
                             </div>
-                            {# <p class="help-block">help</p> #}
+                            {% if errors.password %}
+                                <span style="margin-left:15%;" class="help-block">{{ errors.password | first }}</span>
+                            {% endif %}
                         </div>
                         <div class="form-group text-center">
                             <button style="width:75%" id="singlebutton" name="singlebutton" class="btn btn-default">Sign up</button>

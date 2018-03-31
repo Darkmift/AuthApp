@@ -12,6 +12,11 @@ body {
     width: 75%!important;
 }
 
+.help-block {
+    text-align: left!important;
+    display: inline-block !important;
+}
+
 
 /* woraround for autocomplete */
 
