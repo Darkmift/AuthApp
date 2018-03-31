@@ -1,0 +1,21 @@
+body {
+    padding: 80px 40px 40px 40px;
+}
+
+.form-span {
+    text-align: left!important;
+    width: 15%!important;
+}
+
+.input-group {
+    margin-left: 12.5%!important;
+    width: 75%!important;
+}
+
+
+/* woraround for autocomplete */
+
+input[readonly] {
+    cursor: text;
+    background-color: #fff;
+}
