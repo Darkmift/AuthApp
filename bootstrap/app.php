@@ -80,6 +80,8 @@ $container['validator'] = function($container){
     return new App\Validation\Validator;
 };
 
+//my middlewares
 $app->add(new App\Middleware\ValidationErrorsMiddleware($container));
+$app->add(new App\Middleware\OldInputMiddleware($container));
 
 require __DIR__ . '/../app/routes.php';
