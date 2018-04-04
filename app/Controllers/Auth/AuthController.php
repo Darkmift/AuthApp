@@ -23,7 +23,7 @@ class AuthController extends Controller
         if ($validation->failed()) {
             return $response->withRedirect($this->router->pathFor('auth.signup'));
         }
-        
+
         $user = User::create([
             'name' => $request->getParam('name'),
             'email' => $request->getParam('email'),

@@ -56,19 +56,6 @@ $container['view'] = function ($container) {
     return $view;
 };
 
-// $container['view'] = function ($container) {
-//     $view = new \Slim\Views\Twig('../resources/views', [
-//         'cache' => false,
-//     ]);
-
-//     // Instantiate and add Slim specific extension
-//     $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
-//     $view->addExtension(new Slim\Views\TwigExtension(
-//         $container->get('router'), $basePath));
-
-//     return $view;
-// };
-
 $container['HomeController'] = function($container){
     return new App\Controllers\HomeController($container);
 };
@@ -81,11 +68,23 @@ $container['validator'] = function($container){
     return new App\Validation\Validator;
 };
 
+//csrf import1/2
+$container['csrf'] = function($container){
+    return new \Slim\Csrf\Guard;
+};
+
+//upload dir for images
+$container['upload_directory'] = __DIR__ . '/uploads';
+
 //my middlewares
 $app->add(new App\Middleware\ValidationErrorsMiddleware($container));
 $app->add(new App\Middleware\OldInputMiddleware($container));
+$app->add(new App\Middleware\CsrfViewMiddleware($container));
 
-//my custom rules--called by resspect---see first lines on top
+//csrf import2/2
+$app->add($container->csrf);
+
+//my custom rules--called by respect---see first lines on top
 v::with('App\\Validation\\Rules\\');
 
 require __DIR__ . '/../app/routes.php';
