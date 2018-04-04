@@ -17,10 +17,10 @@ $app = new \Slim\app([
             'database' => 'codecourse',
             'username' => 'root',
             'password' => '',
-            'charset'   => 'utf8',
+            'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-         ]
+            'prefix' => '',
+        ],
     ],
 
 ]);
@@ -36,10 +36,9 @@ $capsule->setAsGlobal();
 // Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
 $capsule->bootEloquent();
 
-$container['db'] = function ($container) use ($capsule){
+$container['db'] = function ($container) use ($capsule) {
     return $capsule;
 };
-
 
 //Register Twig View helper
 $container['view'] = function ($container) {
@@ -56,25 +55,25 @@ $container['view'] = function ($container) {
     return $view;
 };
 
-$container['HomeController'] = function($container){
+$container['HomeController'] = function ($container) {
     return new App\Controllers\HomeController($container);
 };
 
-$container['AuthController'] = function($container){
+$container['AuthController'] = function ($container) {
     return new App\Controllers\Auth\AuthController($container);
 };
 
-$container['validator'] = function($container){
+$container['validator'] = function ($container) {
     return new App\Validation\Validator;
 };
 
 //csrf import1/2
-$container['csrf'] = function($container){
+$container['csrf'] = function ($container) {
     return new \Slim\Csrf\Guard;
 };
 
 //upload dir for images
-$container['upload_directory'] = __DIR__ . '/uploads';
+$container['upload_directory'] = __DIR__ . '/../resources/images';
 
 //my middlewares
 $app->add(new App\Middleware\ValidationErrorsMiddleware($container));

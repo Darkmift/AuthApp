@@ -4,7 +4,7 @@ body {
 
 .form-span {
     text-align: left!important;
-    width: 15vw!important;
+    width: 15%!important;
 }
 
 .input-group {
@@ -15,6 +15,7 @@ body {
 .help-block {
     text-align: left!important;
     display: inline-block !important;
+    width: 100%!important;
 }
 
 

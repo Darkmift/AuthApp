@@ -8,7 +8,7 @@
                     Sign Up
                 </div>
                 <div class="panel-body">
-                    <form method="post" class="align-items-center" action="{{ path_for('auth.signup') }}">
+                    <form method="post" enctype="multipart/form-data" class="align-items-center" action="{{ path_for('auth.signup') }}">
                         {# {% if errors is defined %}
                             {{ errors | json_encode }}
                         {% endif %} #}
@@ -31,13 +31,17 @@
                                 <span style="margin-left:15%;" class="help-block">{{ errors.email | first }}</span>
                             {% endif %}
                         </div>
-                        <div class="form-group  {{ errors.password ? ' has-error' : '' }}">
+                        <div class="form-group  {{ errors.password or errors.image ? ' has-error' : '' }}">
                             <div class="input-group">
                                 <span class="input-group-addon form-span">password</span>
                                 <input id="password" name="password" class="form-control" type="password">
                             </div>
-                            {% if errors.password %}
-                                <span style="margin-left:15%;" class="help-block">{{ errors.password | first }}</span>
+                            {% if errors.password or errors.image %}
+                                <span style="margin-left:15%;" class="help-block">{{ errors.password | first }}
+                                    {% if errors.image %}
+                                       <br> Please retype password
+                                    {% endif %}
+                                </span>
                             {% endif %}
                         </div>
                         {#  image input #}
@@ -45,11 +49,11 @@
                             <div class="input-group input-file">
                                 <label style="width:75%;margin-left:12.5%;max-height:40px;" class="btn btn-default">
                                     Click to Upload Image
-                                    <input style="visibility:hidden" class="form-control" type="file" hidden="hidden" name="image">
+                                    <input style="visibility:hidden" class="form-control" type="file" hidden="hidden" name="image" id="image">
                                 </label>
                             </div>
                             {% if errors.image %}
-                                <span style="margin-left:15%;" class="help-block">{{ errors.image | first }}</span>
+                                <span style="margin-left:15%;max-width:75%;" class="help-block">{{ errors.image }}</span>
                             {% endif %}
                         </div>
                         {#  #}
