@@ -52,7 +52,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updated_a
 (10, 'TEST nine', 'test09@test.ts', '$2y$10$7YYrvhUGjqP3JLjT6Pff7eEUFwZh4Vz1/GzWiqmDC5BwnCvnKRkUO', '2018-04-02 11:46:55', '2018-04-02 11:46:55'),
 (11, 'test ten', 'test@test.ts', '$2y$10$6ZYq4DFEKWRqnzQw47DIYe0Pb71BbSeBMOD7KkRMp3tO..iYpbWTC', '2018-04-04 21:06:17', '2018-04-04 21:06:17'),
 (12, 'test eleven', 'test11@ts.ts', '$2y$10$joBLZTmmKVPY5k/wYeVmEuYKFNhci7zsA9UtLC5jCq3T7AqvwUhAa', '2018-04-04 21:07:14', '2018-04-04 21:07:14'),
-(13, 'test twelve', 'test12@test.com', '$2y$10$X4gTdnzfVwtbT1QRQykeqeglcmIwx/gzbP8Fs0Ud4B1HwrlysMY3S', '2018-04-04 21:17:33', '2018-04-04 21:17:33');
+(13, 'test twelve', 'test12@test.com', '$2y$10$X4gTdnzfVwtbT1QRQykeqeglcmIwx/gzbP8Fs0Ud4B1HwrlysMY3S', '2018-04-04 21:17:33', '2018-04-04 21:17:33'),
+(14, 'Pavel is god', 'p@v.god', '$2y$10$LKrn2VFPnasM4C96/Cwb4OSJadUIm1kaPmW/wG0P5gryrzTCSXYNS', '2018-04-04 22:13:13', '2018-04-04 22:13:13');
 
 --
 -- Indexes for dumped tables
@@ -73,7 +74,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
