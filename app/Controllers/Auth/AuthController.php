@@ -54,19 +54,12 @@ class AuthController extends Controller
             'email' => $request->getParam('email'),
             'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
         ]);
-        //fetch user id
-        // $id = $this->db->table('users');
-        // $id->select('id');
-        // $id->where('name', '=', $request->getParam('name'));
-        // $rows = $id->get();
-        // var_dump($id);
-        // die;
         // Get the PDO object
         $pdo = $this->db2->getPdo();
         $statement = $pdo->prepare("SELECT * FROM users WHERE name= :name");
         $statement->execute(['name' => $request->getParam('name')]);
         $result = $statement->fetch();
-        $id=$result['id'];
+        $id = $result['id'];
         //pass user name and id to image storage function
         $this->moveUploadedFile($directory, $uploadedFile, $request->getParam('name'), $id);
         //redirect user on succesful registration
