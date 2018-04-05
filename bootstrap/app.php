@@ -1,5 +1,8 @@
 <?php
 use Respect\Validation\Validator as v;
+use Illuminate\Database\Connectors\ConnectionFactory;
+use Illuminate\Database\Connection;
+use Psr\Container\ContainerInterface as Container;
 session_start();
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -16,7 +19,7 @@ $app = new \Slim\app([
             'host' => 'localhost',
             'database' => 'codecourse',
             'username' => 'root',
-            'password' => '',
+            'password' => 'root12',
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
@@ -38,6 +41,24 @@ $capsule->bootEloquent();
 
 $container['db'] = function ($container) use ($capsule) {
     return $capsule;
+};
+
+$container['db2'] = function (Container $container) {
+    $settings = $container->get('settings');
+    $config = [
+        'driver' => 'mysql',
+        'host' => $settings['db']['host'],
+        'database' => $settings['db']['database'],
+        'username' => $settings['db']['username'],
+        'password' => $settings['db']['password'],
+        'charset'  => $settings['db']['charset'],
+        'collation' => $settings['db']['collation'],
+        'prefix' => '',
+    ];
+
+    $factory = new ConnectionFactory(new \Illuminate\Container\Container());
+
+    return $factory->make($config);
 };
 
 //Register Twig View helper

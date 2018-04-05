@@ -48,22 +48,35 @@ class AuthController extends Controller
         if ($validation->failed() || $this->uploadStatus == false) {
             return $response->withRedirect($this->router->pathFor('auth.signup'));
         }
-
+        //if form valid create user
         $user = User::create([
             'name' => $request->getParam('name'),
             'email' => $request->getParam('email'),
             'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
         ]);
-
-        $this->moveUploadedFile($directory, $uploadedFile,$request->getParam('name'));
-        // var_dump($request->getParam('name'), $request->getParam('email'), $request->getParam('password'));
+        //fetch user id
+        // $id = $this->db->table('users');
+        // $id->select('id');
+        // $id->where('name', '=', $request->getParam('name'));
+        // $rows = $id->get();
+        // var_dump($id);
+        // die;
+        // Get the PDO object
+        $pdo = $this->db2->getPdo();
+        $statement = $pdo->prepare("SELECT * FROM users WHERE name= :name");
+        $statement->execute(['name' => $request->getParam('name')]);
+        $result = $statement->fetch();
+        $id=$result['id'];
+        //pass user name and id to image storage function
+        $this->moveUploadedFile($directory, $uploadedFile, $request->getParam('name'), $id);
+        //redirect user on succesful registration
         return $response->withRedirect($this->router->pathFor('home'));
     }
 
-    private function moveUploadedFile($directory, UploadedFile $uploadedFile,$name)
+    private function moveUploadedFile($directory, UploadedFile $uploadedFile, $name, $id)
     {
         $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
-        $basename = $name.date('Ymd_hms');
+        $basename = $id . $name;
         // $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
         $filename = sprintf('%s.%0.8s', $basename, $extension);
 
