@@ -3,6 +3,11 @@
 // Get container
 $container = $app->getContainer();
 
+//temp setup for auth check--belongs below
+$container['auth'] = function ($container) {
+    return new \App\Auth\Auth;
+};
+
 //Register Twig View helper
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views', [
@@ -14,6 +19,11 @@ $container['view'] = function ($container) {
         $container->router,
         $container->request->getUri()
     ));
+
+    $view->getEnvironment()->addGlobal('auth', [
+        'check' => $container->auth->check(),
+        'user' => $container->auth->user(),
+    ]);
 
     return $view;
 };
@@ -41,7 +51,3 @@ $container['csrf'] = function ($container) {
 
 //upload dir for images
 $container['upload_directory'] = __DIR__ . '/../resources/images';
-
-$container['auth'] = function ($container) {
-    return new \App\Auth\Auth;
-};
