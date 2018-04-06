@@ -40,6 +40,10 @@ $container['AuthControllerSignIn'] = function ($container) {
     return new App\Controllers\Auth\AuthControllerSignIn($container);
 };
 
+$container['AuthControllerSignOut'] = function ($container) {
+    return new App\Controllers\Auth\AuthControllerSignOut($container);
+};
+
 $container['validator'] = function ($container) {
     return new App\Validation\Validator;
 };

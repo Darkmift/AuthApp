@@ -38,4 +38,9 @@ class Auth
         //if password verify failed
         return false;
     }
+
+    public function logout()
+    {
+        unset($_SESSION['user']);
+    }
 }

@@ -61,12 +61,16 @@ class AuthControllerSignUp extends Controller
         $result = $statement->fetch();
         $id = $result['id'];
         //pass user name and id to image storage function
-        $this->moveUploadedFile($directory, $uploadedFile,$id);
+        $this->moveUploadedFile($directory, $uploadedFile, $id);
+        
+        //create session for new registered user so he may be redirected automatically to home.twig
+        $this->auth->attempt($user->email, $request->getParam('password'));
+
         //redirect user on succesful registration
         return $response->withRedirect($this->router->pathFor('home'));
     }
 
-    private function moveUploadedFile($directory, UploadedFile $uploadedFile,$id)
+    private function moveUploadedFile($directory, UploadedFile $uploadedFile, $id)
     {
         $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
         $basename = $id;
