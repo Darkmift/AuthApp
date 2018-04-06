@@ -1,8 +1,5 @@
 <?php
 use Respect\Validation\Validator as v;
-use Illuminate\Database\Connectors\ConnectionFactory;
-use Illuminate\Database\Connection;
-use Psr\Container\ContainerInterface as Container;
 session_start();
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -29,6 +26,7 @@ $app = new \Slim\app([
 ]);
 
 require __DIR__.'/container.php';
+require __DIR__.'/dbManager.php';
 
 //my middlewares
 $app->add(new App\Middleware\ValidationErrorsMiddleware($container));

@@ -6,7 +6,7 @@ use App\Models\User;
 use Respect\Validation\Validator as v;
 use Slim\Http\UploadedFile;
 
-class AuthController extends Controller
+class AuthControllerSignUp extends Controller
 {
     private $uploadStatus = true;
     public function getSignUp($request, $response)
