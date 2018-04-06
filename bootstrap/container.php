@@ -8,25 +8,13 @@ $container['auth'] = function ($container) {
     return new \App\Auth\Auth;
 };
 
-//Register Twig View helper
-$container['view'] = function ($container) {
-    $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views', [
-        'cache' => false/**'path/to/cache'**/,
-    ]);
-
-    // Instantiate and add Slim specific extension
-    $view->addExtension(new \Slim\Views\TwigExtension(
-        $container->router,
-        $container->request->getUri()
-    ));
-
-    $view->getEnvironment()->addGlobal('auth', [
-        'check' => $container->auth->check(),
-        'user' => $container->auth->user(),
-    ]);
-
-    return $view;
+//flash pack plugin
+$container['flash'] = function ($container) {
+    return new \Slim\Flash\Messages;
 };
+
+//view container
+require __DIR__.'/containerView.php';
 
 $container['HomeController'] = function ($container) {
     return new App\Controllers\HomeController($container);

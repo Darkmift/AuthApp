@@ -17,14 +17,11 @@ class AuthControllerSignIn extends Controller
             $request->getParam('email'),
             $request->getParam('password')
         );
-        //Test Login one
-        // tlogin1@test.ts
-        // Tester1
-        // var_dump($auth);
-        // die();
-
+      
         //if login fails
         if (!$auth) {
+            $this->flash->addMessage('error', 'login failed,please try again');
+
             return $response->withRedirect($this->router->pathFor('auth.signin'));
         }
         return $response->withRedirect($this->router->pathFor('home'));

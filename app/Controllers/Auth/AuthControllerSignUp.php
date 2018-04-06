@@ -63,6 +63,8 @@ class AuthControllerSignUp extends Controller
         //pass user name and id to image storage function
         $this->moveUploadedFile($directory, $uploadedFile, $id);
         
+        $this->flash->addMessage('info', 'Registration successful!');
+
         //create session for new registered user so he may be redirected automatically to home.twig
         $this->auth->attempt($user->email, $request->getParam('password'));
 
