@@ -41,3 +41,7 @@ $container['csrf'] = function ($container) {
 
 //upload dir for images
 $container['upload_directory'] = __DIR__ . '/../resources/images';
+
+$container['auth'] = function ($container) {
+    return new \App\Auth\Auth;
+};

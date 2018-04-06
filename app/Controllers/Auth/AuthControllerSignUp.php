@@ -54,22 +54,22 @@ class AuthControllerSignUp extends Controller
             'email' => $request->getParam('email'),
             'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
         ]);
-        // Get the PDO object
+        //Get the PDO object to bind the id as name to image
         $pdo = $this->db2->getPdo();
         $statement = $pdo->prepare("SELECT * FROM users WHERE name= :name");
         $statement->execute(['name' => $request->getParam('name')]);
         $result = $statement->fetch();
         $id = $result['id'];
         //pass user name and id to image storage function
-        $this->moveUploadedFile($directory, $uploadedFile, $request->getParam('name'), $id);
+        $this->moveUploadedFile($directory, $uploadedFile,$id);
         //redirect user on succesful registration
         return $response->withRedirect($this->router->pathFor('home'));
     }
 
-    private function moveUploadedFile($directory, UploadedFile $uploadedFile, $name, $id)
+    private function moveUploadedFile($directory, UploadedFile $uploadedFile,$id)
     {
         $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
-        $basename = $id . $name;
+        $basename = $id;
         // $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
         $filename = sprintf('%s.%0.8s', $basename, $extension);
 

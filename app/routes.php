@@ -12,5 +12,5 @@ $app->get('/auth/signup', 'AuthControllerSignUp:getSignUp')->setName('auth.signu
 $app->post('/auth/signup', 'AuthControllerSignUp:postSignUp');
 
 //signin
-$app->get('/auth/signin', 'AuthController:getSignIn')->setName('auth.signin');
-$app->post('/auth/signin', 'AuthController:postSignin');
+$app->get('/auth/signin', 'AuthControllerSignIn:getSignIn')->setName('auth.signin');
+$app->post('/auth/signin', 'AuthControllerSignIn:postSignin');
