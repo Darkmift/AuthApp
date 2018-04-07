@@ -1,9 +1,9 @@
-$('#name,#email,#password').on('focus', function() {
+$('#name,#email,#password,#password_old').on('focus', function() {
     this.removeAttribute('readonly');
 });
 
-$('#name,#email,#password').focusout(function() {
+$('#name,#email,#password,#password_old').focusout(function() {
     this.prop('readonly', true);
 });
 
-$('#name,#email,#password').attr('readonly', 'true');
+$('#name,#email,#password,#password_old').attr('readonly', 'true');

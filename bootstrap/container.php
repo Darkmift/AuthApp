@@ -36,6 +36,10 @@ $container['validator'] = function ($container) {
     return new App\Validation\Validator;
 };
 
+$container['PasswordController'] = function ($container) {
+    return new App\Controllers\Auth\PasswordController($container);
+};
+
 //csrf import1/2
 $container['csrf'] = function ($container) {
     return new \Slim\Csrf\Guard;

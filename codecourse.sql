@@ -53,7 +53,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updated_a
 (11, 'test ten', 'test@test.ts', '$2y$10$6ZYq4DFEKWRqnzQw47DIYe0Pb71BbSeBMOD7KkRMp3tO..iYpbWTC', '2018-04-04 21:06:17', '2018-04-04 21:06:17'),
 (12, 'test eleven', 'test11@ts.ts', '$2y$10$joBLZTmmKVPY5k/wYeVmEuYKFNhci7zsA9UtLC5jCq3T7AqvwUhAa', '2018-04-04 21:07:14', '2018-04-04 21:07:14'),
 (13, 'test twelve', 'test12@test.com', '$2y$10$X4gTdnzfVwtbT1QRQykeqeglcmIwx/gzbP8Fs0Ud4B1HwrlysMY3S', '2018-04-04 21:17:33', '2018-04-04 21:17:33');
-
+(14, 'Pavel is god', 'p@v.god', '$2y$10$LKrn2VFPnasM4C96/Cwb4OSJadUIm1kaPmW/wG0P5gryrzTCSXYNS', '2018-04-04 22:13:13', '2018-04-04 22:13:13');
 --
 -- Indexes for dumped tables
 --

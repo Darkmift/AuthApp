@@ -21,7 +21,7 @@
                                 <span style="margin-left:15%;" class="help-block">{{ errors.email | first }}</span>
                             {% endif %}
                         </div>
-                        <div class="form-group  {{ errors.password or errors.image ? ' has-error' : '' }}">
+                        <div class="form-group  {{ errors.password ? ' has-error' : '' }}">
                             <div class="input-group">
                                 <span class="input-group-addon form-span">password</span>
                                 <input id="password" name="password" class="form-control" type="password">
