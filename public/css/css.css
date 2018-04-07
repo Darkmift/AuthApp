@@ -25,3 +25,36 @@ input[readonly] {
     cursor: text;
     background-color: #fff;
 }
+
+.homeimg {
+    width: 10vw!important;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.panel-flexfix {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img2 {
+    display: flex;
+    flex-wrap: wrap;
+    width: 10vw;
+    margin-left: 2rem;
+    margin-top: 1rem;
+    margin-right: 2rem;
+    height: auto;
+    box-shadow: 1px 1px 10px #898989;
+    border: 1px solid #e0e0e0;
+}

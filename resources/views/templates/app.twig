@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
         <!-- Optional theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{ base_url()}}/css/css.css "/>
+        {# <link rel="stylesheet" href="{{ base_url()}}/css/css.css "/> #}
     </head>
 
     <body>
@@ -32,7 +32,21 @@
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <!--Bootstrap Plugins-->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
-        <script src="{{ base_url()}}/js/js.js"></script>
+        {# <script src="{{ base_url()}}/js/js.js"></script> #}
+        <script>
+            var script = document.createElement('script');
+            script.src = "{{ base_url()}}/js/js.js?" + (
+            new Date).getTime();
+            document.getElementsByTagName('head')[0].appendChild(script);
+            ///
+            var x = document.createElement("LINK");
+            x.setAttribute("id", "CssSheet");
+            x.setAttribute("rel", "stylesheet");
+            x.setAttribute("type", "text/css");
+            x.setAttribute("href", "{{ base_url()}}/css/css.css?}" + new Date());
+            document.getElementsByTagName('head')[0].appendChild(x);
+        </script>
+
     </body>
 
 </html>

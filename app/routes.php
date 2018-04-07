@@ -1,23 +1,28 @@
 <?php
 
+use App\Middleware\AuthMiddleware;
+use App\Middleware\GuestMiddleware;
 // $app->get('/home', function ($request, $response) {
 //     return $this->view->render($response,'home.twig');
 // });
-
-//calls controller from app.php $container['HomeController']
-$app->get('/', 'HomeController:index')->setName('home');
-
+$app->group('', function () {
 //signup
-$app->get('/auth/signup', 'AuthControllerSignUp:getSignUp')->setName('auth.signup');
-$app->post('/auth/signup', 'AuthControllerSignUp:postSignUp');
+    $this->get('/auth/signup', 'AuthControllerSignUp:getSignUp')->setName('auth.signup');
+    $this->post('/auth/signup', 'AuthControllerSignUp:postSignUp');
 
 //signin
-$app->get('/auth/signin', 'AuthControllerSignIn:getSignIn')->setName('auth.signin');
-$app->post('/auth/signin', 'AuthControllerSignIn:postSignin');
+    $this->get('/auth/signin', 'AuthControllerSignIn:getSignIn')->setName('auth.signin');
+    $this->post('/auth/signin', 'AuthControllerSignIn:postSignin');
+})->add(new GuestMiddleware($container));
 
-//signout
-$app->get('/auth/signout', 'AuthControllerSignOut:getSignOut')->setName('auth.signout');
+$app->group('', function () {
+    //calls controller from app.php $container['HomeController']
+    $this->get('/', 'HomeController:index')->setName('home');
 
-//password change
-$app->get('/auth/password/change', 'PasswordController:getChangedPassword')->setName('auth.password.change');
-$app->post('/auth/password/change', 'PasswordController:postChangedPassword');
+    //signout
+    $this->get('/auth/signout', 'AuthControllerSignOut:getSignOut')->setName('auth.signout');
+
+    //password change
+    $this->get('/auth/password/change', 'PasswordController:getChangedPassword')->setName('auth.password.change');
+    $this->post('/auth/password/change', 'PasswordController:postChangedPassword');
+})->add(new AuthMiddleware($container));
