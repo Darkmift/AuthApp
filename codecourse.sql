@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 05, 2018 at 12:19 AM
+-- Host: localhost
+-- Generation Time: Apr 07, 2018 at 01:52 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -42,18 +42,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'alex', 'alex@codecourse.com', '', '2018-03-17 21:35:25', '2018-03-17 21:35:25'),
-(2, 'TEST01', 'TEST01@email.com', '12345', '2018-03-31 13:41:42', '2018-03-31 13:41:42'),
-(5, 'TEST02', 'TEST02@email.com', '12345', '2018-03-31 13:42:58', '2018-03-31 13:42:58'),
-(6, 'TEST03', 'TEST03@ts.ts', '123456', '2018-03-31 16:03:13', '2018-03-31 16:03:13'),
-(7, 'TEST04', 'tesst04@ts.ts', '$2y$10$I.tSxKKfWcNLMo.DGOz/guJod0QOlAumQwsV/I0qeC1ArUGq5tqdC', '2018-03-31 17:26:05', '2018-03-31 17:26:05'),
-(8, 'TEST five', 'TEST05@ts.ts', '$2y$10$VBGcGVdrFZO57VpQnWuNK.0YW7Sfq4e0lwVXs7pEDtOJkUtOme4WW', '2018-03-31 18:03:58', '2018-03-31 18:03:58'),
-(9, 'Jerry Seinfeld', 'Jerry@yadda.com', '$2y$10$teBWQllSiy9FlRKdF99anOZ0BBs90hoHVW7faYhSDCer2wO1rQ0yO', '2018-04-02 09:48:15', '2018-04-02 09:48:15'),
-(10, 'TEST nine', 'test09@test.ts', '$2y$10$7YYrvhUGjqP3JLjT6Pff7eEUFwZh4Vz1/GzWiqmDC5BwnCvnKRkUO', '2018-04-02 11:46:55', '2018-04-02 11:46:55'),
-(11, 'test ten', 'test@test.ts', '$2y$10$6ZYq4DFEKWRqnzQw47DIYe0Pb71BbSeBMOD7KkRMp3tO..iYpbWTC', '2018-04-04 21:06:17', '2018-04-04 21:06:17'),
-(12, 'test eleven', 'test11@ts.ts', '$2y$10$joBLZTmmKVPY5k/wYeVmEuYKFNhci7zsA9UtLC5jCq3T7AqvwUhAa', '2018-04-04 21:07:14', '2018-04-04 21:07:14'),
-(13, 'test twelve', 'test12@test.com', '$2y$10$X4gTdnzfVwtbT1QRQykeqeglcmIwx/gzbP8Fs0Ud4B1HwrlysMY3S', '2018-04-04 21:17:33', '2018-04-04 21:17:33');
-(14, 'Pavel is god', 'p@v.god', '$2y$10$LKrn2VFPnasM4C96/Cwb4OSJadUIm1kaPmW/wG0P5gryrzTCSXYNS', '2018-04-04 22:13:13', '2018-04-04 22:13:13');
+(1, 'alex', 'alex@codecourse.com', '$2y$10$X4gTdnzfVwtbT1QRQykeqeglcmIwx/gzbP8Fs0Ud4B1HwrlysMY3S', '2018-03-17 21:35:25', '2018-03-17 21:35:25'),
+(22, 'test twentyone', 't21@ts.ts', '$2y$10$VQdwSJ7ltG8Cs0Y6hBl67uPZcOrX/GEarvg3Gbr5lzbu8Zw0E6kba', '2018-04-06 12:25:53', '2018-04-06 12:25:53'),
+(23, 'Test Login one', 'tlogin1@test.ts', '$2y$10$4Kn5.LOD5wE/MY4k4ga9fu2IFRh0tHhMq/.aO2SvKxy8RiB1pG6v.', '2018-04-06 12:49:07', '2018-04-07 09:02:54'),
+(24, 'Billy Ray', 'Billy@ts.ts', '$2y$10$qGlqDUvwXSYaUoh/to7kDexbYmaF2H62CCveRpg3.o/ibakQVOVSi', '2018-04-06 16:27:45', '2018-04-06 16:27:45'),
+(25, 'Billy Jay', 'jay@ts.ts', '$2y$10$GNvsJtKl0xLCiGYvjtstK.BwaC3ckk8KnxRJI8n8cIIf8VslfAvre', '2018-04-06 16:28:53', '2018-04-06 16:28:53'),
+(26, 'little dummy', 'dumdum@dummy.com', '$2y$10$GAXTQjhneZYm1xjtRks31.70U3kJn1UpGND5wI.OzmnGpVM.4MwLW', '2018-04-06 17:43:34', '2018-04-06 17:43:34'),
+(27, 'Pavel is god', 'p@v.god', '$2y$10$LKrn2VFPnasM4C96/Cwb4OSJadUIm1kaPmW/wG0P5gryrzTCSXYNS', '2018-04-07 11:51:22', '2018-04-07 11:51:22');
+
 --
 -- Indexes for dumped tables
 --
@@ -73,7 +69,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
