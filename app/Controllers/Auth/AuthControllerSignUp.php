@@ -35,14 +35,18 @@ class AuthControllerSignUp extends Controller
             $_SESSION['errors']['image'] = 'Please add image';
             $this->uploadStatus = false;
         } else {
-            if ($uploadedFile->getClientMediaType() !== "image/jpeg") {
-                $_SESSION['errors']['image'] = '"' . $uploadedFile->getClientFilename() . '" is wrong file format!';
-                $this->uploadStatus = false;
-            } else {
+            if (
+                //todo--add more image types.
+                $uploadedFile->getClientMediaType() == "image/jpeg" /*||
+                $uploadedFile->getClientMediaType() == "image/png"*/
+            ) {
                 if ($uploadedFile->getSize() > 1048576) {
                     $_SESSION['errors']['image'] = '"' . $uploadedFile->getClientFilename() . '" is too large (' . $uploadedFile->getSize() . ')!';
                     $this->uploadStatus = false;
                 }
+            } else {
+                $_SESSION['errors']['image'] = '"' . $uploadedFile->getClientFilename() . '" is wrong file format!(' . $uploadedFile->getClientMediaType() . ')';
+                $this->uploadStatus = false;
             }
         }
         /////////
@@ -63,7 +67,7 @@ class AuthControllerSignUp extends Controller
         $id = $result['id'];
         //pass user name and id to image storage function
         $this->moveUploadedFile($directory, $uploadedFile, $id);
-        
+
         $this->flash->addMessage('info', 'Registration successful!');
 
         //create session for new registered user so he may be redirected automatically to home.twig

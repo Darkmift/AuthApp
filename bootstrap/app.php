@@ -1,6 +1,6 @@
 <?php
-use Respect\Validation\Validator as v;
 session_start();
+use Respect\Validation\Validator as v;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -8,7 +8,7 @@ require __DIR__ . '/../vendor/autoload.php';
 // var_dump($user);
 // die();
 
-$app = new \Slim\app([
+$app = new \Slim\App([
     'settings' => [
         'displayErrorDetails' => true,
         'db' => [

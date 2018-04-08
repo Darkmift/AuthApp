@@ -1,21 +1,37 @@
+html {
+    font-size: 1rem;
+}
+
+@media only screen and (max-width: 500px) {
+    .btn {
+        font-size: 0.8rem!important;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .btn {
+        font-size: 0.6rem!important;
+    }
+}
+
 body {
     padding: 80px 40px 40px 40px;
 }
 
 .form-span {
-    text-align: left!important;
-    width: 15%!important;
+    text-align: left !important;
+    width: 15% !important;
 }
 
 .input-group {
-    margin-left: 12.5%!important;
-    width: 75%!important;
+    margin-left: 12.5% !important;
+    width: 75% !important;
 }
 
 .help-block {
-    text-align: left!important;
+    text-align: left !important;
     display: inline-block !important;
-    width: 100%!important;
+    width: 100% !important;
 }
 
 
@@ -27,7 +43,7 @@ input[readonly] {
 }
 
 .homeimg {
-    width: 10vw!important;
+    width: 10vw !important;
     height: auto;
     display: flex;
     justify-content: center;
