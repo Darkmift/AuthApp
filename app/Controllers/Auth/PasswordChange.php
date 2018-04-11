@@ -5,7 +5,7 @@ use App\Controllers\Controller;
 use App\Models\User;
 use Respect\Validation\Validator as v;
 
-class PasswordController extends Controller
+class PasswordChange extends Controller
 {
     public function getChangedPassword($request, $response)
     {
@@ -18,6 +18,7 @@ class PasswordController extends Controller
             'password' => v::noWhitespace()->notEmpty(),
         ]);
         if ($validation->failed()) {
+            $this->flash->addMessage('passwordChange', '');
             return $response->withRedirect($this->router->pathFor('auth.password.change'));
         }
         $this->auth->user()->setPassword($request->getParam('password'));

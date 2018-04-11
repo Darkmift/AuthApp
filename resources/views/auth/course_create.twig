@@ -17,9 +17,9 @@
                                 <span class="input-group-addon form-span">name</span>
                                 <input id="name" name="name" class="form-control" placeholder="your name here" type="text" value="{{ old.name }}">
                             </div>
-                            {# {% if errors.name %}
+                            {% if errors.name %}
                                 <span style="margin-left:15%;" class="help-block">{{ errors.name | first }}</span>
-                            {% endif %} #}
+                            {% endif %}
                         </div>
 
                         <div class="form-group  {{ errors.email ? ' has-error' : '' }}">
@@ -27,22 +27,22 @@
                                 <span class="input-group-addon form-span">email</span>
                                 <input id="email" name="email" class="form-control" placeholder="you@example.com" type="email" value="{{ old.email }}">
                             </div>
-                            {# {% if errors.email %}
+                            {% if errors.email %}
                                 <span style="margin-left:15%;" class="help-block">{{ errors.email | first }}</span>
-                            {% endif %} #}
+                            {% endif %}
                         </div>
                         <div class="form-group  {{ errors.password or errors.image ? ' has-error' : '' }}">
                             <div class="input-group">
                                 <span class="input-group-addon form-span">password</span>
                                 <input id="password" name="password" class="form-control" type="password">
                             </div>
-                            {# {% if errors.password or errors.image %}
+                            {% if errors.password or errors.image %}
                                 <span style="margin-left:15%;" class="help-block">{{ errors.password | first }}
                                     {% if errors.image %}
                                        <br> Please retype password
                                     {% endif %}
                                 </span>
-                            {% endif %} #}
+                            {% endif %}
                         </div>
                         {#  image input #}
                         <div class="form-group {{ errors.image ? ' has-error' : '' }}">
@@ -52,9 +52,9 @@
                                     <input style="visibility:hidden" class="form-control" type="file" hidden="hidden" name="image" id="image">
                                 </label>
                             </div>
-                            {# {% if errors.image %}
+                            {% if errors.image %}
                                 <span style="margin-left:15%;max-width:75%;" class="help-block">{{ errors.image | first }}</span>
-                            {% endif %} #}
+                            {% endif %}
                         </div>
                         {#  #}
                         <div class="form-group text-center">

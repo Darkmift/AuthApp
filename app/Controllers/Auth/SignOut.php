@@ -3,7 +3,7 @@ namespace App\Controllers\Auth;
 
 use App\Controllers\Controller;
 
-class AuthControllerSignOut extends Controller
+class SignOut extends Controller
 {
     public function getSignOut($request, $response)
     {

@@ -17,18 +17,18 @@
                                 <span class="input-group-addon form-span">email</span>
                                 <input id="email" name="email" class="form-control" placeholder="you@example.com" type="email" value="{{ old.email }}">
                             </div>
-                            {% if errors.email %}
+                            {# {% if errors.email %}
                                 <span style="margin-left:15%;" class="help-block">{{ errors.email | first }}</span>
-                            {% endif %}
+                            {% endif %} #}
                         </div>
                         <div class="form-group  {{ errors.password ? ' has-error' : '' }}">
                             <div class="input-group">
                                 <span class="input-group-addon form-span">password</span>
                                 <input id="password" name="password" class="form-control" type="password">
                             </div>
-                            {% if errors.password %}
+                            {# {% if errors.password %}
                                 <span style="margin-left:15%;" class="help-block">{{ errors.password | first }}</span>
-                            {% endif %}
+                            {% endif %} #}
                         </div>
                         <div class="form-group text-center">
                             <button style="width:75%" id="singlebutton" name="singlebutton" class="btn btn-default">Sign in</button>

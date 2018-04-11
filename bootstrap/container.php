@@ -20,16 +20,16 @@ $container['HomeController'] = function ($container) {
     return new App\Controllers\HomeController($container);
 };
 
-$container['AuthControllerSignUp'] = function ($container) {
-    return new App\Controllers\Auth\AuthControllerSignUp($container);
+$container['SignUp'] = function ($container) {
+    return new App\Controllers\Auth\SignUp($container);
 };
 
-$container['AuthControllerSignIn'] = function ($container) {
-    return new App\Controllers\Auth\AuthControllerSignIn($container);
+$container['SignIn'] = function ($container) {
+    return new App\Controllers\Auth\SignIn($container);
 };
 
-$container['AuthControllerSignOut'] = function ($container) {
-    return new App\Controllers\Auth\AuthControllerSignOut($container);
+$container['SignOut'] = function ($container) {
+    return new App\Controllers\Auth\SignOut($container);
 };
 
 $container['validator'] = function ($container) {
@@ -40,8 +40,8 @@ $container['ImageValidator'] = function ($container) {
     return new App\Validation\ImageValidator($container);
 };
 
-$container['PasswordController'] = function ($container) {
-    return new App\Controllers\Auth\PasswordController($container);
+$container['PasswordChange'] = function ($container) {
+    return new App\Controllers\Auth\PasswordChange($container);
 };
 
 //csrf import1/2

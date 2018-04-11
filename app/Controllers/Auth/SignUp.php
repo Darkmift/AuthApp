@@ -5,7 +5,7 @@ use App\Controllers\Controller;
 use App\Models\User;
 use Respect\Validation\Validator as v;
 
-class AuthControllerSignUp extends Controller
+class SignUp extends Controller
 {
     public function getSignUp($request, $response)
     {
@@ -31,6 +31,7 @@ class AuthControllerSignUp extends Controller
         $this->ImageValidator->failed($uploadedFile);
 
         if ($validation->failed() || $this->ImageValidator->failed($uploadedFile)) {
+            $this->flash->addMessage('signupError', '');
             return $response->withRedirect($this->router->pathFor('auth.signup'));
         }
         //authcontrollersignup chunk 1 sent to graveyard
