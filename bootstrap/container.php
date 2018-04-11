@@ -28,6 +28,10 @@ $container['SignIn'] = function ($container) {
     return new App\Controllers\Auth\SignIn($container);
 };
 
+$container['CourseCreate'] = function ($container) {
+    return new App\Controllers\Auth\CourseCreate($container);
+};
+
 $container['SignOut'] = function ($container) {
     return new App\Controllers\Auth\SignOut($container);
 };

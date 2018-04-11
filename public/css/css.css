@@ -1,3 +1,7 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
 html {
     font-size: 1rem;
 }
@@ -18,6 +22,9 @@ body {
     padding: 80px 40px 40px 40px;
 }
 
+
+/**form css**/
+
 .form-span {
     text-align: left !important;
     width: 15% !important;
@@ -34,13 +41,17 @@ body {
     width: 100% !important;
 }
 
-
-/* woraround for autocomplete */
-
 input[readonly] {
     cursor: text;
     background-color: #fff;
 }
+
+textarea {
+    resize: none;
+}
+
+
+/***/
 
 .homeimg {
     width: 10vw !important;

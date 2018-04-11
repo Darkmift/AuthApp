@@ -14,14 +14,15 @@ $app->group('', function () {
     $this->get('/auth/signin', 'SignIn:getSignIn')->setName('auth.signin');
     $this->post('/auth/signin', 'SignIn:postSignin');
 
-    //course creation
-    // $this->get('/auth/course_create', 'CourseCreate:getSignIn')->setName('auth.course_create');
-    // $this->post('/auth/course_create', 'CourseCreate:postSignin');
 })->add(new GuestMiddleware($container));
 
 $app->group('', function () {
     //calls controller from app.php $container['HomeController']
     $this->get('/', 'HomeController:index')->setName('home');
+
+    //course creation
+    $this->get('/auth/course_create', 'CourseCreate:getCourseCreate')->setName('auth.course_create');
+    $this->post('/auth/course_create', 'CourseCreate:postCourseCreate');
 
     //signout
     $this->get('/auth/signout', 'SignOut:getSignOut')->setName('auth.signout');
