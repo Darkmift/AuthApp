@@ -49,7 +49,7 @@ class SignUp extends Controller
         $result = $statement->fetch();
         $id = $result['id'];
         //pass user name and id to image storage function
-        $this->ImageValidator->moveUploadedFile($this->container->upload_directory, $uploadedFile, $id);
+        $this->ImageValidator->moveUploadedFile($this->container->upload_directory_users, $uploadedFile, $id);
 
         $this->flash->addMessage('info', 'Registration successful!');
 

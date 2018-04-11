@@ -18,7 +18,7 @@
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <img style="middle;width:25px;padding:0;margin-top:-0.25vh;margin-bottom:-0.30vh;" src=" {{ base_url()}}/../resources/images/{{ auth.user.id }}.jpg" class="responsive img-thumbnail" alt="Cinque Terre">
+                            <img style="middle;width:25px;padding:0;margin-top:-0.25vh;margin-bottom:-0.30vh;" src="{{ base_url()}}/../public/images/users/{{ auth.user.id }}.jpg" class="responsive img-thumbnail" alt="Cinque Terre">
                             {{ auth.user.name }}
                             <span class="caret"></span>
                         </a>

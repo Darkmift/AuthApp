@@ -64,11 +64,31 @@
 
 {# //password change error #}
 
-{% if flash.getMessage('passwordChange') %}
+{% if flash.getMessage('courseError') %}
     <div class="alert alert-danger">
-        {% if errors.password_old or errors.password %}
-            -one or more fields are empty,please try again
+        {% if errors.name %}
+            -
+            {{ errors.name | first }}
             <br>
+        {% endif %}
+        {% if errors.description %}
+            -
+            {{ errors.description | first }}
+            <br>
+        {% endif %}
+        {% if errors.start_date %}
+            -
+            {{ errors.start_date | first }}
+            <br>
+        {% endif %}
+        {% if errors.end_date %}
+            -
+            {{ errors.end_date | first }}
+            <br>
+        {% endif %}
+        {% if errors.image %}
+            -
+            {{ errors.image | first }}
         {% endif %}
     </div>
 {% endif %}

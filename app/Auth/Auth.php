@@ -33,6 +33,7 @@ class Auth
             //if true verify password
             //set session if true
             $_SESSION['user'] = $user->id;
+            $_SESSION['userName'] = $user->name;
             return true;
         }
         //if password verify failed

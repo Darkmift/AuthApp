@@ -13,44 +13,45 @@
                         <div class="form-group {{ errors.name ? ' has-error' : '' }}">
                             <label for="name">Name:</label>
                             <input id="name" name="name" class="form-control" placeholder="your name here" type="text" value="{{ old.name }}">
-                            {% if errors.name %}
+                            {# {% if errors.name %}
                                 <span style="margin-left:15%;" class="help-block">{{ errors.name | first }}</span>
-                            {% endif %}
+                            {% endif %} #}
                         </div>
                         {# describe input  #}
-                        <div class="form-group {{ errors.description ? ' has-error' : '' }}">
-                            <label for="description">Describe course:</label>
-                            <textarea class="form-control" width="50%" rows="5" id="description" name="description" value="{{ old.description ? old.description : ''  }}"></textarea>
-                            {% if errors.description %}
-                                <span style="margin-left:15%;" class="help-block">{{ errors.description | first }}</span>
-                            {% endif %}
-                        </div>
+                        {% spaceless %}
+                            <div class="form-group {{ errors.description ? ' has-error' : '' }}">
+                                <label for="description">Describe course:</label>
+                                <textarea class="form-control" width="50%" rows="5" id="description" name="description">{% if old.description %}{{ old.description |replace({'  ':''}) }}
+                                    {% endif %}
+                                </textarea>
+                            </div>
+                        {% endspaceless %}
                         {# start date input #}
                         <div style="margin-left:2%;display:inline-block;width:45%;" class="form-group {{ errors.start_date ? ' has-error' : '' }}">
                             <label for="example-datetime-local-input" class="col-2 col-form-label">Start Date</label>
-                            <div>
-                                <input class="form-control" type="datetime-local" id="start_date" name="start_date">
+                            <div {{ errors.start_date ? 'style="border:1px solid red' : '' }}>
+                                <input   class="form-control" type="date" id="start_date" name="start_date" value="{{ old.start_date ? old.start_date : "now"|date("Y-m-d") }}">
                             </div>
                         </div>
                         {# end date input #}
                         <div style="margin-left:3%;display:inline-block;width:45%;" class="form-group {{ errors.end_date ? ' has-error' : '' }}">
                             <label for="example-datetime-local-input" class="col-2 col-form-label">End Date</label>
-                            <div>
-                                <input class="form-control" type="datetime-local" id="end_date" name="end_date">
+                            <div {{ errors.end_date ? 'style="border:1px solid red' : '' }} >
+                                <input class="form-control" type="date" id="end_date" name="end_date"  value="{{ old.end_date ? old.end_date : "now"|date("Y-m-d") }}">
                             </div>
                         </div>
                         {#  image input #}
                         <div class="form-group {{ errors.image ? ' has-error' : '' }}">
                             <br>
                             <div class="input-group input-file">
-                                <label style="max-height:40px;" class="btn btn-default">
+                                <label style="max-height:40px;{{ errors.image ? 'border:1px solid red' : '' }}" class="btn btn-default">
                                     Click to Upload Image
                                     <input style="visibility:hidden" class="form-control" type="file" hidden="hidden" name="image" id="image">
                                 </label>
                             </div>
-                            {% if errors.image %}
+                            {# {% if errors.image %}
                                 <span style="margin-left:15%;max-width:75%;" class="help-block">{{ errors.image | first }}</span>
-                            {% endif %}
+                            {% endif %} #}
                         </div>
                         {#  #}
                         <div class="form-group text-center">
