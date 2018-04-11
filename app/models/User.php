@@ -11,11 +11,13 @@ class User extends Model
         'name',
         'email',
         'password',
+        'updated_at',
     ];
     public function setPassword($password)
     {
         $this->update([
             'password' => password_hash($password, PASSWORD_DEFAULT),
+            'updated_at' => date("Y-m-d H:i:s"),
         ]);
     }
 }

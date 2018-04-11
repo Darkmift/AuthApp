@@ -7,7 +7,6 @@ use Respect\Validation\Validator as v;
 
 class AuthControllerSignUp extends Controller
 {
-    private $uploadStatus = true;
     public function getSignUp($request, $response)
     {
         return $this->view->render($response, 'auth\signup.twig');
@@ -31,30 +30,7 @@ class AuthControllerSignUp extends Controller
         //image validate chunk end
         $this->ImageValidator->failed($uploadedFile);
 
-<<<<<<< HEAD
         if ($validation->failed() || $this->ImageValidator->failed($uploadedFile)) {
-=======
-        if ($uploadedFile->getSize() == 0) {
-            $_SESSION['errors']['image'] = 'Please add image';
-            $this->uploadStatus = false;
-        } else {
-            if (
-                //todo--add more image types.
-                $uploadedFile->getClientMediaType() == "image/jpeg" /*||
-                $uploadedFile->getClientMediaType() == "image/png"*/
-            ) {
-                if ($uploadedFile->getSize() > 1048576) {
-                    $_SESSION['errors']['image'] = '"' . $uploadedFile->getClientFilename() . '" is too large (' . $uploadedFile->getSize() . ')!';
-                    $this->uploadStatus = false;
-                }
-            } else {
-                $_SESSION['errors']['image'] = '"' . $uploadedFile->getClientFilename() . '" is wrong file format!(' . $uploadedFile->getClientMediaType() . ')';
-                $this->uploadStatus = false;
-            }
-        }
-        /////////
-        if ($validation->failed() || $this->uploadStatus == false) {
->>>>>>> 01f8b72cfa6c53c81f124c6dd4eab6e9c5b8764e
             return $response->withRedirect($this->router->pathFor('auth.signup'));
         }
         //authcontrollersignup chunk 1 sent to graveyard
@@ -72,11 +48,7 @@ class AuthControllerSignUp extends Controller
         $result = $statement->fetch();
         $id = $result['id'];
         //pass user name and id to image storage function
-<<<<<<< HEAD
         $this->ImageValidator->moveUploadedFile($this->container->upload_directory, $uploadedFile, $id);
-=======
-        $this->moveUploadedFile($directory, $uploadedFile, $id);
->>>>>>> 01f8b72cfa6c53c81f124c6dd4eab6e9c5b8764e
 
         $this->flash->addMessage('info', 'Registration successful!');
 
@@ -86,17 +58,4 @@ class AuthControllerSignUp extends Controller
         //redirect user on succesful registration
         return $response->withRedirect($this->router->pathFor('home'));
     }
-
-    // private function moveUploadedFile($directory, UploadedFile $uploadedFile, $id)
-    // {
-    //     $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
-    //     $basename = $id;
-    //     // $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
-    //     $filename = sprintf('%s.%0.8s', $basename, $extension);
-
-    //     $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
-
-    //     return $filename;
-    // }
-
 }
