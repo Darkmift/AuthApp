@@ -1,8 +1,6 @@
 <?php
-//SERVER CONFIG
-//SEE app.1.php for local config
-use Respect\Validation\Validator as v;
 session_start();
+use Respect\Validation\Validator as v;
 
 require __DIR__ . '/../vendor/autoload.php';
 

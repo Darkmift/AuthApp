@@ -50,4 +50,4 @@ $container['csrf'] = function ($container) {
 };
 
 //upload dir for images
-$container['upload_directory'] = __DIR__ . '/../resources/images';
+$container['upload_directory'] = __DIR__.'/../resources/images';
