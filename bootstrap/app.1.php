@@ -1,20 +1,21 @@
 <?php
-//SERVER CONFIG
-//SEE app.1.php for local config
+
+//LOCALHOST CONFIG
+//SEE app.php for server config
 use Respect\Validation\Validator as v;
 session_start();
 
 require __DIR__ . '/../vendor/autoload.php';
+
+// $user = new \App\models\User;
+// var_dump($user);
+// die();
 
 $app = new \Slim\app([
     'settings' => [
         'displayErrorDetails' => true,
         'db' => [
             'driver' => 'mysql',
-            // 'host' => 'sql206.epizy.com',
-            // 'database' => 'epiz_21822353_codecourse',
-            // 'username' => 'epiz_21822353',
-            // 'password' => 'RiYByFDH5F8T',
             'host' => 'localhost',
             'database' => 'codecourse',
             'username' => 'root',

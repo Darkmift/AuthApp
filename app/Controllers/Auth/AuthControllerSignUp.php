@@ -4,7 +4,6 @@ namespace App\Controllers\Auth;
 use App\Controllers\Controller;
 use App\Models\User;
 use Respect\Validation\Validator as v;
-use Slim\Http\UploadedFile;
 
 class AuthControllerSignUp extends Controller
 {
@@ -21,34 +20,22 @@ class AuthControllerSignUp extends Controller
             'email' => v::noWhitespace()->notEmpty()->emailAvailable(),
             'name' => v::notEmpty()->alpha(),
             'password' => v::noWhitespace()->notEmpty(),
+            // 'image' => v::mimetype('image/png')->validate($request->getUploadedFiles())
         ]);
 
         /////////
-        //image validate start
-        $directory = $this->container->upload_directory;
+        //get uploads
         $uploadedFiles = $request->getUploadedFiles();
-        // handle single input with single file upload
+        // get image from uploads
         $uploadedFile = $uploadedFiles['image'];
         //image validate chunk end
+        $this->ImageValidator->failed($uploadedFile);
 
-        if ($uploadedFile->getSize() == 0) {
-            $_SESSION['errors']['image'] = 'Please add image';
-            $this->uploadStatus = false;
-        } else {
-            if ($uploadedFile->getClientMediaType() !== "image/jpeg") {
-                $_SESSION['errors']['image'] = '"' . $uploadedFile->getClientFilename() . '" is wrong file format!';
-                $this->uploadStatus = false;
-            } else {
-                if ($uploadedFile->getSize() > 1048576) {
-                    $_SESSION['errors']['image'] = '"' . $uploadedFile->getClientFilename() . '" is too large (' . $uploadedFile->getSize() . ')!';
-                    $this->uploadStatus = false;
-                }
-            }
-        }
-        /////////
-        if ($validation->failed() || $this->uploadStatus == false) {
+        if ($validation->failed() || $this->ImageValidator->failed($uploadedFile)) {
             return $response->withRedirect($this->router->pathFor('auth.signup'));
         }
+        //authcontrollersignup chunk 1 sent to graveyard
+
         //if form valid create user
         $user = User::create([
             'name' => $request->getParam('name'),
@@ -62,8 +49,8 @@ class AuthControllerSignUp extends Controller
         $result = $statement->fetch();
         $id = $result['id'];
         //pass user name and id to image storage function
-        $this->moveUploadedFile($directory, $uploadedFile, $id);
-        
+        $this->ImageValidator->moveUploadedFile($this->container->upload_directory, $uploadedFile, $id);
+
         $this->flash->addMessage('info', 'Registration successful!');
 
         //create session for new registered user so he may be redirected automatically to home.twig
@@ -73,16 +60,16 @@ class AuthControllerSignUp extends Controller
         return $response->withRedirect($this->router->pathFor('home'));
     }
 
-    private function moveUploadedFile($directory, UploadedFile $uploadedFile, $id)
-    {
-        $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
-        $basename = $id;
-        // $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
-        $filename = sprintf('%s.%0.8s', $basename, $extension);
+    // private function moveUploadedFile($directory, UploadedFile $uploadedFile, $id)
+    // {
+    //     $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+    //     $basename = $id;
+    //     // $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
+    //     $filename = sprintf('%s.%0.8s', $basename, $extension);
 
-        $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+    //     $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
 
-        return $filename;
-    }
+    //     return $filename;
+    // }
 
 }

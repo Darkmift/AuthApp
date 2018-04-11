@@ -53,7 +53,7 @@
                                 </label>
                             </div>
                             {% if errors.image %}
-                                <span style="margin-left:15%;max-width:75%;" class="help-block">{{ errors.image }}</span>
+                                <span style="margin-left:15%;max-width:75%;" class="help-block">{{ errors.image | first }}</span>
                             {% endif %}
                         </div>
                         {#  #}

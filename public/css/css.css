@@ -50,11 +50,22 @@ input[readonly] {
 .img2 {
     display: flex;
     flex-wrap: wrap;
-    width: 10vw;
+    /* width: 10vw; */
     margin-left: 2rem;
     margin-top: 1rem;
     margin-right: 2rem;
     height: auto;
     box-shadow: 1px 1px 10px #898989;
     border: 1px solid #e0e0e0;
+}
+
+.img-responsive {
+    display: block;
+    max-width: 60%;
+    height: auto;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
 }

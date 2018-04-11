@@ -36,6 +36,10 @@ $container['validator'] = function ($container) {
     return new App\Validation\Validator;
 };
 
+$container['ImageValidator'] = function ($container) {
+    return new App\Validation\ImageValidator($container);
+};
+
 $container['PasswordController'] = function ($container) {
     return new App\Controllers\Auth\PasswordController($container);
 };

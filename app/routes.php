@@ -2,9 +2,9 @@
 
 use App\Middleware\AuthMiddleware;
 use App\Middleware\GuestMiddleware;
-// $app->get('/home', function ($request, $response) {
-//     return $this->view->render($response,'home.twig');
-// });
+$app->get('/home', function ($request, $response) {
+    return $this->view->render($response,'home.twig');
+});
 $app->group('', function () {
 //signup
     $this->get('/auth/signup', 'AuthControllerSignUp:getSignUp')->setName('auth.signup');
