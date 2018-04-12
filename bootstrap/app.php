@@ -4,15 +4,17 @@ use Respect\Validation\Validator as v;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$app = new \Slim\app([
+$app = new \Slim\App([
     'settings' => [
         'displayErrorDetails' => true,
         'db' => [
             'driver' => 'mysql',
+            //site settings
             // 'host' => 'sql206.epizy.com',
             // 'database' => 'epiz_21822353_codecourse',
             // 'username' => 'epiz_21822353',
             // 'password' => 'RiYByFDH5F8T',
+            //localhost
             'host' => 'localhost',
             'database' => 'codecourse',
             'username' => 'root',
