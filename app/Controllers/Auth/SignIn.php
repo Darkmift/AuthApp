@@ -25,14 +25,14 @@ class SignIn extends Controller
             return $response->withRedirect($this->router->pathFor('auth.signin'));
         }
 
-        $auth = $this->auth->attempt(
+        $auth = $this->auth->attemptLogin(
             $request->getParam('email'),
             $request->getParam('password')
         );
 
         //if login fails
         if (!$auth) {
-            $this->flash->addMessage('error', '');
+            $this->flash->addMessage('signinError', 'Login failed,Please try again');
             return $response->withRedirect($this->router->pathFor('auth.signin'));
         }
         return $response->withRedirect($this->router->pathFor('home'));

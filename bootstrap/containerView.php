@@ -15,8 +15,12 @@ $container['view'] = function ($container) {
         'check' => $container->auth->check(),
         'user' => $container->auth->user(),
     ]);
+    $view->getEnvironment()->addGlobal('DBController', [
+        'userList' => $container->DBController->getUserList(),
+        'getCoursesList' => $container->DBController->getCoursesList(),
+    ]);
 
-    $view->getEnvironment()->addGlobal('flash',$container->flash);
-    
+    $view->getEnvironment()->addGlobal('flash', $container->flash);
+
     return $view;
 };

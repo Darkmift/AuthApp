@@ -53,6 +53,10 @@ $container['csrf'] = function ($container) {
     return new \Slim\Csrf\Guard;
 };
 
+$container['DBController'] = function ($container) {
+    return new App\Controllers\DBController($container);
+};
+
 //upload dir for images
 $container['upload_directory_users'] = __DIR__.'/../public/images/users';
 

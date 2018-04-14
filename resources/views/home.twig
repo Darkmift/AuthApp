@@ -6,8 +6,10 @@
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default ">
                 <div class="panel-heading">
+
                     {% if auth.check %}
-                        Welcome  {{ auth.user.name }}!
+                        Welcome
+                        {{ auth.user.name }}!
                     {% else %}
                         <br>
                         Who dis?U hackerz?!
@@ -15,9 +17,73 @@
                 </div>
                 <div class="panel-body panel-flexfix text-center">
                     <img src=" {{ base_url()}}/../public/images/users/{{ auth.user.id }}.jpg" class="img-responsive img-circle" alt="user image">
-                </form>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default ">
+                <div class="panel-heading">
+                    Users in DB:
+                    <b>{{ DBController.userList|length }}</b>
+                </div>
+                <div class="panel-body">
+                    <h4>USERS:</h4>
+                    <hr>
+                    <br>
+                    <div id="userContainer" class="pre-scrollable">
+                        {% if DBController.userList %}
+                            {# {{ DBController.userList |json_encode() }} #}
+                            {% for user in DBController.userList %}
+                                <p>{{ user.id }}
+                                    :
+                                    {{user.name}}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default ">
+                <div class="panel-heading">
+                    Courses in DB:
+                    <b>{{ DBController.getCoursesList|length }}</b>
+                </div>
+                <div class="panel-body">
+                    <h4>Courses:</h4>
+                    <hr>
+                    <br>
+                    <div id="courseContainer" class="pre-scrollable">
+                        {% if DBController.getCoursesList %}
+                            <ul>
+                                {% for course in DBController.getCoursesList %}
+                                    <ol>{{course.id}}:
+                                        {{course.name}}
+                                        <ul>
+                                            <li>
+                                                <b>
+                                                    duration:
+                                                    {{course.start_date}}
+                                                    until:
+                                                    {{course.end_date}}
+                                                </b>
+                                            </li>
+                                            <li>{{course.description}}</li>
+                                        </ul>
+                                </ol>
+                                <hr>
+                            {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 {% endblock %}

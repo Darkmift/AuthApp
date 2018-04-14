@@ -21,7 +21,7 @@ class Auth
         return isset($_SESSION['user']);
     }
 
-    public function attempt($email, $password)
+    public function attemptLogin($email, $password)
     {
         //grab user by email
         $user = User::where('email', $email)->first();
@@ -33,7 +33,6 @@ class Auth
             //if true verify password
             //set session if true
             $_SESSION['user'] = $user->id;
-            $_SESSION['userName'] = $user->name;
             return true;
         }
         //if password verify failed

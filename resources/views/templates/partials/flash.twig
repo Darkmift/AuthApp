@@ -49,6 +49,7 @@
 
 {% if flash.getMessage('signinError') %}
     <div class="alert alert-danger">
+        {{ flash.getMessage('signinError') |first }}
         {% if errors.email %}
             -
             {{ errors.email | first }}

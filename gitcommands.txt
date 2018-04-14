@@ -11,3 +11,7 @@ composer require slim/slim "^3.0"
 
 ***do not use unless autoloading fails!!***
 composer dump-autoload -o
+
+install composer.json content dependencies
+php composer.phar install
+

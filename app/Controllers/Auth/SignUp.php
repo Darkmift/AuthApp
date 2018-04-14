@@ -14,6 +14,10 @@ class SignUp extends Controller
 
     public function postSignUp($request, $response)
     {
+        // $fucku = $this->DBController->userList();
+        // $users = ['users' => $fucku];
+        // var_dump($users);
+        // die();
         //respect/validation validator object
         $validation = $this->validator->validate($request, [
             'email' => v::noWhitespace()->notEmpty()->emailAvailable(),
