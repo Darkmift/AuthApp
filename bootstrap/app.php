@@ -27,8 +27,8 @@ $app = new \Slim\App([
 
 ]);
 
-require __DIR__.'/container.php';
-require __DIR__.'/dbManager.php';
+require __DIR__ . '/container.php';
+require __DIR__ . '/dbManager.php';
 
 //my middlewares
 $app->add(new App\Middleware\ValidationErrorsMiddleware($container));

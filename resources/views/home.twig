@@ -37,9 +37,13 @@
                         {% if DBController.userList %}
                             {# {{ DBController.userList |json_encode() }} #}
                             {% for user in DBController.userList %}
-                                <p>{{ user.id }}
+                                <img style="display:inline-block;width:5vw;height:auto;" src=" {{ base_url()}}/../public/images/users/{{ auth.user.id }}.jpg" class="img-responsive img-thumbnail" alt="user image">
+                                <p style="display:inline-block;">
+                                    {{ user.id }}
                                     :
-                                    {{user.name}}</p>
+                                    {{user.name}}
+                                </p>
+                                <br>
                             {% endfor %}
                         {% endif %}
                     </div>
@@ -63,27 +67,32 @@
                         {% if DBController.getCoursesList %}
                             <ul>
                                 {% for course in DBController.getCoursesList %}
-                                    <ol>{{course.id}}:
-                                        {{course.name}}
-                                        <ul>
-                                            <li>
-                                                <b>
-                                                    duration:
-                                                    {{course.start_date}}
-                                                    until:
-                                                    {{course.end_date}}
-                                                </b>
-                                            </li>
-                                            <li>{{course.description}}</li>
-                                        </ul>
-                                </ol>
-                                <hr>
-                            {% endfor %}
-                    </ul>
-                {% endif %}
+                                    <ol>
+                                        <img style="display:inline-block;width:5vw;height:auto;" src=" {{ base_url()}}/../public/images/courses/{{ course.id }}.jpg" class="img-responsive img-circle" alt="user image">
+                                        <p style="margin-left:5px;display:inline-block;">
+                                            {{course.id}}:
+                                            {{course.name}}
+                                            <ul>
+                                                <li>
+                                                    <b>
+                                                        duration:
+                                                        {{course.start_date}}
+                                                        until:
+                                                        {{course.end_date}}
+                                                    </b>
+                                                </li>
+                                                <li>{{course.description}}</li>
+                                            </ul>
+                                            <hr>
+                                            <p>
+                                        </ol>
+
+                                    {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 {% endblock %}
