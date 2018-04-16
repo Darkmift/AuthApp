@@ -36,12 +36,12 @@
                     <div id="userContainer" class="pre-scrollable">
                         {% if DBController.userList %}
                             {# {{ DBController.userList |json_encode() }} #}
-                            {% for user in DBController.userList %}
-                                <img style="display:inline-block;width:5vw;height:auto;" src=" {{ base_url()}}/../public/images/users/{{ user.id }}.jpg" class="img-responsive img-thumbnail" alt="user image">
+                            {% for users in DBController.userList %}
+                                <img style="display:inline-block;width:5vw;height:10vh;" src=" {{ base_url()}}/../public/images/users/{{ users.id }}.jpg" class="img-responsive img-thumbnail" alt="user image">
                                 <p style="display:inline-block;">
-                                    {{ user.id }}
+                                    {{ users.id }}
                                     :
-                                    {{user.name}}
+                                    {{users.name}}
                                 </p>
                                 <br>
                             {% endfor %}
