@@ -33,14 +33,13 @@ class CourseCreate extends Controller
             $this->flash->addMessage('courseError', '');
             return $response->withRedirect($this->router->pathFor('auth.course_create'));
         }
-
         //if form valid create user
         $user = Course::create([
             'name' => $request->getParam('name'),
             'description' => $request->getParam('description'),
             'start_date' => $request->getParam('start_date'),
             'end_date' => $request->getParam('end_date'),
-            'created_by' => $_SESSION['userName'],
+            'created_by' => $this->auth->user()->name,
         ]);
         //Get the PDO object to bind the id as name to image
         $pdo = $this->db2->getPdo();
