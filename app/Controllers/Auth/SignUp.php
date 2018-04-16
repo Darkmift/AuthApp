@@ -58,7 +58,7 @@ class SignUp extends Controller
         $this->flash->addMessage('info', 'Registration successful!');
 
         //create session for new registered user so he may be redirected automatically to home.twig
-        $this->auth->attempt($user->email, $request->getParam('password'));
+        $this->auth->attemptLogin($user->email, $request->getParam('password'));
 
         //redirect user on succesful registration
         return $response->withRedirect($this->router->pathFor('home'));

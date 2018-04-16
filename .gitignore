@@ -1,3 +1,4 @@
 /vendor/*
-resources/images/*
+public/images/courses*
+public/images/users*
 composer.lock

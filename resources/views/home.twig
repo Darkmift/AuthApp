@@ -37,7 +37,7 @@
                         {% if DBController.userList %}
                             {# {{ DBController.userList |json_encode() }} #}
                             {% for user in DBController.userList %}
-                                <img style="display:inline-block;width:5vw;height:auto;" src=" {{ base_url()}}/../public/images/users/{{ auth.user.id }}.jpg" class="img-responsive img-thumbnail" alt="user image">
+                                <img style="display:inline-block;width:5vw;height:auto;" src=" {{ base_url()}}/../public/images/users/{{ user.id }}.jpg" class="img-responsive img-thumbnail" alt="user image">
                                 <p style="display:inline-block;">
                                     {{ user.id }}
                                     :
