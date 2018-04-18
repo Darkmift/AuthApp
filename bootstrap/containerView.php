@@ -3,6 +3,7 @@
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views', [
         'cache' => false/**'path/to/cache'**/,
+        'debug' => true,
     ]);
 
     // Instantiate and add Slim specific extension
@@ -10,14 +11,11 @@ $container['view'] = function ($container) {
         $container->router,
         $container->request->getUri()
     ));
+    $view->addExtension(new Twig_Extension_Debug());
 
     $view->getEnvironment()->addGlobal('auth', [
         'check' => $container->auth->check(),
         'user' => $container->auth->user(),
-    ]);
-    $view->getEnvironment()->addGlobal('DBController', [
-        'userList' => $container->DBController->getUserList(),
-        'getCoursesList' => $container->DBController->getCoursesList(),
     ]);
 
     $view->getEnvironment()->addGlobal('flash', $container->flash);
