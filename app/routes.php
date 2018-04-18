@@ -19,6 +19,7 @@ $app->group('', function () {
 $app->group('', function () {
     //calls controller from app.php $container['HomeController']
     $this->get('/', 'HomeController:index')->setName('home');
+    $this->post('/btns','HomeController:operationBtns')->setName('home.Display');
 
     //course creation
     $this->get('/auth/course_create', 'CourseCreate:getCourseCreate')->setName('auth.course_create');

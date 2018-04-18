@@ -101,7 +101,7 @@ ol {
 /**course view css**/
 
 .post-container {
-    margin: 20px 20px 0 0;
+    margin: 20px 20px;
     overflow: auto
 }
 
@@ -129,4 +129,9 @@ ol {
     padding: 9px;
     background-image: linear-gradient(to bottom, #f5f5f5 0, #e8e8e8 100%);
     border-color: #ddd;
+}
+
+.btn {
+    width: 12vw!important;
+    padding: 0.5vw;
 }

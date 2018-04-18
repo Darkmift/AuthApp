@@ -7,3 +7,28 @@ $('#name,#email,#password,#password_old').focusout(function() {
 });
 
 $('#name,#email,#password,#password_old').attr('readonly', 'true');
+
+//toggle display of users/courses
+users = $('#userContainer');
+courseContainer = $('courseContainer');
+operationBtnForm = $('#operationBtn');
+var btnName;
+operationBtnForm.children().click(
+    function(e) {
+        e.preventDefault();
+        console.log('form clicked');
+        console.log($(this).text());
+        //sset name of btn
+        btnName = $(this).text();
+        // append and submit
+        submitInput = $('<input>').attr({
+            type: "hidden",
+            name: btnName,
+            value: btnName
+        });
+        console.log(submitInput.attr('name'));
+        operationBtnForm.append(
+            submitInput
+        ).submit();
+    }
+);
