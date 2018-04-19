@@ -21,6 +21,13 @@ class Auth
         return isset($_SESSION['user']);
     }
 
+    public function role()
+    {
+        if (isset($_SESSION['user'])) {
+            return User::find($_SESSION['user'])->role;
+        }
+    }
+
     public function attemptLogin($email, $password)
     {
         //grab user by email

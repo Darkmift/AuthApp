@@ -8,12 +8,12 @@ $('#name,#email,#password,#password_old').focusout(function() {
 
 $('#name,#email,#password,#password_old').attr('readonly', 'true');
 
-//toggle display of users/courses
+//menu button control
 users = $('#userContainer');
 courseContainer = $('courseContainer');
 operationBtnForm = $('#operationBtn');
 var btnName;
-operationBtnForm.children().click(
+operationBtnForm.children().children().click(
     function(e) {
         e.preventDefault();
         console.log('form clicked');

@@ -4,16 +4,16 @@ namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Student extends Model
 {
-    public $table = 'users';
+    public $table = 'students';
     public $fillable = [
         'name',
         'email',
         'phone',
-        'role',
         'password',
         'updated_at',
+        'added_by',
     ];
     public function setPassword($password)
     {

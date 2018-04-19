@@ -12,7 +12,7 @@ class Course extends Model
         'description',
         'start_date',
         'end_date',
-        'created_by'
+        'added_by'
     ];
     public function updateTimestamp()
     {

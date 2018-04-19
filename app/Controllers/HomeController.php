@@ -26,14 +26,16 @@ class HomeController extends Controller
         //return relevant
         switch ($btn) {
             case 'Admins':
-                die('Admins');
-                break;
-            case 'Sales':
                 $userList = array('userList' => $this->DBController->getUserList());
                 return $this->view->render($response, 'home.twig', $userList);
                 break;
+            case 'Sales':
+                $userList = array('userList' => $this->DBController->getSalesList());
+                return $this->view->render($response, 'home.twig', $userList);
+                break;
             case 'Students':
-                die('Students');
+                $userList = array('userList' => $this->DBController->getStudentsList());
+                return $this->view->render($response, 'home.twig', $userList);
                 break;
             case 'Courses':
                 $courseList = array('courseList' => $this->DBController->getCoursesList());

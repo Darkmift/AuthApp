@@ -8,7 +8,7 @@ class DBController extends Controller
 {
     public function getUserList()
     {
-        $users = array('users' => $this->db2->select('select id,name from users'));
+        $users = array('users' => $this->db2->select('select id,name,role,email,phone,added_by from users where role >= 2'));
         $parsedUsers = array();
         foreach ($users as $key => $value) {
             foreach ($value as $subkey => $subvalue) {
@@ -19,17 +19,35 @@ class DBController extends Controller
     }
     public function getCoursesList()
     {
-        $courses = array('courses' => $this->db2->select('select id,name,description,start_date,end_date,created_by from courses', [1]));
+        $courses = array('courses' => $this->db2->select('select id,name,description,start_date,end_date,added_by from courses', [1]));
         $parsedCourses = array();
         foreach ($courses as $key => $value) {
-            //var_dump($value);
             foreach ($value as $subkey => $subvalue) {
-                // var_dump($subkey, $subvalue);
                 $parsedCourses[$subkey] = $subvalue;
             }
-            // var_dump($parsedCourses);
-            // die();
         }
         return $parsedCourses;
+    }
+    public function getSalesList()
+    {
+        $users = array('sales' => $this->db2->select('select id,name,role,email,phone,added_by from users where role = 1'));
+        $parsedUsers = array();
+        foreach ($users as $key => $value) {
+            foreach ($value as $subkey => $subvalue) {
+                $parsedUsers[$subkey] = $subvalue;
+            }
+        }
+        return $parsedUsers;
+    }
+    public function getStudentsList()
+    {
+        $users = array('students' => $this->db2->select('select id,name,email,phone,added_by from students'));
+        $parsedUsers = array();
+        foreach ($users as $key => $value) {
+            foreach ($value as $subkey => $subvalue) {
+                $parsedUsers[$subkey] = $subvalue;
+            }
+        }
+        return $parsedUsers;
     }
 }

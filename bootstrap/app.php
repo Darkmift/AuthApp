@@ -16,7 +16,7 @@ $app = new \Slim\App([
             // 'password' => 'RiYByFDH5F8T',
             //localhost
             'host' => 'localhost',
-            'database' => 'codecourse',
+            'database' => 'schoolcrm',
             'username' => 'root',
             'password' => 'root12',
             'charset' => 'utf8',
