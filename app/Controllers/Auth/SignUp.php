@@ -41,7 +41,7 @@ class SignUp extends Controller
         //authcontrollersignup chunk 1 sent to graveyard
 
         //if form valid create user
-        $user = User::create([
+        $user = Student::create([
             'name' => $request->getParam('name'),
             'email' => $request->getParam('email'),
             'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
