@@ -2,7 +2,7 @@
 namespace App\Controllers\Auth;
 
 use App\Controllers\Controller;
-use App\Models\User;
+use App\Models\Student;
 use Respect\Validation\Validator as v;
 
 class SignUp extends Controller
