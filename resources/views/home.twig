@@ -32,15 +32,35 @@
                         {% if courseList %}
                             <h4>Courses:</h4>
                         {% endif %}
-                        <div style="border-radius:3px;border:1px solid #e5e5e5" id="userContainer" class="pre-scrollable">
+                        {% if studentList %}
+                            <h4>Students:</h4>
+                        {% endif %}
+                        studentList
+                        <div style="border-radius:3px;border:1px solid #e5e5e5" id="listContainer" class="pre-scrollable">
+                            {% set counter = 1 %}
+                            {% if studentList %}
+                                {% for student in studentList %}
+                                    <div id="{{student.id}}" style="margin-top:1rem;">
+                                        <img src=" {{ base_url()}}/../public/images/students/{{ student.id }}.jpg" class="img-responsive img-thumbnail img" alt="user image">
+                                        <p style="display:inline-block;">
+                                            {{ counter }}
+                                            {% set counter = counter + 1 %}
+                                            :
+                                            {{student.name}}
+                                        </p>
+                                        <br>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
                             {% if userList %}
                                 {# {{dump(userList)}} #}
                                 {# {{ DBController.userList |json_encode() }} #}
                                 {% for users in userList %}
-                                    <div style="margin-top:1rem;">
+                                    <div id="{{users.id}}" style="margin-top:1rem;">
                                         <img src=" {{ base_url()}}/../public/images/users/{{ users.id }}.jpg" class="img-responsive img-thumbnail img" alt="user image">
                                         <p style="display:inline-block;">
-                                            {{ users.id }}
+                                            {{ counter }}
+                                            {% set counter = counter + 1 %}
                                             :
                                             {{users.name}}
                                         </p>
@@ -50,8 +70,10 @@
                             {% endif %}
                             {% if courseList %}
                                 {% for course in courseList %}
-                                    <div class="post-container panel panel-default">
-                                        <div class="post-title panel-heading">{{course.id}}:{{course.name}}</div>
+                                    <div id="{{course.id}}" class="post-container panel panel-default">
+                                        <div class="post-title panel-heading">
+                                            {{ counter }}
+                                            {% set counter = counter + 1 %}:{{course.name}}</div>
                                         <div class="post-title panel-body">
                                             <div class="post-thumb">
                                                 <br>

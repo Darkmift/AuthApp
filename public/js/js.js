@@ -1,12 +1,10 @@
-$('#name,#email,#password,#password_old').on('focus', function() {
-    this.removeAttribute('readonly');
-});
-
-$('#name,#email,#password,#password_old').focusout(function() {
-    this.prop('readonly', true);
-});
-
-$('#name,#email,#password,#password_old').attr('readonly', 'true');
+// $('#name,#email,#password,#password_old').on('focus', function() {
+//     this.removeAttribute('readonly');
+// });
+// $('#name,#email,#password,#password_old').focusout(function() {
+//     this.prop('readonly', true);
+// });
+// $('#name,#email,#password,#password_old').attr('readonly', 'true');
 
 //menu button control
 users = $('#userContainer');
@@ -32,3 +30,5 @@ operationBtnForm.children().children().click(
         ).submit();
     }
 );
+
+//ajax functions for right div display.

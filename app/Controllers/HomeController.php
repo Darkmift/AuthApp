@@ -34,8 +34,8 @@ class HomeController extends Controller
                 return $this->view->render($response, 'home.twig', $userList);
                 break;
             case 'Students':
-                $userList = array('userList' => $this->DBController->getStudentsList());
-                return $this->view->render($response, 'home.twig', $userList);
+                $studentList = array('studentList' => $this->DBController->getStudentsList());
+                return $this->view->render($response, 'home.twig', $studentList);
                 break;
             case 'Courses':
                 $courseList = array('courseList' => $this->DBController->getCoursesList());
