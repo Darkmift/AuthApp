@@ -21,11 +21,11 @@
             <br>
         </div>
     </div>
-    <div class="row panel panel-default">
-        <div class="panel-body row">
+    <div id="mainDisplay" class="row panel panel-default">
+        <div style="height:60vh;" class="panel-body row">
             <div class="col-sm-6">
                 <div class="panel panel-default ">
-                    <div class="panel-body">
+                    <div style="height:57vh;" class="panel-body">
                         {% if userList %}
                             <h4>Users:</h4>
                         {% endif %}
@@ -35,12 +35,11 @@
                         {% if studentList %}
                             <h4>Students:</h4>
                         {% endif %}
-                        studentList
-                        <div style="border-radius:3px;border:1px solid #e5e5e5" id="listContainer" class="pre-scrollable">
+                        <div style="border-radius:3px;border:1px solid #e5e5e5;overflow:scroll;height:50vh;" id="listContainer">
                             {% set counter = 1 %}
                             {% if studentList %}
                                 {% for student in studentList %}
-                                    <div elType="student" id="{{student.id}}" style="margin-top:1rem;">
+                                    <div eltype="student" id="{{student.id}}" style="margin-top:1rem;">
                                         <img src=" {{ base_url()}}/../public/images/students/{{ student.id }}.jpg" class="img-responsive img-thumbnail img" alt="user image">
                                         <p style="display:inline-block;">
                                             {{ counter }}
@@ -56,7 +55,7 @@
                                 {# {{dump(userList)}} #}
                                 {# {{ DBController.userList |json_encode() }} #}
                                 {% for users in userList %}
-                                    <div elType="user" id="{{users.id}}" style="margin-top:1rem;">
+                                    <div eltype="user" id="{{users.id}}" style="margin-top:1rem;">
                                         <img src=" {{ base_url()}}/../public/images/users/{{ users.id }}.jpg" class="img-responsive img-thumbnail img" alt="user image">
                                         <p style="display:inline-block;">
                                             {{ counter }}
@@ -70,10 +69,11 @@
                             {% endif %}
                             {% if courseList %}
                                 {% for course in courseList %}
-                                    <div elType="course" id="{{course.id}}" class="post-container panel panel-default">
+                                    <div eltype="course" id="{{course.id}}" class="post-container panel panel-default">
                                         <div class="post-title panel-heading">
                                             {{ counter }}
-                                            {% set counter = counter + 1 %}:{{course.name}}</div>
+                                            {% set counter = counter + 1 %}:{{course.name}}
+                                        </div>
                                         <div class="post-title panel-body">
                                             <div class="post-thumb">
                                                 <br>
@@ -88,7 +88,6 @@
                                     </div>
                                 {% endfor %}
                             {% endif %}
-                            <br>
                         </div>
                     </div>
                 </div>
@@ -96,12 +95,37 @@
             {# //right div #}
             <div class="col-sm-6">
                 <div class="panel panel-default ">
-                    <div id="display" class="panel-body panel-flexfix">
-                        //user or course info
+                    <div style="height:57vh;" class="panel-body panel-flexfix">
+                        <div style="padding:5px;border-radius:3px;height:57vh!important;" id="display">
+                            <div>
+                                //Click to view info
+                                <hr>
+                            </div>
+                            {# show details of clicked #}
+                            <div id="detailsDisplay"></div>
+                            {# button div #}
+                            <div style="visibility:hidden;" id="mngBtn">
+                                {% if studentList %}
+                                    <hr>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-warning">Update</button>
+                                        <button type="button" class="btn btn-danger">Delete</button>
+                                    </div>
+                                {% endif %}
+                                {% if userList or courseList %}
+                                    {% if auth.role >= 2 %}
+                                        <hr>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-warning">Update</button>
+                                            <button type="button" class="btn btn-danger">Delete</button>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 {% endblock %}

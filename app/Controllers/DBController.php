@@ -8,7 +8,7 @@ class DBController extends Controller
 {
     public function getUserList()
     {
-        $users = array('users' => $this->db2->select('select id,name,role,email,phone,added_by from users where role >= "2";'));
+        $users = array('users' => $this->db2->select('SELECT id,name,role,email,phone,added_by FROM users where role >= "2" AND is_active="1";'));
         $parsedUsers = array();
         foreach ($users as $key => $value) {
             foreach ($value as $subkey => $subvalue) {
@@ -19,7 +19,7 @@ class DBController extends Controller
     }
     public function getCoursesList()
     {
-        $courses = array('courses' => $this->db2->select('select id,name,description,start_date,end_date,added_by from courses', [1]));
+        $courses = array('courses' => $this->db2->select('SELECT id,name,description,start_date,end_date,added_by FROM courses WHERE is_active="1"', [1]));
         $parsedCourses = array();
         foreach ($courses as $key => $value) {
             foreach ($value as $subkey => $subvalue) {
@@ -30,7 +30,7 @@ class DBController extends Controller
     }
     public function getSalesList()
     {
-        $users = array('sales' => $this->db2->select('select id,name,role,email,phone,added_by from users where role = "1"'));
+        $users = array('sales' => $this->db2->select('SELECT id,name,role,email,phone,added_by FROM users where role = "1" AND is_active="1"'));
         $parsedUsers = array();
         foreach ($users as $key => $value) {
             foreach ($value as $subkey => $subvalue) {
@@ -41,7 +41,7 @@ class DBController extends Controller
     }
     public function getStudentsList()
     {
-        $users = array('students' => $this->db2->select('select id,name,email,phone,added_by from students'));
+        $users = array('students' => $this->db2->select('SELECT id,name,email,phone,added_by FROM students WHERE is_active="1"'));
         $parsedUsers = array();
         foreach ($users as $key => $value) {
             foreach ($value as $subkey => $subvalue) {
@@ -56,13 +56,13 @@ class DBController extends Controller
         $table = $args['elType'];
         switch ($table) {
             case 'courses':
-                $output = json_encode($this->db2->select("select id,name,description,start_date,end_date,added_by from $table where id =$id"));
+                $output = json_encode($this->db2->select("SELECT id,name,description,start_date,end_date,added_by FROM $table WHERE id =$id"));
                 break;
             case 'users':
-                $output = json_encode($this->db2->select("select id,name,role,email,phone,added_by from $table where id =$id"));
+                $output = json_encode($this->db2->select("SELECT id,name,role,email,phone,added_by FROM $table WHERE id =$id"));
                 break;
             case 'students':
-                $output = json_encode($this->db2->select("select id,name,email,phone,added_by from $table where id =$id"));
+                $output = json_encode($this->db2->select("SELECT id,name,email,phone,added_by FROM $table WHERE id =$id"));
                 break;
         }
         return $response->getBody()->write($output);
