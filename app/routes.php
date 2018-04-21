@@ -38,5 +38,5 @@ $app->group('', function () {
 
     //ajax routes
     //show user/student/course details
-    $this->get('/{elType}/{id}', 'DBController:showUserDetails');
+    $this->get('/{elType}/{id}', 'DBController:showDetails');
 })->add(new AuthMiddleware($container));

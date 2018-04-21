@@ -50,7 +50,7 @@ class DBController extends Controller
         }
         return $parsedUsers;
     }
-    public function showUserDetails($request, $response, $args)
+    public function showDetails($request, $response, $args)
     {
         $id = $args['id'];
         $table = $args['elType'];
