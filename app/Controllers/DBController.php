@@ -8,7 +8,7 @@ class DBController extends Controller
 {
     public function getUserList()
     {
-        $users = array('users' => $this->db2->select('select id,name,role,email,phone,added_by from users where role >= 2'));
+        $users = array('users' => $this->db2->select('select id,name,role,email,phone,added_by from users where role >= "2";'));
         $parsedUsers = array();
         foreach ($users as $key => $value) {
             foreach ($value as $subkey => $subvalue) {
@@ -30,7 +30,7 @@ class DBController extends Controller
     }
     public function getSalesList()
     {
-        $users = array('sales' => $this->db2->select('select id,name,role,email,phone,added_by from users where role = 1'));
+        $users = array('sales' => $this->db2->select('select id,name,role,email,phone,added_by from users where role = "1"'));
         $parsedUsers = array();
         foreach ($users as $key => $value) {
             foreach ($value as $subkey => $subvalue) {

@@ -32,11 +32,13 @@ class Auth
     {
         //grab user by email
         $user = User::where('email', $email)->first();
-        if (!$user) {
+         if (!$user) {
             //false if fails
             return false;
         }
         if (password_verify($password, $user->password)) {
+            // var_dump($user);
+            // die();
             //if true verify password
             //set session if true
             $_SESSION['user'] = $user->id;
