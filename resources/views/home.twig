@@ -40,7 +40,7 @@
                             {% set counter = 1 %}
                             {% if studentList %}
                                 {% for student in studentList %}
-                                    <div id="{{student.id}}" style="margin-top:1rem;">
+                                    <div elType="student" id="{{student.id}}" style="margin-top:1rem;">
                                         <img src=" {{ base_url()}}/../public/images/students/{{ student.id }}.jpg" class="img-responsive img-thumbnail img" alt="user image">
                                         <p style="display:inline-block;">
                                             {{ counter }}
@@ -56,7 +56,7 @@
                                 {# {{dump(userList)}} #}
                                 {# {{ DBController.userList |json_encode() }} #}
                                 {% for users in userList %}
-                                    <div id="{{users.id}}" style="margin-top:1rem;">
+                                    <div elType="user" id="{{users.id}}" style="margin-top:1rem;">
                                         <img src=" {{ base_url()}}/../public/images/users/{{ users.id }}.jpg" class="img-responsive img-thumbnail img" alt="user image">
                                         <p style="display:inline-block;">
                                             {{ counter }}
@@ -70,7 +70,7 @@
                             {% endif %}
                             {% if courseList %}
                                 {% for course in courseList %}
-                                    <div id="{{course.id}}" class="post-container panel panel-default">
+                                    <div elType="course" id="{{course.id}}" class="post-container panel panel-default">
                                         <div class="post-title panel-heading">
                                             {{ counter }}
                                             {% set counter = counter + 1 %}:{{course.name}}</div>
@@ -96,7 +96,7 @@
             {# //right div #}
             <div class="col-sm-6">
                 <div class="panel panel-default ">
-                    <div class="panel-body panel-flexfix">
+                    <div id="display" class="panel-body panel-flexfix">
                         //user or course info
                     </div>
                 </div>

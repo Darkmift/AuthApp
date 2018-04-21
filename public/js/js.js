@@ -7,11 +7,13 @@
 // $('#name,#email,#password,#password_old').attr('readonly', 'true');
 
 //menu button control
-users = $('#userContainer');
-courseContainer = $('courseContainer');
-operationBtnForm = $('#operationBtn');
+BtnForm = $('#operationBtn');
+//user/student/course list display
+listContainer = $('#listContainer');
+//display info of clicked in listcontainer
+displaay = $('#display');
 var btnName;
-operationBtnForm.children().children().click(
+BtnForm.children().children().click(
     function(e) {
         e.preventDefault();
         console.log('form clicked');
@@ -25,10 +27,30 @@ operationBtnForm.children().children().click(
             value: btnName
         });
         console.log(submitInput.attr('name'));
-        operationBtnForm.append(
+        BtnForm.append(
             submitInput
         ).submit();
     }
 );
 
 //ajax functions for right div display.
+listContainer.children().click(
+    function(e) {
+        //get id of clicked
+        id = $(this).attr('id');
+        //get table name
+        type = $(this).attr('elType');
+        console.log($(this).attr('id'), $(this).attr('elType'));
+        switch (type) {
+            case 'student':
+                console.log('switch:student');
+                break;
+            case 'user':
+                console.log('switch:user');
+                break;
+            case 'course':
+                console.log('switch:course');
+                break;
+        }
+    }
+);
