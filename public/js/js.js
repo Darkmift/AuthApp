@@ -11,7 +11,7 @@ BtnForm = $('#operationBtn');
 //user/student/course list display
 listContainer = $('#listContainer');
 //display info of clicked in listcontainer
-displaay = $('#display');
+display = $('#display');
 var btnName;
 BtnForm.children().children().click(
     function(e) {
@@ -37,20 +37,12 @@ BtnForm.children().children().click(
 listContainer.children().click(
     function(e) {
         //get id of clicked
-        id = $(this).attr('id');
+        idClicked = $(this).attr('id');
         //get table name
         type = $(this).attr('elType');
         console.log($(this).attr('id'), $(this).attr('elType'));
-        switch (type) {
-            case 'student':
-                console.log('switch:student');
-                break;
-            case 'user':
-                console.log('switch:user');
-                break;
-            case 'course':
-                console.log('switch:course');
-                break;
-        }
+        $.get(type + 's' + "/" + idClicked).done(function(data) {
+            display.html(data);
+        });
     }
 );

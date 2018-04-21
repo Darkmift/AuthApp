@@ -35,4 +35,8 @@ $app->group('', function () {
     //password change
     $this->get('/auth/password/change', 'PasswordChange:getChangedPassword')->setName('auth.password.change');
     $this->post('/auth/password/change', 'PasswordChange:postChangedPassword');
+
+    //ajax routes
+    //show user/student/course details
+    $this->get('/{elType}/{id}', 'DBController:showUserDetails');
 })->add(new AuthMiddleware($container));

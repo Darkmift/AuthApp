@@ -50,4 +50,21 @@ class DBController extends Controller
         }
         return $parsedUsers;
     }
+    public function showUserDetails($request, $response, $args)
+    {
+        $id = $args['id'];
+        $table = $args['elType'];
+        switch ($table) {
+            case 'courses':
+                $output = json_encode($this->db2->select("select id,name,description,start_date,end_date,added_by from $table where id =$id"));
+                break;
+            case 'users':
+                $output = json_encode($this->db2->select("select id,name,role,email,phone,added_by from $table where id =$id"));
+                break;
+            case 'students':
+                $output = json_encode($this->db2->select("select id,name,email,phone,added_by from $table where id =$id"));
+                break;
+        }
+        return $response->getBody()->write($output);
+    }
 }
