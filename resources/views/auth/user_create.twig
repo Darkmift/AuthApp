@@ -8,7 +8,7 @@
                     Create User
                 </div>
                 <div class="panel-body">
-                    <form method="post" enctype="multipart/form-data" class="align-items-center" action="{{ path_for('auth.user.create') }}">
+                    <form method="post" enctype="multipart/form-data" class="align-items-center" action="{{ path_for('auth.user_create') }}">
                         <div class="form-group {{ errors.name ? ' has-error' : '' }}">
                             <div class="input-group">
                                 <span class="input-group-addon form-span">name</span>
@@ -24,7 +24,20 @@
                         <div class="form-group  {{ errors.phone ? ' has-error' : '' }}">
                             <div class="input-group">
                                 <span class="input-group-addon form-span">phone</span>
-                                <input id="phone" name="phone" class="form-control" placeholder="Phone number here" type="text" value="{{ old.phone }}">
+                                <input id="phone" name="phone" class="form-control" placeholder="Phone number here" type="number" value="{{ old.phone }}">
+                            </div>
+                        </div>
+                        <div class="form-group  {{ errors.role ? ' has-error' : '' }}">
+                            <div class="input-group">
+                                <label class="radio-inline">
+                                    <input type="radio" name="role" value="1">Sales
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="role" value="2">Administration
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="role" value="S">Student
+                                </label>
                             </div>
                         </div>
                         <div class="form-group  {{ errors.password or errors.image ? ' has-error' : '' }}">
@@ -39,7 +52,7 @@
                             <div class="input-group input-file">
                                 <label style="font-size:0.75rem;max-height:40px;" class="btn btn-default btn-block col-md-offset-2">
                                     Click to Upload Image
-                                    <input width"0"="width" 0""="0""" style="visibility:hidden" class="form-control" type="file" hidden="hidden" name="image" id="image">
+                                    <input width="0" style="visibility:hidden" class="form-control" type="file" hidden="hidden" name="image" id="image">
                                 </label>
                             </div>
                         </div>

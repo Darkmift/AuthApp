@@ -32,8 +32,8 @@ $container['CourseCreate'] = function ($container) {
     return new App\Controllers\Auth\CourseCreate($container);
 };
 
-$container['userCreate'] = function ($container) {
-    return new App\Controllers\Auth\userCreate($container);
+$container['CreateUser'] = function ($container) {
+    return new App\Controllers\Auth\CreateUser($container);
 };
 
 $container['SignOut'] = function ($container) {
@@ -63,6 +63,9 @@ $container['DBController'] = function ($container) {
 
 //upload dir for images
 $container['upload_directory_users'] = __DIR__.'/../public/images/users';
+
+//upload dir for images
+$container['upload_directory_students'] = __DIR__.'/../public/images/students';
 
 //upload dir for images of courses
 $container['courseImage_upload_directory'] = __DIR__.'/../public/images/courses';

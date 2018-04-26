@@ -22,8 +22,8 @@ $app->group('', function () {
     $this->post('/', 'HomeController:operationBtns')->setName('home.Display');
 
     //user creation
-    $this->get('/auth/user_create', 'userCreate:getSignUp')->setName('auth.user.create');
-    $this->post('/auth/user_create', 'userCreate:postSignUp');
+    $this->get('/auth/user_create', 'CreateUser:getUserSignUp')->setName('auth.user_create');
+    $this->post('/auth/user_create', 'CreateUser:postUserSignUp');
 
     //course creation
     $this->get('/auth/course_create', 'CourseCreate:getCourseCreate')->setName('auth.course_create');

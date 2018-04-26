@@ -63,7 +63,7 @@
     </div>
 {% endif %}
 
-{# //password change error #}
+{# Course error #}
 
 {% if flash.getMessage('courseError') %}
     <div class="alert alert-danger">
@@ -90,6 +90,43 @@
         {% if errors.image %}
             -
             {{ errors.image | first }}
+        {% endif %}
+    </div>
+{% endif %}
+
+{# user Create error #}
+
+{% if flash.getMessage('userCreateError') %}
+    <div class="alert alert-danger">
+        {% if errors.name %}
+            -
+            {{ errors.name | first }}
+            <br>
+        {% endif %}
+        {% if errors.email %}
+            -
+            {{ errors.email | first }}
+            <br>
+        {% endif %}
+        {% if errors.phone %}
+            -
+            {{ errors.phone | first }}
+            <br>
+        {% endif %}
+        {% if errors.role %}
+            -
+            {{ errors.role | first }}
+            <br>
+        {% endif %}
+        {% if errors.password %}
+            -
+            {{ errors.password | first }}
+            <br>
+        {% endif %}
+        {% if errors.image %}
+            -
+            {{ errors.image | first }}
+            and retype password
         {% endif %}
     </div>
 {% endif %}
