@@ -4,7 +4,11 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Home.twig</title>
+        <title>
+            {% if page_title is defined %}
+                {{ page_title }}
+                |
+            {% endif %}SchoolCrm</title>
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <link rel="shortcut icon" type="image/png" href="http://pre11.deviantart.net/3944/th/pre/i/2012/122/6/9/cookie_monster_by_neorame-d4yb0b5.png"/>
         <!--bootstrap-->
