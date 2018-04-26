@@ -69,14 +69,19 @@
                             {% if courseList %}
                                 {% for course in courseList %}
                                     <div eltype="course" id="{{course.id}}" class="post-container panel panel-default">
+                                        <div class="post-title panel-heading">
+                                            {{ counter }}
+                                            {% set counter = counter + 1 %}:{{course.name}}
+                                        </div>
                                         <div class="post-title panel-body">
                                             <div class="post-thumb">
-                                                <img style="display:inline-block;" src=" {{ base_url()}}/../public/images/courses/{{ course.id }}.jpg" class="img-responsive img-thumbnail img" alt="course image"/>
-                                                <p style="display:inline-block;">
-                                                    {{ counter }}
-                                                    {% set counter = counter + 1 %}:{{course.name}}
-                                                </p>
+                                                <br>
+                                                <img src=" {{ base_url()}}/../public/images/courses/{{ course.id }}.jpg" class="img-responsive img-thumbnail img" alt="course image"/>
                                                 <br height="2vh">
+                                            </div>
+                                            <div class="post-content">
+                                                <br height="2vh">
+                                                {{course.description}}
                                             </div>
                                         </div>
                                     </div>

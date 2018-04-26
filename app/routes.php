@@ -19,7 +19,7 @@ $app->group('', function () {
 $app->group('', function () {
     //calls controller from app.php $container['HomeController']
     $this->get('/', 'HomeController:index')->setName('home');
-    $this->post('/btns', 'HomeController:operationBtns')->setName('home.Display');
+    $this->post('/', 'HomeController:operationBtns')->setName('home.Display');
 
     //user creation
     $this->get('/auth/user_create', 'userCreate:getSignUp')->setName('auth.user.create');
