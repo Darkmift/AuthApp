@@ -38,57 +38,68 @@
                         <div style="border-radius:3px;border:1px solid #e5e5e5;overflow:scroll;height:50vh;" id="listContainer">
                             {% set counter = 1 %}
                             {% if studentList %}
-                                {% for student in studentList %}
-                                    <div eltype="student" id="{{student.id}}" style="margin-top:1rem;" class="post-container panel panel-default">
-                                        <div class="post-title panel-body">
-                                            <div class="post-thumb">
-                                                <img style="display:inline-block;" src=" {{ base_url()}}/../public/images/students/{{ student.id }}.jpg" class="img-responsive img-thumbnail img" alt="user image">
-                                                <p style="display:inline-block;">
-                                                    {{ counter }}
-                                                    {% set counter = counter + 1 %}
-                                                    :
-                                                    {{student.name}}
-                                                </p>
-                                                <br>
+                                {% if studentList.empty =="Empty"%}
+                                    <p style="margin-left:25%;">This list is Empty</p>
+                                {% else %}
+                                    {% for student in studentList %}
+                                        <div eltype="student" id="{{student.id}}" style="margin-top:1rem;" class="post-container panel panel-default">
+                                            <div class="post-title panel-body">
+                                                <div class="post-thumb">
+                                                    <img style="display:inline-block;" src=" {{ base_url()}}/../public/images/students/{{ student.id }}.jpg" class="img-responsive img-thumbnail img" alt="user image">
+                                                    <p style="display:inline-block;">
+                                                        {{ counter }}
+                                                        {% set counter = counter + 1 %}
+                                                        :
+                                                        {{student.name}}
+                                                    </p>
+                                                    <br>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
                             {% endif %}
                             {% if userList %}
-                                {# {{dump(userList)}} #}
-                                {% for users in userList %}
-                                    <div eltype="user" id="{{users.id}}" style="margin-top:1rem;" class="post-container panel panel-default">
-                                        <div class="post-title panel-body">
-                                            <div class="post-thumb">
-                                                <img style="display:inline-block;" src=" {{ base_url()}}/../public/images/users/{{ users.id }}.jpg" class="img-responsive img-thumbnail img" alt="user image">
-                                                <p style="display:inline-block;font-size:0.75rem;">
-                                                    {{ counter }}
-                                                    {% set counter = counter + 1 %}
-                                                    :
-                                                    {{users.name}}
-                                                </p>
-                                                <br>
+                                {% if userList.empty =="Empty"%}
+                                    <p style="margin-left:25%;">This list is Empty</p>
+                                {% else %}
+                                    {% for users in userList %}
+                                        <div eltype="user" id="{{users.id}}" style="margin-top:1rem;" class="post-container panel panel-default">
+                                            <div class="post-title panel-body">
+                                                <div class="post-thumb">
+                                                    <img style="display:inline-block;" src=" {{ base_url()}}/../public/images/users/{{ users.id }}.jpg" class="img-responsive img-thumbnail img" alt="user image">
+                                                    <p style="display:inline-block;font-size:0.75rem;">
+                                                        {{ counter }}
+                                                        {% set counter = counter + 1 %}
+                                                        :
+                                                        {{users.name}}
+                                                    </p>
+                                                    <br>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
                             {% endif %}
                             {% if courseList %}
-                                {% for course in courseList %}
-                                    <div eltype="course" id="{{course.id}}" class="post-container panel panel-default">
-                                        <div class="post-title panel-body">
-                                            <div class="post-thumb">
-                                                <img style="display:inline-block;" src=" {{ base_url()}}/../public/images/courses/{{ course.id }}.jpg" class="img-responsive img-thumbnail img" alt="course image"/>
-                                                <p style="display:inline-block;">
-                                                    {{ counter }}
-                                                    {% set counter = counter + 1 %}:{{course.name}}
-                                                </p>
-                                                <br height="2vh">
+                                {% if courseList.empty =="Empty"%}
+                                    <p style="margin-left:25%;">This list is Empty</p>
+                                {% else %}
+                                    {% for course in courseList %}
+                                        <div eltype="course" id="{{course.id}}" class="post-container panel panel-default">
+                                            <div class="post-title panel-body">
+                                                <div class="post-thumb">
+                                                    <img style="display:inline-block;" src=" {{ base_url()}}/../public/images/courses/{{ course.id }}.jpg" class="img-responsive img-thumbnail img" alt="course image"/>
+                                                    <p style="display:inline-block;">
+                                                        {{ counter }}
+                                                        {% set counter = counter + 1 %}:{{course.name}}
+                                                    </p>
+                                                    <br height="2vh">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
                             {% endif %}
                         </div>
                     </div>
@@ -109,17 +120,17 @@
                             <div style="visibility:hidden;" id="mngBtn">
                                 {% if studentList %}
                                     <hr>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-warning">Update</button>
-                                        <button type="button" class="btn btn-danger">Delete</button>
+                                    <div id="UpDelBtns" class="btn-group">
+                                        {# <button type="button" id="SLidUpdate" class="btn btn-warning">Update</button>
+                                        <button type="button" id="SLidDel" class="btn btn-danger">Delete</button>#}
                                     </div>
                                 {% endif %}
                                 {% if userList or courseList %}
                                     {% if auth.role >= 2 %}
                                         <hr>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-warning">Update</button>
-                                            <button type="button" class="btn btn-danger">Delete</button>
+                                        <div id="UpDelBtns" class="btn-group">
+                                            {# <button type="button" id="ULORCLidUpdate" class="btn btn-warning">Update</button>
+                                            <button type="button" id="ULORCLidDel" class="btn btn-danger">Delete</button> #}
                                         </div>
                                     {% endif %}
                                 {% endif %}

@@ -52,13 +52,26 @@ listContainer.children().click(
         idClicked = $(this).attr('id');
         //get table name
         type = $(this).attr('elType') + 's';
-        console.log('id: ' + idClicked, 'type: ' + type);
+        //console.log('id: ' + idClicked, 'type: ' + type);
         display.children[0].innerHTML = "<h4>" + $(this).attr('elType') + " info:</h4><hr>";
         mngBtn.css('visibility', 'visible');
         $.get(type + "/" + idClicked).done(function(data) {
             //detailsDisplay.html(data);
             showStudents(data, type);
-        });
+            //update/del btns
+            setBtns(data, type);
+        }).done(
+            $('#UpDelBtns').click(
+                function(e) {
+                    var BtnClicked = event.target;
+                    console.log('BtnClicked id: ' + BtnClicked.id);
+                    console.log('BtnClicked type: ' + BtnClicked.name);
+                    console.log('BtnClicked do: ', BtnClicked.value);
+                    updateEntry(BtnClicked.name, BtnClicked.id, BtnClicked.value);
+                    window.location.replace("/AuthApp/public/");
+                }
+            )
+        );
     }
 );
 
@@ -66,8 +79,8 @@ function showStudents(data, type) {
     container = detailsDisplay;
     data = JSON.parse(data);
     data = data[0];
-    console.log(data);
-    container.html($('<ol>').append(
+    //console.log(data);
+    container.html($('<p>').append(
         $('<img>', {
             src: "images/" + type + "/" + data.id + ".jpg",
             alt: type + '#' + data.id + 'image',
@@ -97,4 +110,54 @@ function showStudents(data, type) {
         ).appendTo(container);
     }
     return container;
+}
+
+function setBtns(data, type) {
+    container = $('#UpDelBtns');
+    data = JSON.parse(data);
+    data = data[0];
+    container.html([
+        $('<button>', {
+            id: data.id,
+            name: type,
+            value: "update",
+            class: "btn btn-warning",
+            text: "Update",
+        }),
+        $('<button>', {
+            id: data.id,
+            name: type,
+            value: "del",
+            class: "btn btn-danger",
+            text: "Delete",
+        }),
+    ]);
+    return container;
+}
+
+
+function updateEntry(type, id, action) {
+    csrfName = $('[name="csrf_name"]');
+    csrfValue = $('[name="csrf_value"]');
+    // console.log(csrfName.val(), csrfValue.val());
+    // console.log(type, id, action);
+    $.ajax({
+        type: 'POST',
+        url: "updateEntry",
+        data: JSON.stringify({
+            type: type,
+            id: id,
+            action: action,
+            "csrf_name": csrfName.val(),
+            "csrf_value": csrfValue.val()
+        }),
+        error: function(e) {
+            console.log(e);
+        },
+        success: function(data, status) {
+            console.log(data, status)
+        },
+        dataType: "json",
+        contentType: "application/json"
+    });
 }

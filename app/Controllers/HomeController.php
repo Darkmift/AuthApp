@@ -27,18 +27,30 @@ class HomeController extends Controller
         switch ($btn) {
             case 'Admins':
                 $userList = array('userList' => $this->DBController->getUserList());
+                if (count($userList['userList']) === 0) {
+                    $userList = array('userList' => array("empty" => 0));
+                }
                 return $this->view->render($response, 'home.twig', $userList);
                 break;
             case 'Sales':
                 $userList = array('userList' => $this->DBController->getSalesList());
+                if (count($userList['userList']) === 0) {
+                    $userList = array('userList' => array("empty" => 0));
+                }
                 return $this->view->render($response, 'home.twig', $userList);
                 break;
             case 'Students':
                 $studentList = array('studentList' => $this->DBController->getStudentsList());
+                if (count($studentList['studentList']) === 0) {
+                    $studentList = array('studentList' => array("empty" => 0));
+                }
                 return $this->view->render($response, 'home.twig', $studentList);
                 break;
             case 'Courses':
                 $courseList = array('courseList' => $this->DBController->getCoursesList());
+                if (count($courseList['courseList']) === 0) {
+                    $courseList = array('courseList' => array("empty" => 0));
+                }
                 return $this->view->render($response, 'home.twig', $courseList);
                 die('Courses');
                 break;
