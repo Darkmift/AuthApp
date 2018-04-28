@@ -84,4 +84,34 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Update Course Image
+                </div>
+                <div class="panel-body">
+                    <form method="post" enctype="multipart/form-data" class="align-items-center" action="{{ path_for('auth.course_update_image_submit') }}">
+                        {#  image input #}
+                        <div class="form-group {{ errors.image ? ' has-error' : '' }}">
+                            <br>
+                            <div class="input-group input-file">
+                                <label style="font-size:0.75rem;max-height:40px;padding:10px;" class="btn btn-default btn-block col-md-offset-3">
+                                    Click to Upload Image
+                                    <input width="0" style="visibility:hidden" class="form-control" type="file" hidden="hidden" name="image" id="image">
+                                </label>
+                            </div>
+                        </div>
+                        {#  #}
+                        <div class="form-group text-center">
+                            <button style="width:100%" id="UpdateImg" name="UpdateImg" class="btn btn-default">Update Image</button>
+                        </div>
+                        <input type="hidden" name="type" value="{{ type }}">
+                        <input type="hidden" name="id" value="{{ id }}">
+                        {{ csrf.field | raw }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
