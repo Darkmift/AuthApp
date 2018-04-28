@@ -59,8 +59,11 @@ listContainer.children().click(
                         console.log('BtnClicked id: ' + BtnClicked.id);
                         console.log('BtnClicked type: ' + BtnClicked.name);
                         console.log('BtnClicked do: ', BtnClicked.value);
-                        updateEntry(BtnClicked.name, BtnClicked.id, BtnClicked.value);
-                        window.location.replace("/AuthApp/public/");
+
+                        if (BtnClicked.value == "del") {
+                            updateEntry(BtnClicked.name, BtnClicked.id, BtnClicked.value);
+                            $('#' + BtnClicked.id).remove();
+                        }
                     }
                 );
             }
@@ -108,31 +111,29 @@ function showEntry(data, type) {
 function setBtns(info, type) {
     container = $('#UpDelBtns');
     data = JSON.parse(info);
-    console.log(data, table);
+    // console.log(data);
+    data = data[0];
+    container.html([
+        $('<button>', {
+            id: data.id,
+            name: type,
+            value: "update",
+            class: "btn btn-warning",
+            text: "Update",
+        }),
+        $('<button>', {
+            id: data.id,
+            name: type,
+            value: "del",
+            class: "btn btn-danger",
+            text: "Delete",
+        }),
+    ]);
+    info = JSON.parse(info);
     if (table == "users") {
-        if (data[0].id === data[1].logged) {
+        if (data.id === info[1].logged) {
             console.log('not allowed');
             $('[name="users"]').css("display", "none");
-        } else {
-            data = JSON.parse(info);
-            // console.log(data);
-            data = data[0];
-            container.html([
-                $('<button>', {
-                    id: data.id,
-                    name: type,
-                    value: "update",
-                    class: "btn btn-warning",
-                    text: "Update",
-                }),
-                $('<button>', {
-                    id: data.id,
-                    name: type,
-                    value: "del",
-                    class: "btn btn-danger",
-                    text: "Delete",
-                }),
-            ]);
         }
     }
 }
