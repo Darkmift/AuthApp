@@ -63,6 +63,14 @@ listContainer.children().click(
                         if (BtnClicked.value == "del") {
                             updateEntry(BtnClicked.name, BtnClicked.id, BtnClicked.value);
                             $('#' + BtnClicked.id).remove();
+                            $('#detailsDisplay').html($('<div>', {
+                                class: "alert alert-success",
+                                text: "Entry Deletion succesful!"
+                            }));
+                            $('#UpDelBtns').empty();
+                        }
+                        if (BtnClicked.value == "update") {
+                            console.log("update");
                         }
                     }
                 );
