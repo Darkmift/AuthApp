@@ -112,14 +112,21 @@ class UserUpdate extends Controller
             $args = ['id' => $id, 'type' => $table];
             return $response->withRedirect($this->router->pathFor('auth.user_update', [], $args));
         }
-        die('so far so good');
         //Get the PDO object to bind the id as name to image
         $pdo = $this->db2->getPdo();
-        $statement = $pdo->prepare("SELECT id FROM $table WHERE id= :id");
+        $statement = $pdo->prepare("SELECT id,name FROM $table WHERE id= :id");
         $statement->execute(['id' => $id]);
         $result = $statement->fetch();
-        $id = $result;
+        $id = $result["id"];
+        $name = $result["name"];
         //pass user name and id to image storage function
-        $this->ImageValidator->moveUploadedFile($this->container->upload_directory_students, $uploadedFile, $id);
+        if ($table == "students") {
+            $this->ImageValidator->moveUploadedFile($this->container->upload_directory_students, $uploadedFile, $id);
+        }
+        if ($table == "users") {
+            $this->ImageValidator->moveUploadedFile($this->container->upload_directory_users, $uploadedFile, $id);
+        }
+        $this->flash->addMessage('info', 'Image changed for ' . $name . ' successful!');
+        return $response->withRedirect($this->router->pathFor('home'));
     }
 }
