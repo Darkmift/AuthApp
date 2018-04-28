@@ -1,0 +1,139 @@
+{% extends 'templates/app.twig'%}
+{% set page_title = 'Update User' %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Update User
+                </div>
+                <div class="panel-body">
+                    <form method="post" enctype="multipart/form-data" class="align-items-center" action="{{ path_for('auth.user_update_submit') }}">
+                        {# name set #}
+                        {% if old.name %}
+                            {% set name = old.name %}
+                        {% elseif  student[0].name %}
+                            {% set name = student[0].name %}
+                        {% elseif user[0].name %}
+                            {% set name = user[0].name %}
+                        {% endif %}
+                        {# email set #}
+                        {% if old.email %}
+                            {% set email = old.email %}
+                        {% elseif  student[0].email %}
+                            {% set email = student[0].email %}
+                        {% elseif user[0].email %}
+                            {% set email = user[0].email %}
+                        {% endif %}
+                        {# phone set #}
+                        {% if old.phone %}
+                            {% set phone = old.phone %}
+                        {% elseif  student[0].phone %}
+                            {% set phone = student[0].phone %}
+                        {% elseif user[0].phone %}
+                            {% set phone = user[0].phone %}
+                        {% endif %}
+                        {# phone set #}
+                        {% if user[0].role %}
+                            {% set role = user[0].role %}
+                        {% endif %}
+                        {# type #}
+                        {% if user %}
+                            {% set type = "users"%}
+                        {% elseif student %}
+                            {% set type = "students"%}
+                        {% endif %}
+                        {# id #}
+                        {% if user %}
+                            {% set id = user[0].id%}
+                        {% elseif student %}
+                            {% set id = student[0].id%}
+                        {% endif %}
+                        <div class="form-group {{ errors.name ? ' has-error' : '' }}">
+                            <div class="input-group">
+                                <span class="input-group-addon form-span">name</span>
+                                <input id="name" name="name" class="form-control" placeholder="your name here" type="text" value="{{ name }}">
+                            </div>
+                        </div>
+                        <div class="form-group {{ errors.email ? ' has-error' : '' }}">
+                            <div class="input-group">
+                                <span class="input-group-addon form-span">email</span>
+                                <input id="email" name="email" class="form-control" placeholder="you@example.com" type="email" value="{{ email }}">
+                            </div>
+                        </div>
+                        <div class="form-group  {{ errors.phone ? ' has-error' : '' }}">
+                            <div class="input-group">
+                                <span class="input-group-addon form-span">phone</span>
+                                <input id="phone" name="phone" class="form-control" placeholder="Phone number here" type="number" value="{{ phone }}">
+                            </div>
+                        </div>
+                        <div class="form-group  {{ errors.role ? ' has-error' : '' }}">
+                            <div class="input-group">
+                                {% if user %}
+                                    <label class="radio-inline">
+                                        <input type="radio" name="role" value="1" {{ role == 1 ? 'checked="checked"' : '' }}>Sales
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="role" value="2" {{ role == 2 ? 'checked="checked"' : '' }}>Administration
+                                    </label>
+                                {% endif %}
+                                {% if student %}
+                                    <label class="radio-inline">
+                                        <input type="radio" name="role" value="S" checked="checked">Student
+                                    </label>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group  {{ errors.password ? ' has-error' : '' }}">
+                            <span style="margin-left:4vw;font-size:0.75rem;">
+                                leave password empty if you do not want to change password
+                            </span>
+                            <div class="input-group">
+                                <span class="input-group-addon form-span">password</span>
+                                <input id="password" name="password" class="form-control" type="password">
+                            </div>
+                        </div>
+                        {#  #}
+                        <div class="form-group text-center">
+                            <button style="width:75%" id="UpdateDetails" name="UpdateDetails" class="btn btn-default">Update User</button>
+                        </div>
+                        <input type="hidden" name="type" value="{{ type }}">
+                        <input type="hidden" name="id" value="{{ id }}">
+                        {{ csrf.field | raw }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Update User
+                </div>
+                <div class="panel-body">
+                    <form method="post" enctype="multipart/form-data" class="align-items-center" action="{{ path_for('auth.user_update_image_submit') }}">
+                        {#  image input #}
+                        <div class="form-group {{ errors.image ? ' has-error' : '' }}">
+                            <br>
+                            <div class="input-group input-file">
+                                <label style="font-size:0.75rem;max-height:40px;padding:10px;" class="btn btn-default btn-block col-md-offset-3">
+                                    Click to Upload Image
+                                    <input width="0" style="visibility:hidden" class="form-control" type="file" hidden="hidden" name="image" id="image">
+                                </label>
+                            </div>
+                        </div>
+                        {#  #}
+                        <div class="form-group text-center">
+                            <button style="width:100%" id="UpdateImg" name="UpdateImg" class="btn btn-default">Update Image</button>
+                        </div>
+                        <input type="hidden" name="type" value="{{ type }}">
+                        <input type="hidden" name="id" value="{{ id }}">
+                        {{ csrf.field | raw }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

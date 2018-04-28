@@ -42,4 +42,13 @@ $app->group('', function () {
 
     //update/delete db entry
     $this->post('/updateEntry', 'DBController:updateEntry');
+
+    //user update
+    $this->get('/user_update', 'UserUpdate:populateForm')->setName('auth.user_update');
+    $this->post('/user_update', 'UserUpdate:populateForm');
+    $this->post('/user_update_submit', 'UserUpdate:submitForm')->setName('auth.user_update_submit');
+    $this->post('/user_update_image', 'UserUpdate:ChangeImage')->setName('auth.user_update_image_submit');
+    //course update
+    $this->get('/course_update', 'CourseUpdate:getCourseCreate')->setName('auth.course_update');
+    $this->post('/course_update', 'CourseUpdate:postCourseCreate');
 })->add(new AuthMiddleware($container));

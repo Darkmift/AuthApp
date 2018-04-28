@@ -56,12 +56,13 @@ listContainer.children().click(
                 $('#UpDelBtns').click(
                     function(e) {
                         var BtnClicked = event.target;
-                        console.log('BtnClicked id: ' + BtnClicked.id);
-                        console.log('BtnClicked type: ' + BtnClicked.name);
-                        console.log('BtnClicked do: ', BtnClicked.value);
-
+                        // console.log('BtnClicked id: ' + BtnClicked.id);
+                        // console.log('BtnClicked type: ' + BtnClicked.name);
+                        // console.log('BtnClicked do: ', BtnClicked.value);
+                        data = JSON.parse(data);
+                        data = data[0];
                         if (BtnClicked.value == "del") {
-                            updateEntry(BtnClicked.name, BtnClicked.id, BtnClicked.value);
+                            delEntry(data, BtnClicked.name, BtnClicked.id, BtnClicked.value);
                             $('#' + BtnClicked.id).remove();
                             $('#detailsDisplay').html($('<div>', {
                                 class: "alert alert-success",
@@ -70,7 +71,29 @@ listContainer.children().click(
                             $('#UpDelBtns').empty();
                         }
                         if (BtnClicked.value == "update") {
-                            console.log("update");
+                            console.log("update: ", data.id, 'do:' + BtnClicked.value, 'table: ' + BtnClicked.name);
+                            var url;
+                            switch (BtnClicked.name) {
+                                case "users":
+                                case "students":
+                                    url = "user_update";
+                                    break;
+                                case "courses":
+                                    url = "course_update";
+                                    break;
+                            }
+                            csrfName = $('[name="csrf_name"]');
+                            csrfValue = $('[name="csrf_value"]');
+                            var form = $('<form action="' + url + '" method="post">' +
+                                '<input type="text" name="id" value="' + String(data.id) + '" />' +
+                                '<input type="text" name="type" value="' + BtnClicked.name + '" />' +
+                                '<input type="text" name="csrf_name" value="' + csrfName.val() + '" />' +
+                                '<input type="text" name="csrf_value" value="' + csrfValue.val() + '" />' +
+                                '</form>');
+                            console.log(form);
+                            $('body').append(form);
+                            form.submit();
+                            //graveyard chunk 01 here
                         }
                     }
                 );
@@ -147,7 +170,7 @@ function setBtns(info, type) {
 }
 
 
-function updateEntry(type, id, action) {
+function delEntry(info, type, id, action) {
     csrfName = $('[name="csrf_name"]');
     csrfValue = $('[name="csrf_value"]');
     // console.log(csrfName.val(), csrfValue.val());
@@ -171,4 +194,26 @@ function updateEntry(type, id, action) {
         dataType: "json",
         contentType: "application/json"
     });
+}
+
+function createInput(namestr, inputValue, inputType) {
+    containerInput = $('<div>', {
+        class: "input-group",
+    }).css("margin-top", "5px");
+    span = $('<span>', {
+        class: "input-group-addon form-span",
+        text: namestr,
+    });
+    input = $('<input>', {
+        class: "form-control",
+        name: namestr,
+        placeholder: namestr,
+        type: inputType,
+        value: inputValue
+    });
+    containerInput.append(
+        span,
+        input,
+    );
+    return containerInput;
 }

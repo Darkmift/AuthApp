@@ -130,3 +130,45 @@
         {% endif %}
     </div>
 {% endif %}
+
+{# user Update error #}
+
+{% if flash.getMessage('userCreateError') %}
+    <div class="alert alert-danger">
+        {% if errors.name %}
+            -
+            {{ errors.name | first }}
+            <br>
+        {% endif %}
+        {% if errors.email %}
+            -
+            {{ errors.email | first }}
+            <br>
+        {% endif %}
+        {% if errors.phone %}
+            -
+            {{ errors.phone | first }}
+            <br>
+        {% endif %}
+        {% if errors.role %}
+            -
+            {{ errors.role | first }}
+            <br>
+        {% endif %}
+        {% if errors.password %}
+            -
+            {{ errors.password | first }}
+            <br>
+        {% endif %}
+    </div>
+{% endif %}
+
+{# update image #}
+{% if flash.getMessage('imageUpdateError') %}
+    <div class="alert alert-danger">
+        {% if errors.image %}
+            -
+            {{ errors.image | first }}
+        {% endif %}
+    </div>
+{% endif %}
