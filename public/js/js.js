@@ -1,11 +1,3 @@
-// $('#name,#email,#password,#password_old').on('focus', function() {
-//     this.removeAttribute('readonly');
-// });
-// $('#name,#email,#password,#password_old').focusout(function() {
-//     this.prop('readonly', true);
-// });
-// $('#name,#email,#password,#password_old').attr('readonly', 'true');
-
 //maindisplay
 mainDisplay = $('#mainDisplay');
 //menu button control
@@ -44,7 +36,7 @@ BtnForm.children().children().click(
         ).submit();
     }
 );
-
+var table;
 //ajax functions for right div display.
 listContainer.children().click(
     function(e) {
@@ -52,30 +44,31 @@ listContainer.children().click(
         idClicked = $(this).attr('id');
         //get table name
         type = $(this).attr('elType') + 's';
-        //console.log('id: ' + idClicked, 'type: ' + type);
         display.children[0].innerHTML = "<h4>" + $(this).attr('elType') + " info:</h4><hr>";
         mngBtn.css('visibility', 'visible');
         $.get(type + "/" + idClicked).done(function(data) {
-            //detailsDisplay.html(data);
-            showStudents(data, type);
-            //update/del btns
-            setBtns(data, type);
+            table = type;
+            info = data;
+            showEntry(data, type);
         }).done(
-            $('#UpDelBtns').click(
-                function(e) {
-                    var BtnClicked = event.target;
-                    console.log('BtnClicked id: ' + BtnClicked.id);
-                    console.log('BtnClicked type: ' + BtnClicked.name);
-                    console.log('BtnClicked do: ', BtnClicked.value);
-                    updateEntry(BtnClicked.name, BtnClicked.id, BtnClicked.value);
-                    window.location.replace("/AuthApp/public/");
-                }
-            )
+            function(data) {
+                setBtns(data, table);
+                $('#UpDelBtns').click(
+                    function(e) {
+                        var BtnClicked = event.target;
+                        console.log('BtnClicked id: ' + BtnClicked.id);
+                        console.log('BtnClicked type: ' + BtnClicked.name);
+                        console.log('BtnClicked do: ', BtnClicked.value);
+                        updateEntry(BtnClicked.name, BtnClicked.id, BtnClicked.value);
+                        window.location.replace("/AuthApp/public/");
+                    }
+                );
+            }
         );
     }
 );
 
-function showStudents(data, type) {
+function showEntry(data, type) {
     container = detailsDisplay;
     data = JSON.parse(data);
     data = data[0];
@@ -112,27 +105,36 @@ function showStudents(data, type) {
     return container;
 }
 
-function setBtns(data, type) {
+function setBtns(info, type) {
     container = $('#UpDelBtns');
-    data = JSON.parse(data);
-    data = data[0];
-    container.html([
-        $('<button>', {
-            id: data.id,
-            name: type,
-            value: "update",
-            class: "btn btn-warning",
-            text: "Update",
-        }),
-        $('<button>', {
-            id: data.id,
-            name: type,
-            value: "del",
-            class: "btn btn-danger",
-            text: "Delete",
-        }),
-    ]);
-    return container;
+    data = JSON.parse(info);
+    console.log(data, table);
+    if (table == "users") {
+        if (data[0].id === data[1].logged) {
+            console.log('not allowed');
+            $('[name="users"]').css("display", "none");
+        } else {
+            data = JSON.parse(info);
+            // console.log(data);
+            data = data[0];
+            container.html([
+                $('<button>', {
+                    id: data.id,
+                    name: type,
+                    value: "update",
+                    class: "btn btn-warning",
+                    text: "Update",
+                }),
+                $('<button>', {
+                    id: data.id,
+                    name: type,
+                    value: "del",
+                    class: "btn btn-danger",
+                    text: "Delete",
+                }),
+            ]);
+        }
+    }
 }
 
 
