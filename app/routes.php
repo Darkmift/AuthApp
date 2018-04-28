@@ -49,6 +49,8 @@ $app->group('', function () {
     $this->post('/user_update_submit', 'UserUpdate:submitForm')->setName('auth.user_update_submit');
     $this->post('/user_update_image', 'UserUpdate:ChangeImage')->setName('auth.user_update_image_submit');
     //course update
-    $this->get('/course_update', 'CourseUpdate:getCourseCreate')->setName('auth.course_update');
-    $this->post('/course_update', 'CourseUpdate:postCourseCreate');
+    $this->get('/course_update', 'CourseUpdate:populateForm')->setName('auth.course_update');
+    $this->post('/course_update', 'CourseUpdate:populateForm');
+    $this->post('/course_update_submit', 'CourseUpdate:submitForm')->setName('auth.course_update_submit');
+    $this->post('/course_update_image', 'CourseUpdate:ChangeImage')->setName('auth.course_update_image_submit');
 })->add(new AuthMiddleware($container));

@@ -1,6 +1,38 @@
 {% extends 'templates/app.twig'%}
 {% set page_title = 'Update Course' %}
 {% block content %}
+    {# name set #}
+    {% if old.name %}
+        {% set name = old.name %}
+    {% elseif  course[0].name %}
+        {% set name = course[0].name %}
+    {% endif %}
+    {# description set #}
+    {% if old.description %}
+        {% set description = old.description %}
+    {% elseif  course[0].description %}
+        {% set description = course[0].description %}
+    {% endif %}
+    {# start_date set #}
+    {% if old.start_date %}
+        {% set start_date = old.start_date %}
+    {% elseif  course[0].start_date %}
+        {% set start_date = course[0].start_date %}
+    {% endif %}
+    {# end_date set #}
+    {% if old.end_date %}
+        {% set end_date = old.end_date %}
+    {% elseif  course[0].end_date %}
+        {% set end_date = course[0].end_date %}
+    {% endif %}
+    {# type #}
+    {% if course %}
+        {% set type = "courses"%}
+    {% endif %}
+    {# id #}
+    {% if course %}
+        {% set id = course[0].id%}
+    {% endif %}
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">
@@ -8,20 +40,19 @@
                     Course Update
                 </div>
                 <div class="panel-body">
-                    <form method="post" enctype="multipart/form-data" class="align-items-center" action="{{ path_for('auth.course_create') }}">
+                    {# {{dump(course)}} #}
+                    <form method="post" enctype="multipart/form-data" class="align-items-center" action="{{ path_for('auth.course_update_submit') }}">
                         {# name input #}
                         <div class="form-group {{ errors.name ? ' has-error' : '' }}">
                             <label for="name">Name:</label>
-                            <input id="name" name="name" class="form-control" placeholder="your name here" type="text" value="{{ old.name }}">
-                            {# {% if errors.name %}
-                                <span style="margin-left:15%;" class="help-block">{{ errors.name | first }}</span>
-                            {% endif %} #}
+                            <input id="name" name="name" class="form-control" placeholder="your name here" type="text" value="{{ name }}">
                         </div>
                         {# describe input  #}
                         {% spaceless %}
                             <div class="form-group {{ errors.description ? ' has-error' : '' }}">
                                 <label for="description">Describe course:</label>
-                                <textarea class="form-control" width="50%" rows="5" id="description" name="description">{% if old.description %}{{ old.description |replace({'  ':''}) }}
+                                <textarea class="form-control" width="50%" rows="5" id="description" name="description">
+                                    {% if description %}{{ description |replace({'  ':''}) }}
                                     {% endif %}
                                 </textarea>
                             </div>
@@ -30,34 +61,23 @@
                         <div style="margin-left:2%;display:inline-block;width:45%;" class="form-group {{ errors.start_date ? ' has-error' : '' }}">
                             <label for="example-datetime-local-input" class="col-2 col-form-label">Start Date</label>
                             <div {{ errors.start_date ? 'style="border:1px solid red' : '' }}>
-                                <input   class="form-control" type="date" id="start_date" name="start_date" value="{{ old.start_date ? old.start_date : "now"|date("Y-m-d") }}">
+                                <input class="form-control" type="date" id="start_date" name="start_date" value="{{start_date}}">
                             </div>
                         </div>
                         {# end date input #}
                         <div style="margin-left:3%;display:inline-block;width:45%;" class="form-group {{ errors.end_date ? ' has-error' : '' }}">
                             <label for="example-datetime-local-input" class="col-2 col-form-label">End Date</label>
-                            <div {{ errors.end_date ? 'style="border:1px solid red' : '' }} >
-                                <input class="form-control" type="date" id="end_date" name="end_date"  value="{{ old.end_date ? old.end_date : "now"|date("Y-m-d") }}">
+                            <div {{ errors.end_date ? 'style="border:1px solid red' : '' }}>
+                                <input class="form-control" type="date" id="end_date" name="end_date" value="{{end_date}}">
                             </div>
-                        </div>
-                        {#  image input #}
-                        <div class="form-group {{ errors.image ? ' has-error' : '' }}">
-                            <br>
-                            <div class="input-group input-file">
-                                <label style="max-height:40px;{{ errors.image ? 'border:1px solid red' : '' }}" class="btn btn-default">
-                                    Click to Upload Image
-                                    <input style="visibility:hidden" class="form-control" type="file" hidden="hidden" name="image" id="image">
-                                </label>
-                            </div>
-                            {# {% if errors.image %}
-                                <span style="margin-left:15%;max-width:75%;" class="help-block">{{ errors.image | first }}</span>
-                            {% endif %} #}
                         </div>
                         {#  #}
                         <div class="form-group text-center">
                             <br>
                             <button style="width:75%" id="singlebutton" name="singlebutton" class="btn btn-default">Add Course</button>
                         </div>
+                        <input type="hidden" name="type" value="courses">
+                        <input type="hidden" name="id" value="{{ id }}">
                         {{ csrf.field | raw }}
                     </form>
                 </div>

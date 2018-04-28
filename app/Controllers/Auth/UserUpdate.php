@@ -8,13 +8,6 @@ use Respect\Validation\Validator as v;
 
 class UserUpdate extends Controller
 {
-    public function getUserSignUp($request, $response)
-    {
-        var_dump($request->getParam('data'));
-        die();
-        return $this->view->render($response, 'auth/user_update.twig');
-    }
-
     public function populateForm($request, $response)
     {
         $id = $request->getParam('id');
@@ -27,6 +20,7 @@ class UserUpdate extends Controller
         }
         return $this->view->render($response, 'auth/user_update.twig', $userList);
     }
+    
     public function submitForm($request, $response)
     {
         $id = $request->getParam('id');
