@@ -8,7 +8,7 @@ class DBController extends Controller
 {
     public function getUserList()
     {
-        $users = array('users' => $this->db2->select('SELECT id,name,role,email,phone FROM users where role >= "2" AND is_active="1";'));
+        $users = array('users' => $this->db2->select('SELECT id,name,role,email,phone FROM users where role >= "2" AND active="1";'));
         $parsedUsers = array();
         foreach ($users as $key => $value) {
             foreach ($value as $subkey => $subvalue) {
@@ -19,7 +19,7 @@ class DBController extends Controller
     }
     public function getCoursesList()
     {
-        $courses = array('courses' => $this->db2->select('SELECT id,name,description,start_date,end_date FROM courses WHERE is_active="1"', [1]));
+        $courses = array('courses' => $this->db2->select('SELECT id,name,description,start_date,end_date FROM courses WHERE active="1"', [1]));
         $parsedCourses = array();
         foreach ($courses as $key => $value) {
             foreach ($value as $subkey => $subvalue) {
@@ -30,7 +30,7 @@ class DBController extends Controller
     }
     public function getSalesList()
     {
-        $users = array('sales' => $this->db2->select('SELECT id,name,role,email,phone FROM users where role = "1" AND is_active="1"'));
+        $users = array('sales' => $this->db2->select('SELECT id,name,role,email,phone FROM users where role = "1" AND active="1"'));
         $parsedUsers = array();
         foreach ($users as $key => $value) {
             foreach ($value as $subkey => $subvalue) {
@@ -41,7 +41,7 @@ class DBController extends Controller
     }
     public function getStudentsList()
     {
-        $users = array('students' => $this->db2->select('SELECT id,name,email,phone FROM students WHERE is_active="1"'));
+        $users = array('students' => $this->db2->select('SELECT id,name,email,phone FROM students WHERE active="1"'));
         $parsedUsers = array();
         foreach ($users as $key => $value) {
             foreach ($value as $subkey => $subvalue) {
@@ -53,7 +53,7 @@ class DBController extends Controller
     public function showDetails($request, $response, $args)
     {
         $id = $args['id'];
-        $table = $args['elType'];
+        $table = $args['table'];
         $output = "";
         switch ($table) {
             case 'courses':
@@ -77,15 +77,56 @@ class DBController extends Controller
         $action = $request->getParam('action');
         $tester = "";
         switch ($action) {
+            case 'enroll':
+                $tester = "enroll!!";
+                break;
             case 'update':
                 $tester = "update!!";
                 break;
             case 'del':
                 $tester = "delete!!";
-                $output = json_encode($this->db2->update("UPDATE $table SET `is_active`='0' WHERE id=$id"));
+                $output = json_encode($this->db2->update("UPDATE $table SET `active`='0' WHERE id=$id"));
                 break;
         }
         $derp = array($id, $table, $action, $tester);
         return $response->getBody()->write(json_encode($derp), $output);
     }
+
+    public function getEnrollments($request, $response, $args)
+    {
+        $id = $request->getParam('id');
+        $table = $request->getParam('type');
+        switch ($table) {
+            case 'students':
+                $pdo = $this->db2->getPdo();
+                $statement = $pdo->prepare(
+                    "SELECT enrollments.id, courses.name, students.name
+                        from courses
+                            inner join enrollments on courses.id = enrollments.course_id
+                            inner join students on students.id = enrollments.student_id
+                            inner join users c_user on courses.user_id = c_user.id
+                            inner join users s_user on students.user_id = s_user.id
+                            inner join users e_user on enrollments.user_id = e_user.id
+                        where students.active = 1 and courses.active = 1 and students.id=:id;");
+                $statement->execute(['id' => $id]);
+                $output = $statement->fetchAll();
+                break;
+            case 'courses':
+                $pdo = $this->db2->getPdo();
+                $statement = $pdo->prepare(
+                    "SELECT enrollments.id, courses.name, students.name
+                        from courses
+                            inner join enrollments on courses.id = enrollments.course_id
+                            inner join students on students.id = enrollments.student_id
+                            inner join users c_user on courses.user_id = c_user.id
+                            inner join users s_user on students.user_id = s_user.id
+                            inner join users e_user on enrollments.user_id = e_user.id
+                        where students.active = 1 and courses.active = 1 and courses.id=:id;");
+                $statement->execute(['id' => $id]);
+                $output = $statement->fetchAll();
+                break;
+        }
+        return $response->getBody()->write(json_encode($output));
+    }
+
 }

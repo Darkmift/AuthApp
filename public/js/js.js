@@ -44,11 +44,11 @@ listContainer.children().click(
         idClicked = $(this).attr('id');
         //get table name
         type = $(this).attr('elType') + 's';
+        //student/course/user info header
         display.children[0].innerHTML = "<h4>" + $(this).attr('elType') + " info:</h4><hr>";
         mngBtn.css('visibility', 'visible');
         $.get(type + "/" + idClicked).done(function(data) {
             table = type;
-            info = data;
             showEntry(data, type);
         }).done(
             function(data) {
@@ -59,10 +59,11 @@ listContainer.children().click(
                         // console.log('BtnClicked id: ' + BtnClicked.id);
                         // console.log('BtnClicked type: ' + BtnClicked.name);
                         // console.log('BtnClicked do: ', BtnClicked.value);
-                        data = JSON.parse(data);
-                        data = data[0];
+                        console.log(data);
+                        dataParsed = JSON.parse(data);
+                        dataParsed = dataParsed[0];
                         if (BtnClicked.value == "del") {
-                            delEntry(data, BtnClicked.name, BtnClicked.id, BtnClicked.value);
+                            editEntry(dataParsed, BtnClicked.name, BtnClicked.id, BtnClicked.value);
                             $('#' + BtnClicked.id).remove();
                             $('#detailsDisplay').html($('<div>', {
                                 class: "alert alert-success",
@@ -71,7 +72,7 @@ listContainer.children().click(
                             $('#UpDelBtns').empty();
                         }
                         if (BtnClicked.value == "update") {
-                            console.log("update: ", data.id, 'do:' + BtnClicked.value, 'table: ' + BtnClicked.name);
+                            console.log("update: ", dataParsed.id, 'do:' + BtnClicked.value, 'table: ' + BtnClicked.name);
                             var url;
                             switch (BtnClicked.name) {
                                 case "users":
@@ -85,15 +86,23 @@ listContainer.children().click(
                             csrfName = $('[name="csrf_name"]');
                             csrfValue = $('[name="csrf_value"]');
                             var form = $('<form action="' + url + '" method="post">' +
-                                '<input type="text" name="id" value="' + String(data.id) + '" />' +
+                                '<input type="text" name="id" value="' + String(dataParsed.id) + '" />' +
                                 '<input type="text" name="type" value="' + BtnClicked.name + '" />' +
                                 '<input type="text" name="csrf_name" value="' + csrfName.val() + '" />' +
                                 '<input type="text" name="csrf_value" value="' + csrfValue.val() + '" />' +
                                 '</form>');
-                            console.log(form);
+                            //console.log(form);
                             $('body').append(form);
                             form.submit();
                             //graveyard chunk 01 here
+                        }
+                        if (BtnClicked.value == "enroll") {
+                            //console.log(data, BtnClicked.name, BtnClicked.id, BtnClicked.value);
+                            editEntry(dataParsed, BtnClicked.name, BtnClicked.id, BtnClicked.value);
+                            // $('#detailsDisplay').append($('<div>', {
+                            //     class: "alert alert-success",
+                            //     text: "Enrollment succesful!"
+                            // }));
                         }
                     }
                 );
@@ -101,7 +110,7 @@ listContainer.children().click(
         );
     }
 );
-
+//build info panel of clicked on left panel
 function showEntry(data, type) {
     container = detailsDisplay;
     data = JSON.parse(data);
@@ -124,7 +133,7 @@ function showEntry(data, type) {
     } else {
         $('<ul>').append(
             $('<li>').html('<b>Course Name</b>:<br>' + data.name),
-            $('<li>').html('<b>Course duration</b>:<br>' + data.start_date + " until" + data.end_date),
+            $('<li>').html('<b>Course duration</b>:<br>' + data.start_date + " until: " + data.end_date),
             $('<li>').append(
                 $('<b>').html('<b>Description</b> :<br>'),
                 $('<div>').css({
@@ -133,51 +142,73 @@ function showEntry(data, type) {
                     border: "1px solid #ddd",
                     padding: "2px",
                     overflow: "scroll"
-                }).addClass('pre-scrollableXXX').html(data.description)),
+                }).html(data.description)),
         ).appendTo(container);
     }
     return container;
 }
-
+//set functions of update/delete buttons
 function setBtns(info, type) {
     container = $('#UpDelBtns');
     data = JSON.parse(info);
-    // console.log(data);
     data = data[0];
-    container.html([
-        $('<button>', {
-            id: data.id,
-            name: type,
-            value: "update",
-            class: "btn btn-warning",
-            text: "Update",
-        }),
-        $('<button>', {
-            id: data.id,
-            name: type,
-            value: "del",
-            class: "btn btn-danger",
-            text: "Delete",
-        }),
-    ]);
-    info = JSON.parse(info);
+    logged = JSON.parse(info);
+    // console.log(data);
+    if (table === "students" || table === "courses") {
+        container.html([
+            makeBtn(data.id, type, "enroll", "btn btn-default", "Enroll"),
+            makeBtn(data.id, type, "update", "btn btn-warning", "Update"),
+            makeBtn(data.id, type, "del", "btn btn-danger", "Delete"),
+        ]);
+    }
     if (table == "users") {
-        if (data.id === info[1].logged) {
+        container.html([
+            makeBtn(data.id, type, "update", "btn btn-warning", "Update"),
+            makeBtn(data.id, type, "del", "btn btn-danger", "Delete"),
+        ]);
+        //hide buttons if user viewing themselves
+        if (data.id === logged[1].logged) {
             console.log('not allowed');
             $('[name="users"]').css("display", "none");
         }
     }
 }
+//global alert remover
+setInterval(function() {
+    if ('.alert') {
+        setTimeout(() => {
+            $('.alert').slideUp();
+            setTimeout(() => {
+                $('.alert').remove();
+            }, 1000);
+        }, 4000);
+    }
+}, 500);
 
+function makeBtn(btnId, btnType, btnValue, btnClassName, btnText) {
+    return $('<button>', {
+        id: btnId,
+        name: btnType,
+        value: btnValue,
+        class: btnClassName,
+        text: btnText,
+    })
+}
 
-function delEntry(info, type, id, action) {
+//send delete request
+function editEntry(info, type, id, action) {
     csrfName = $('[name="csrf_name"]');
     csrfValue = $('[name="csrf_value"]');
-    // console.log(csrfName.val(), csrfValue.val());
-    // console.log(type, id, action);
+    if (action === "del") {
+        urlStr = "updateEntry"
+    }
+    if (action === "enroll") {
+        urlStr = "getEnrollments"
+    }
+
     $.ajax({
         type: 'POST',
-        url: "updateEntry",
+        url: urlStr,
         data: JSON.stringify({
             type: type,
             id: id,
@@ -195,25 +226,4 @@ function delEntry(info, type, id, action) {
         contentType: "application/json"
     });
 }
-
-function createInput(namestr, inputValue, inputType) {
-    containerInput = $('<div>', {
-        class: "input-group",
-    }).css("margin-top", "5px");
-    span = $('<span>', {
-        class: "input-group-addon form-span",
-        text: namestr,
-    });
-    input = $('<input>', {
-        class: "form-control",
-        name: namestr,
-        placeholder: namestr,
-        type: inputType,
-        value: inputValue
-    });
-    containerInput.append(
-        span,
-        input,
-    );
-    return containerInput;
-}
+//graveeyard chunk 2

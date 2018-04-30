@@ -38,10 +38,13 @@ $app->group('', function () {
 
     //ajax routes
     //show user/student/course details
-    $this->get('/{elType}/{id}', 'DBController:showDetails');
+    $this->get('/{table}/{id}', 'DBController:showDetails');
 
     //update/delete db entry
     $this->post('/updateEntry', 'DBController:updateEntry');
+
+        //update/delete db entry
+        $this->post('/getEnrollments', 'DBController:getEnrollments');
 
     //user update
     $this->get('/user_update', 'UserUpdate:populateForm')->setName('auth.user_update');
@@ -53,4 +56,5 @@ $app->group('', function () {
     $this->post('/course_update', 'CourseUpdate:populateForm');
     $this->post('/course_update_submit', 'CourseUpdate:submitForm')->setName('auth.course_update_submit');
     $this->post('/course_update_image', 'CourseUpdate:ChangeImage')->setName('auth.course_update_image_submit');
+
 })->add(new AuthMiddleware($container));
