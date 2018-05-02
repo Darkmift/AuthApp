@@ -150,30 +150,64 @@ function showEntry(data, type) {
             width: '8vw',
         })
     ));
-    if (data.email) {
-        $('<ul>').append(
-            $('<li>').text(type + ' name:' + data.name),
-            $('<li>').text('Email : ' + data.email),
-            $('<li>').text('Phone : ' + data.phone),
-            $('<li>').attr('id', 'enrollmentsTabe').text(studentsInCourse),
-        ).appendTo(container);
-    } else {
-        $('<ul>').append(
-            $('<li>').html('<b>Course Name</b>:<br>' + data.name),
-            $('<li>').html('<b>Course duration</b>:<br>' + data.start_date + " until: " + data.end_date),
-            $('<li>').append(
-                $('<b>').html('<b>Description</b> :<br>'),
-                $('<div>').css({
-                    height: "100px",
-                    backgroundColor: "#e8e8e8",
-                    border: "1px solid #ddd",
-                    padding: "2px",
-                    overflow: "scroll"
-                }).html(data.description)
-            ),
-            $('<li>').attr('id', 'enrollmentsTabe').text(coursesForStudent),
-        ).appendTo(container);
+    switch (type) {
+        case 'students':
+            $('<ul>').append(
+                $('<li>').text(type + ' name:' + data.name),
+                $('<li>').text('Email : ' + data.email),
+                $('<li>').text('Phone : ' + data.phone),
+                $('<li>').attr('id', 'enrollmentsTabe').text(studentsInCourse),
+            ).appendTo(container);
+            break;
+        case 'users':
+            $('<ul>').append(
+                $('<li>').text(type + ' name:' + data.name),
+                $('<li>').text('Email : ' + data.email),
+                $('<li>').text('Phone : ' + data.phone),
+            ).appendTo(container);
+            break;
+        case 'courses':
+            $('<ul>').append(
+                $('<li>').html('<b>Course Name</b>:<br>' + data.name),
+                $('<li>').html('<b>Course duration</b>:<br>' + data.start_date + " until: " + data.end_date),
+                $('<li>').append(
+                    $('<b>').html('<b>Description</b> :<br>'),
+                    $('<div>').css({
+                        height: "100px",
+                        backgroundColor: "#e8e8e8",
+                        border: "1px solid #ddd",
+                        padding: "2px",
+                        overflow: "scroll"
+                    }).html(data.description)
+                ),
+                $('<li>').attr('id', 'enrollmentsTabe').text(coursesForStudent),
+            ).appendTo(container);
+            break;
     }
+    // if (data.email) {
+    //     $('<ul>').append(
+    //         $('<li>').text(type + ' name:' + data.name),
+    //         $('<li>').text('Email : ' + data.email),
+    //         $('<li>').text('Phone : ' + data.phone),
+    //         $('<li>').attr('id', 'enrollmentsTabe').text(studentsInCourse),
+    //     ).appendTo(container);
+    // } else {
+    //     $('<ul>').append(
+    //         $('<li>').html('<b>Course Name</b>:<br>' + data.name),
+    //         $('<li>').html('<b>Course duration</b>:<br>' + data.start_date + " until: " + data.end_date),
+    //         $('<li>').append(
+    //             $('<b>').html('<b>Description</b> :<br>'),
+    //             $('<div>').css({
+    //                 height: "100px",
+    //                 backgroundColor: "#e8e8e8",
+    //                 border: "1px solid #ddd",
+    //                 padding: "2px",
+    //                 overflow: "scroll"
+    //             }).html(data.description)
+    //         ),
+    //         $('<li>').attr('id', 'enrollmentsTabe').text(coursesForStudent),
+    //     ).appendTo(container);
+    // }
     return container;
 }
 //set functions of update/delete buttons

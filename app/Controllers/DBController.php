@@ -58,7 +58,6 @@ class DBController extends Controller
         $enrollemnts = [];
         switch ($table) {
             case 'courses':
-                $output = $this->db2->select("SELECT id,name,description,start_date,end_date FROM $table WHERE id =$id");
                 $pdo = $this->db2->getPdo();
                 $statement = $pdo->prepare(
                     "SELECT enrollments.id, courses.name, students.name,enrollments.user_id
@@ -71,12 +70,12 @@ class DBController extends Controller
                         where students.active = 1 and courses.active = 1 and courses.id=:id;");
                 $statement->execute(['id' => $id]);
                 $enrollemnts = $statement->fetchAll();
+                $output = $this->db2->select("SELECT id,name,description,start_date,end_date FROM $table WHERE id =$id");
                 break;
             case 'users':
                 $output = $this->db2->select("SELECT `id`,`name`,`role`,`email`,`phone` FROM $table WHERE id =$id");
                 break;
             case 'students':
-                $output = $this->db2->select("SELECT `id`,`name`,`email`,`phone` FROM $table WHERE id =$id");
                 //fetch student enrollemnts
                 $pdo = $this->db2->getPdo();
                 $statement = $pdo->prepare(
@@ -90,6 +89,7 @@ class DBController extends Controller
                         where students.active = 1 and courses.active = 1 and students.id=:id;");
                 $statement->execute(['id' => $id]);
                 $enrollemnts = $statement->fetchAll();
+                $output = $this->db2->select("SELECT `id`,`name`,`email`,`phone` FROM $table WHERE id =$id");
                 break;
         }
         //$csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
