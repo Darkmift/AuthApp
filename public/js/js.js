@@ -16,6 +16,10 @@ detailsDisplay = $('#detailsDisplay');
 mngBtn = $('#mngBtn');
 //init global for use in scope
 var btnName;
+//csrf
+var csrfName = $('[name="csrf_name"]');
+var csrfValue = $('[name="csrf_value"]');
+
 BtnForm.children().children().click(
     function(e) {
         e.preventDefault();
@@ -49,6 +53,7 @@ listContainer.children().click(
         mngBtn.css('visibility', 'visible');
         $.get(type + "/" + idClicked).done(function(data) {
             table = type;
+            console.log(data);
             showEntry(data, type);
         }).done(
             function(data) {
@@ -59,7 +64,7 @@ listContainer.children().click(
                         // console.log('BtnClicked id: ' + BtnClicked.id);
                         // console.log('BtnClicked type: ' + BtnClicked.name);
                         // console.log('BtnClicked do: ', BtnClicked.value);
-                        console.log(data);
+                        //console.log(data);
                         dataParsed = JSON.parse(data);
                         dataParsed = dataParsed[0];
                         if (BtnClicked.value == "del") {
@@ -153,7 +158,7 @@ function setBtns(info, type) {
     data = JSON.parse(info);
     data = data[0];
     logged = JSON.parse(info);
-    // console.log(data);
+    //console.log(data);
     if (table === "students" || table === "courses") {
         container.html([
             makeBtn(data.id, type, "enroll", "btn btn-default", "Enroll"),
@@ -197,8 +202,6 @@ function makeBtn(btnId, btnType, btnValue, btnClassName, btnText) {
 
 //send delete request
 function editEntry(info, type, id, action) {
-    csrfName = $('[name="csrf_name"]');
-    csrfValue = $('[name="csrf_value"]');
     if (action === "del") {
         urlStr = "updateEntry"
     }
@@ -220,7 +223,11 @@ function editEntry(info, type, id, action) {
             console.log(e, status);
         },
         success: function(data, status) {
-            console.log(data, status)
+            console.log(data, status);
+            csrfVals = data['csrf'];
+            console.log(csrfVals.csrf_name_value, csrfVals.csrf_value_value);
+            csrfName.val(csrfVals.csrf_name_value);
+            csrfValue.val(csrfVals.csrf_value_value);
         },
         dataType: "json",
         contentType: "application/json"

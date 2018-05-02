@@ -66,7 +66,8 @@ class DBController extends Controller
                 $output = $this->db2->select("SELECT id,name,email,phone FROM $table WHERE id =$id");
                 break;
         }
-        array_push($output, array("logged" => $this->auth->user()->id));
+        $csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
+        array_push($output, array("logged" => $this->auth->user()->id), $csrf);
         return $response->getBody()->write(json_encode($output));
     }
 
@@ -88,7 +89,8 @@ class DBController extends Controller
                 $output = json_encode($this->db2->update("UPDATE $table SET `active`='0' WHERE id=$id"));
                 break;
         }
-        $derp = array($id, $table, $action, $tester);
+        $csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
+        $derp = array($id, $table, $action, $tester, $csrf);
         return $response->getBody()->write(json_encode($derp), $output);
     }
 
@@ -126,6 +128,8 @@ class DBController extends Controller
                 $output = $statement->fetchAll();
                 break;
         }
+        $csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
+        $output["csrf"] = $csrf;
         return $response->getBody()->write(json_encode($output));
     }
 
