@@ -66,8 +66,8 @@ class DBController extends Controller
                 $output = $this->db2->select("SELECT id,name,email,phone FROM $table WHERE id =$id");
                 break;
         }
-        $csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
-        array_push($output, array("logged" => $this->auth->user()->id), $csrf);
+        //$csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
+        array_push($output, array("logged" => $this->auth->user()->id));
         return $response->getBody()->write(json_encode($output));
     }
 
@@ -89,8 +89,8 @@ class DBController extends Controller
                 $output = json_encode($this->db2->update("UPDATE $table SET `active`='0' WHERE id=$id"));
                 break;
         }
-        $csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
-        $derp = array($id, $table, $action, $tester, $csrf);
+        //$csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
+        $derp = array($id, $table, $action, $tester);
         return $response->getBody()->write(json_encode($derp), $output);
     }
 
@@ -116,7 +116,7 @@ class DBController extends Controller
             case 'courses':
                 $pdo = $this->db2->getPdo();
                 $statement = $pdo->prepare(
-                    "SELECT enrollments.id, courses.name, students.name
+                    "SELECT enrollments.id, courses.name, students.name,enrollments.user_id
                         from courses
                             inner join enrollments on courses.id = enrollments.course_id
                             inner join students on students.id = enrollments.student_id
@@ -128,8 +128,8 @@ class DBController extends Controller
                 $output = $statement->fetchAll();
                 break;
         }
-        $csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
-        $output["csrf"] = $csrf;
+        // $csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
+        // $output["csrf"] = $csrf;
         return $response->getBody()->write(json_encode($output));
     }
 

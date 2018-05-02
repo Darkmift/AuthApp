@@ -53,7 +53,7 @@ listContainer.children().click(
         mngBtn.css('visibility', 'visible');
         $.get(type + "/" + idClicked).done(function(data) {
             table = type;
-            console.log(data);
+            //console.log(data);
             showEntry(data, type);
         }).done(
             function(data) {
@@ -102,7 +102,7 @@ listContainer.children().click(
                             //graveyard chunk 01 here
                         }
                         if (BtnClicked.value == "enroll") {
-                            //console.log(data, BtnClicked.name, BtnClicked.id, BtnClicked.value);
+                            //console.log('editentryenroll:', data, BtnClicked.name, BtnClicked.id, BtnClicked.value);
                             editEntry(dataParsed, BtnClicked.name, BtnClicked.id, BtnClicked.value);
                             // $('#detailsDisplay').append($('<div>', {
                             //     class: "alert alert-success",
@@ -134,6 +134,7 @@ function showEntry(data, type) {
             $('<li>').text(type + ' name:' + data.name),
             $('<li>').text('Email : ' + data.email),
             $('<li>').text('Phone : ' + data.phone),
+            $('<li>').attr('id', 'enrollmentsTabe'),
         ).appendTo(container);
     } else {
         $('<ul>').append(
@@ -147,7 +148,9 @@ function showEntry(data, type) {
                     border: "1px solid #ddd",
                     padding: "2px",
                     overflow: "scroll"
-                }).html(data.description)),
+                }).html(data.description)
+            ),
+            $('<li>').attr('id', 'enrollmentsTable'),
         ).appendTo(container);
     }
     return container;
@@ -203,31 +206,51 @@ function makeBtn(btnId, btnType, btnValue, btnClassName, btnText) {
 //send delete request
 function editEntry(info, type, id, action) {
     if (action === "del") {
-        urlStr = "updateEntry"
-    }
-    if (action === "enroll") {
-        urlStr = "getEnrollments"
-    }
-
-    $.ajax({
-        type: 'POST',
-        url: urlStr,
-        data: JSON.stringify({
+        urlStr = "updateEntry";
+        methodType = "GET";
+        info = JSON.stringify({
             type: type,
             id: id,
             action: action,
             "csrf_name": csrfName.val(),
             "csrf_value": csrfValue.val()
-        }),
+        });
+    }
+    if (action === "enroll") {
+        urlStr = "getEnrollments";
+        methodType = "GET";
+        info = {
+            type: type,
+            id: id,
+            action: action,
+        };
+    }
+
+    $.ajax({
+        type: methodType,
+        url: urlStr,
+        data: info,
         error: function(e) {
             console.log(e, status);
         },
         success: function(data, status) {
-            console.log(data, status);
-            csrfVals = data['csrf'];
-            console.log(csrfVals.csrf_name_value, csrfVals.csrf_value_value);
-            csrfName.val(csrfVals.csrf_name_value);
-            csrfValue.val(csrfVals.csrf_value_value);
+            //console.log(data, status);
+            //console.log('enrollments:', data.length);
+            container = $('div');
+            ul = $('<ul>');
+            data.forEach(entry => {
+                ul.append(
+                    $('li').text(entry[2]),
+                );
+                //console.log(entry[0], entry[1], entry[2]);
+            });
+            container.append(ul);
+            container.appendTo($('#enrollmentsTable'));
+            //$('#enrollmentsTable').append(container);
+            // csrfVals = data['csrf'];
+            // console.log(csrfVals.csrf_name_value, csrfVals.csrf_value_value);
+            // csrfName.val(csrfVals.csrf_name_value);
+            // csrfValue.val(csrfVals.csrf_value_value);
         },
         dataType: "json",
         contentType: "application/json"
