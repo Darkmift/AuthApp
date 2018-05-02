@@ -54,8 +54,8 @@ class DBController extends Controller
     {
         $id = $args['id'];
         $table = $args['table'];
-        $output = "";
-        $enrollemnts = "";
+        $output = [];
+        $enrollemnts = [];
         switch ($table) {
             case 'courses':
                 $output = $this->db2->select("SELECT id,name,description,start_date,end_date FROM $table WHERE id =$id");
@@ -73,10 +73,10 @@ class DBController extends Controller
                 $enrollemnts = $statement->fetchAll();
                 break;
             case 'users':
-                $output = $this->db2->select("SELECT id,name,role,email,phone FROM $table WHERE id =$id");
+                $output = $this->db2->select("SELECT `id`,`name`,`role`,`email`,`phone` FROM $table WHERE id =$id");
                 break;
             case 'students':
-                $output = $this->db2->select("SELECT id,name,email,phone FROM $table WHERE id =$id");
+                $output = $this->db2->select("SELECT `id`,`name`,`email`,`phone` FROM $table WHERE id =$id");
                 //fetch student enrollemnts
                 $pdo = $this->db2->getPdo();
                 $statement = $pdo->prepare(
