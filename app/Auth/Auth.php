@@ -18,7 +18,10 @@ class Auth
     //check if session is set
     public function check()
     {
-        return isset($_SESSION['user']);
+        $active=User::find($_SESSION['user'])->active;
+        if($active){
+            return isset($_SESSION['user']);
+        }
     }
 
     public function role()
@@ -31,7 +34,7 @@ class Auth
     public function attemptLogin($email, $password)
     {
         //grab user by email
-        $user = User::where('email', $email)->first();
+        $user = User::where('email', $email)->where('active',1)->first();
          if (!$user) {
             //false if fails
             return false;

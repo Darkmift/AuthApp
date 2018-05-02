@@ -1,13 +1,13 @@
 <?php
-$dbname = 'epiz_21822353_codecourse';
-$dbuser = 'epiz_21822353';
-$dbpass = 'RiYByFDH5F8T';
-$dbhost = 'sql206.epizy.com';
+// $dbname = 'epiz_21822353_codecourse';
+// $dbuser = 'epiz_21822353';
+// $dbpass = 'RiYByFDH5F8T';
+// $dbhost = 'sql206.epizy.com';
 
-// $dbname = 'schoolcrm';
-// $dbuser = 'root';
-// $dbpass = 'root12';
-// $dbhost = 'localhost';
+$dbname = 'schoolcrm';
+$dbuser = 'root';
+$dbpass = 'root12';
+$dbhost = 'localhost';
 
 $connect = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname) or die("Unable to Connect to '$dbhost'");
 mysqli_select_db($connect, $dbname) or die("Could not open the db '$dbname'");

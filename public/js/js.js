@@ -168,7 +168,7 @@ function setBtns(info, type) {
         ]);
         //hide buttons if user viewing themselves
         if (data.id === logged[1].logged) {
-            console.log('not allowed');
+            //console.log('not allowed');
             $('[name="users"]').css("display", "none");
         }
     }
@@ -217,7 +217,7 @@ function editEntry(info, type, id, action) {
             "csrf_value": csrfValue.val()
         }),
         error: function(e) {
-            console.log(e);
+            console.log(e, status);
         },
         success: function(data, status) {
             console.log(data, status)
