@@ -68,7 +68,7 @@ listContainer.children().click(
                         dataParsed = JSON.parse(data);
                         dataParsed = dataParsed[0];
                         if (BtnClicked.value == "del") {
-                            editEntry(dataParsed, BtnClicked.name, BtnClicked.id, BtnClicked.value);
+                            editEntry(BtnClicked.name, BtnClicked.id, BtnClicked.value);
                             $('#' + BtnClicked.id).remove();
                             $('#detailsDisplay').html($('<div>', {
                                 class: "alert alert-success",
@@ -103,7 +103,8 @@ listContainer.children().click(
                         }
                         if (BtnClicked.value == "enroll") {
                             //console.log('editentryenroll:', data, BtnClicked.name, BtnClicked.id, BtnClicked.value);
-                            editEntry(dataParsed, BtnClicked.name, BtnClicked.id, BtnClicked.value);
+                            editEntry(BtnClicked.name, BtnClicked.id, BtnClicked.value);
+                            //console.log(dataParsed, BtnClicked.name, BtnClicked.id, BtnClicked.value);
                             // $('#detailsDisplay').append($('<div>', {
                             //     class: "alert alert-success",
                             //     text: "Enrollment succesful!"
@@ -119,8 +120,28 @@ listContainer.children().click(
 function showEntry(data, type) {
     container = detailsDisplay;
     data = JSON.parse(data);
+    //console.log('full: ', data);
+    enrolls = data[2];
     data = data[0];
-    //console.log(data);
+    studentsInCourse = [];
+    coursesForStudent = [];
+    //console.log(coursesForStudent.length);
+    enrolls.forEach(enroll => {
+        studentsInCourse.push(enroll[1]);
+        coursesForStudent.push(enroll[2]);
+    });
+    console.log(coursesForStudent.length);
+    if (coursesForStudent.length == 0) {
+        coursesForStudent = 'no students enlisted';
+    } else {
+        coursesForStudent = JSON.stringify(coursesForStudent);
+    }
+
+    if (studentsInCourse.length == 0) {
+        studentsInCourse = 'not enlisted to any courses';
+    } else {
+        studentsInCourse = JSON.stringify(studentsInCourse);
+    }
     container.html($('<p>').append(
         $('<img>', {
             src: "images/" + type + "/" + data.id + ".jpg",
@@ -134,7 +155,7 @@ function showEntry(data, type) {
             $('<li>').text(type + ' name:' + data.name),
             $('<li>').text('Email : ' + data.email),
             $('<li>').text('Phone : ' + data.phone),
-            $('<li>').attr('id', 'enrollmentsTabe'),
+            $('<li>').attr('id', 'enrollmentsTabe').text(studentsInCourse),
         ).appendTo(container);
     } else {
         $('<ul>').append(
@@ -150,7 +171,7 @@ function showEntry(data, type) {
                     overflow: "scroll"
                 }).html(data.description)
             ),
-            $('<li>').attr('id', 'enrollmentsTable'),
+            $('<li>').attr('id', 'enrollmentsTabe').text(coursesForStudent),
         ).appendTo(container);
     }
     return container;
@@ -204,7 +225,7 @@ function makeBtn(btnId, btnType, btnValue, btnClassName, btnText) {
 }
 
 //send delete request
-function editEntry(info, type, id, action) {
+function editEntry(type, id, action) {
     if (action === "del") {
         urlStr = "updateEntry";
         methodType = "GET";
@@ -224,6 +245,7 @@ function editEntry(info, type, id, action) {
             id: id,
             action: action,
         };
+        enrollmentArray = [];
     }
 
     $.ajax({
@@ -236,24 +258,18 @@ function editEntry(info, type, id, action) {
         success: function(data, status) {
             //console.log(data, status);
             //console.log('enrollments:', data.length);
-            container = $('div');
-            ul = $('<ul>');
             data.forEach(entry => {
-                ul.append(
-                    $('li').text(entry[2]),
-                );
-                //console.log(entry[0], entry[1], entry[2]);
+                obj = {
+                    "course": entry[1],
+                    "student": entry[0]
+                }
+                enrollmentArray.push(obj);
             });
-            container.append(ul);
-            container.appendTo($('#enrollmentsTable'));
-            //$('#enrollmentsTable').append(container);
-            // csrfVals = data['csrf'];
-            // console.log(csrfVals.csrf_name_value, csrfVals.csrf_value_value);
-            // csrfName.val(csrfVals.csrf_name_value);
-            // csrfValue.val(csrfVals.csrf_value_value);
         },
         dataType: "json",
         contentType: "application/json"
     });
+    console.log(enrollmentArray);
+    return enrollmentArray ? enrollmentArray : '';
 }
 //graveeyard chunk 2

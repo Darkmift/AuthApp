@@ -55,19 +55,45 @@ class DBController extends Controller
         $id = $args['id'];
         $table = $args['table'];
         $output = "";
+        $enrollemnts = "";
         switch ($table) {
             case 'courses':
                 $output = $this->db2->select("SELECT id,name,description,start_date,end_date FROM $table WHERE id =$id");
+                $pdo = $this->db2->getPdo();
+                $statement = $pdo->prepare(
+                    "SELECT enrollments.id, courses.name, students.name,enrollments.user_id
+                        from courses
+                            inner join enrollments on courses.id = enrollments.course_id
+                            inner join students on students.id = enrollments.student_id
+                            inner join users c_user on courses.user_id = c_user.id
+                            inner join users s_user on students.user_id = s_user.id
+                            inner join users e_user on enrollments.user_id = e_user.id
+                        where students.active = 1 and courses.active = 1 and courses.id=:id;");
+                $statement->execute(['id' => $id]);
+                $enrollemnts = $statement->fetchAll();
                 break;
             case 'users':
                 $output = $this->db2->select("SELECT id,name,role,email,phone FROM $table WHERE id =$id");
                 break;
             case 'students':
                 $output = $this->db2->select("SELECT id,name,email,phone FROM $table WHERE id =$id");
+                //fetch student enrollemnts
+                $pdo = $this->db2->getPdo();
+                $statement = $pdo->prepare(
+                    "SELECT enrollments.id, courses.name, students.name
+                        from courses
+                            inner join enrollments on courses.id = enrollments.course_id
+                            inner join students on students.id = enrollments.student_id
+                            inner join users c_user on courses.user_id = c_user.id
+                            inner join users s_user on students.user_id = s_user.id
+                            inner join users e_user on enrollments.user_id = e_user.id
+                        where students.active = 1 and courses.active = 1 and students.id=:id;");
+                $statement->execute(['id' => $id]);
+                $enrollemnts = $statement->fetchAll();
                 break;
         }
         //$csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
-        array_push($output, array("logged" => $this->auth->user()->id));
+        array_push($output, array("logged" => $this->auth->user()->id), $enrollemnts);
         return $response->getBody()->write(json_encode($output));
     }
 

@@ -41,7 +41,7 @@ $app->group('', function () {
     $this->get('/{table}/{id}', 'DBController:showDetails');
 
     //update/delete db entry
-    $this->post('/updateEntry', 'DBController:updateEntry');
+    $this->get('/updateEntry', 'DBController:updateEntry');
 
         //update/delete db entry
         $this->get('/getEnrollments', 'DBController:getEnrollments');
