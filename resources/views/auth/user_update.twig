@@ -31,7 +31,6 @@
     {% endif %}
     {# type #}
     {% if user %}
-        <!-- {{dump(user[0].role)}} -->
         {% if user[0].role is same as('2') %}
             {% set headerEntityType = "Admin" %}
         {% elseif   user[0].role is same as('1') %}
@@ -168,11 +167,33 @@
                                 </thead>
                                 <tbody>
                                     {% for enrollment in enrollments %}
-                                        {# {{ dump(enrollment) }} #}
                                         <tr>
-                                            <td>{{enrollment.id}}</td>
                                             <td>{{ counter }}</td>
-                                            <td>{{enrollment.name}}</td>
+                                            <td>{{enrollment.enrollID}}</td>
+                                            <td>{{enrollment.courseName}}</td>
+                                        </tr>
+                                        {% set counter = counter + 1 %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+
+                        {% if courseToEnrollIn %}
+                            {% set counter = 1 %}
+                            <table class="fixed_header table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr class="active">
+                                        <th>#</th>
+                                        <th>Course ID</th>
+                                        <th>Course Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for enrollment in courseToEnrollIn %}
+                                        <tr>
+                                            <td>{{ counter }}</td>
+                                            <td>{{enrollment.courseID}}</td>
+                                            <td>{{enrollment.courseName}}</td>
                                         </tr>
                                         {% set counter = counter + 1 %}
                                     {% endfor %}

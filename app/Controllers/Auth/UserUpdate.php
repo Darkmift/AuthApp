@@ -18,24 +18,55 @@ class UserUpdate extends Controller
         if ($table == "students") {
             $pdo = $this->db2->getPdo();
             $statement = $pdo->prepare(
-                "SELECT enrollments.id, courses.name from courses
-                    INNER JOIN enrollments on courses.id = enrollments.course_id
-                    INNER JOIN students on students.id = enrollments.student_id
-                    INNER JOIN users c_user on courses.user_id = c_user.id
-                    INNER JOIN users s_user on students.user_id = s_user.id
-                    INNER JOIN users e_user on enrollments.user_id = e_user.id
-                where students.active = 1 and courses.active = 1 and students.id=:id"
+                "SELECT
+                enrollments.id as enrollID,
+                courses.name as courseName,
+                courses.id as 'courseID',
+                students.id as 'studentID'
+            FROM
+                courses
+            INNER JOIN enrollments ON courses.id = enrollments.course_id
+            INNER JOIN students ON students.id = enrollments.student_id
+            INNER JOIN users c_user ON
+                courses.user_id = c_user.id
+            INNER JOIN users s_user ON
+                students.user_id = s_user.id
+            INNER JOIN users e_user ON
+                enrollments.user_id = e_user.id
+            WHERE
+                students.active = 1 AND courses.active = 1 AND students.id = :id"
             );
             $statement->execute(['id' => $id]);
             $output = $statement->fetchAll();
+            //get all courses
+            $courseList = $this->db2->select("SELECT id as courseID,name as courseName FROM courses WHERE active = 1");
+            //unset courses which student is enrolled in
+            for ($i = 0; $i < count($courseList) - 1; $i++) {
+                foreach ($output as $key => $value) {
+                    // var_dump(
+                    //     $courseList[$key],
+                    //     $output[$key]
+                    // );
+                    if ($output[$key] === $courseList[$key]) {
+                        var_dump(
+                            $courseList[$key]->courseID,
+                            $output[$key]['courseID']
+                        );
+                        unset($courseList[$i]);
+                    }
+                }
+            }
+            die();
+            //add empty logic factor if output is empty
+            if (count($output) === 0) {
+                $userList["empty"] = 'empty';
+            }
 
             $userList = array(
                 'student' => $this->db2->select("SELECT id,name,email,phone FROM $table WHERE id =$id"),
                 'enrollments' => $output,
+                'courseToEnrollIn' => $courseList,
             );
-            if (count($output) === 0) {
-                $userList["empty"] = 'empty';
-            }
         }
         return $this->view->render($response, 'auth/user_update.twig', $userList);
     }

@@ -161,22 +161,8 @@ class DBController extends Controller
                 where students.active = 1 and courses.active = 1 and courses.id=$id"
                 );
                 $output = $this->db2->select("SELECT `id`,`name`,`email`,`phone` FROM $table WHERE id =$id");
-                // $statement = Course::select('enrollments.id', 'courses.name', 'students.name', 'enrollments.user_id')
-                //     ->join('enrollments', 'courses.id', '=', 'enrollments.course_id')
-                //     ->join('students', 'students.id', '=', 'enrollments.student_id')
-                //     ->join('courses', 'courses.user_id', '=', 'c_user.id')
-                //     ->join('students', 'students.user_id', '=', 's_user.id')
-                //     ->join('users', 'enrollments.user_id', '=', 'e_user.id')
-                //     ->where('students.active', '=', 1)
-                //     ->where('courses.active', '=', 1)
-                //     ->where('courses.id', '=', $id)
-                //     ->get();
-                // $statement->execute(['id' => $id]);
-                //$output = $statement->fetchAll();
                 break;
         }
-        // $csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
-        // $output["csrf"] = $csrf;
         return $response->getBody()->write(
             //var_dump($query)
             json_encode($statement)

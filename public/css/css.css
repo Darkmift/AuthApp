@@ -142,7 +142,8 @@ ol {
 
 /* table css */
 
-.fixed_header tbody {
+
+/* .fixed_header tbody {
     display: block;
     overflow: auto;
     max-height: 200px;
@@ -157,7 +158,7 @@ ol {
 .fixed_header th:nth-child(1),
 .fixed_header td:nth-child(1) {
     text-align: left;
-    width: 10%;
+    width: 5%;
 }
 
 .fixed_header th:nth-child(2),
@@ -166,4 +167,4 @@ ol {
 .fixed_header td:nth-child(3) {
     text-align: left;
     width: 10%;
-}
+} */
