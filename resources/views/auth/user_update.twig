@@ -146,7 +146,7 @@
         </div>
     </div>
     {% if student %}
-        {{dump(enrollments)}}
+        {% set counter = counter + 1 %}
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-default">
@@ -155,10 +155,34 @@
                         {{headerEntityType}}:{{ name }}.
                     </div>
                     <div class="panel-body">
-                        <form method="post" enctype="multipart/form-data" class="align-items-center" action="{{ path_for('auth.user_update_image_submit') }}">
+                        {% if empty %}
+                            <h3>This list is Empty</h3>
+                        {% elseif enrollments %}
+                            <table class="fixed_header table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr class="active">
+                                        <th>#</th>
+                                        <th>Enrollment ID</th>
+                                        <th>Course Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for enrollment in enrollments %}
+                                        {# {{ dump(enrollment) }} #}
+                                        <tr>
+                                            <td>{{enrollment.id}}</td>
+                                            <td>{{ counter }}</td>
+                                            <td>{{enrollment.name}}</td>
+                                        </tr>
+                                        {% set counter = counter + 1 %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                        <form method="post" enctype="multipart/form-data" class="align-items-center" action="#">
                             {#  #}
                             <div class="form-group text-center">
-                                <button style="width:100%" id="UpdateImg" name="UpdateImg" class="btn btn-default">Save Changes</button>
+                                <button style="padding:3px;" name="SaveEnrolls" class="btn btn-default">Save Changes</button>
                             </div>
                             <input type="hidden" name="type" value="{{ type }}">
                             <input type="hidden" name="id" value="{{ id }}">

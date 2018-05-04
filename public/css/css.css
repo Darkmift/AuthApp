@@ -135,3 +135,35 @@ ol {
     width: 8vw!important;
     padding: 0.5vw;
 }
+
+
+/***/
+
+
+/* table css */
+
+.fixed_header tbody {
+    display: block;
+    overflow: auto;
+    max-height: 200px;
+    width: 100%;
+}
+
+.fixed_header thead tr {
+    display: block;
+    width: 100%;
+}
+
+.fixed_header th:nth-child(1),
+.fixed_header td:nth-child(1) {
+    text-align: left;
+    width: 10%;
+}
+
+.fixed_header th:nth-child(2),
+.fixed_header td:nth-child(2),
+.fixed_header th:nth-child(3),
+.fixed_header td:nth-child(3) {
+    text-align: left;
+    width: 10%;
+}

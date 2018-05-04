@@ -18,7 +18,7 @@ class UserUpdate extends Controller
         if ($table == "students") {
             $pdo = $this->db2->getPdo();
             $statement = $pdo->prepare(
-                "SELECT enrollments.id, courses.name, students.name from courses
+                "SELECT enrollments.id, courses.name from courses
                     INNER JOIN enrollments on courses.id = enrollments.course_id
                     INNER JOIN students on students.id = enrollments.student_id
                     INNER JOIN users c_user on courses.user_id = c_user.id
@@ -28,10 +28,14 @@ class UserUpdate extends Controller
             );
             $statement->execute(['id' => $id]);
             $output = $statement->fetchAll();
+
             $userList = array(
                 'student' => $this->db2->select("SELECT id,name,email,phone FROM $table WHERE id =$id"),
                 'enrollments' => $output,
             );
+            if (count($output) === 0) {
+                $userList["empty"] = 'empty';
+            }
         }
         return $this->view->render($response, 'auth/user_update.twig', $userList);
     }
