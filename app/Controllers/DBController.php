@@ -59,6 +59,7 @@ class DBController extends Controller
         switch ($table) {
             case 'courses':
                 $pdo = $this->db2->getPdo();
+                //$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $statement = $pdo->prepare(
                     "SELECT enrollments.id, courses.name, students.name,enrollments.user_id
                         from courses
@@ -78,6 +79,7 @@ class DBController extends Controller
             case 'students':
                 //fetch student enrollemnts
                 $pdo = $this->db2->getPdo();
+                //$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $statement = $pdo->prepare(
                     "SELECT enrollments.id, courses.name, students.name
                         from courses
@@ -93,8 +95,12 @@ class DBController extends Controller
                 break;
         }
         //$csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
-        array_push($output, array("logged" => $this->auth->user()->id), $enrollemnts);
-        return $response->getBody()->write(json_encode($output));
+        $data['logged'] = $this->auth->user()->id;
+        $data['enrollments'] = $enrollemnts;
+        $data['selectedEntity'] = $output;
+        return $response->getBody()->write(json_encode($data));
+        // array_push($output, array("logged" => $this->auth->user()->id), $enrollemnts);
+        // return $response->getBody()->write(json_encode($output));
     }
 
     public function updateEntry($request, $response, $args)

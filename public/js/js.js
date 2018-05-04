@@ -53,7 +53,7 @@ listContainer.children().click(
         mngBtn.css('visibility', 'visible');
         $.get(type + "/" + idClicked).done(function(data) {
             table = type;
-            //console.log(data);
+            console.log(data);
             showEntry(data, type);
         }).done(
             function(data) {
@@ -121,8 +121,8 @@ function showEntry(data, type) {
     container = detailsDisplay;
     data = JSON.parse(data);
     //console.log('full: ', data);
-    enrolls = data[2];
-    data = data[0];
+    enrolls = data['enrollments'];
+    data = data['selectedEntity'][0];
     studentsInCourse = [];
     coursesForStudent = [];
     //console.log(coursesForStudent.length);
@@ -130,7 +130,7 @@ function showEntry(data, type) {
         studentsInCourse.push(enroll[1]);
         coursesForStudent.push(enroll[2]);
     });
-    console.log(coursesForStudent.length);
+    //console.log(coursesForStudent.length);
     if (coursesForStudent.length == 0) {
         coursesForStudent = 'no students enlisted';
     } else {
@@ -214,9 +214,10 @@ function showEntry(data, type) {
 function setBtns(info, type) {
     container = $('#UpDelBtns');
     data = JSON.parse(info);
-    data = data[0];
-    logged = JSON.parse(info);
     //console.log(data);
+    logged = data['logged'];
+    data = data['selectedEntity'][0];
+    console.log('logged: ', logged, 'data.id: ', data.id);
     if (table === "students" || table === "courses") {
         container.html([
             makeBtn(data.id, type, "enroll", "btn btn-default", "Enroll"),
@@ -230,7 +231,7 @@ function setBtns(info, type) {
             makeBtn(data.id, type, "del", "btn btn-danger", "Delete"),
         ]);
         //hide buttons if user viewing themselves
-        if (data.id === logged[1].logged) {
+        if (data.id === logged) {
             //console.log('not allowed');
             $('[name="users"]').css("display", "none");
         }

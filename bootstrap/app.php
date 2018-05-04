@@ -11,7 +11,7 @@ $app = new \Slim\App([
             'driver' => 'mysql',
             //site settings
             // 'host' => 'sql206.epizy.com',
-            // 'database' => 'epiz_21822353_codecourse',
+            // 'database' => 'epiz_21822353_schoolcrm',
             // 'username' => 'epiz_21822353',
             // 'password' => 'RiYByFDH5F8T',
             //localhost
