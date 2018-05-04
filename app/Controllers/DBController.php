@@ -68,7 +68,7 @@ class DBController extends Controller
                             inner join users c_user on courses.user_id = c_user.id
                             inner join users s_user on students.user_id = s_user.id
                             inner join users e_user on enrollments.user_id = e_user.id
-                        where students.active = 1 and courses.active = 1 and courses.id=:id;");
+                        where students.active = 1 and courses.active = 1 and courses.id=:id");
                 $statement->execute(['id' => $id]);
                 $enrollemnts = $statement->fetchAll();
                 $output = $this->db2->select("SELECT id,name,description,start_date,end_date FROM $table WHERE id =$id");
@@ -88,7 +88,7 @@ class DBController extends Controller
                             inner join users c_user on courses.user_id = c_user.id
                             inner join users s_user on students.user_id = s_user.id
                             inner join users e_user on enrollments.user_id = e_user.id
-                        where students.active = 1 and courses.active = 1 and students.id=:id;");
+                        where students.active = 1 and courses.active = 1 and students.id=:id");
                 $statement->execute(['id' => $id]);
                 $enrollemnts = $statement->fetchAll();
                 $output = $this->db2->select("SELECT `id`,`name`,`email`,`phone` FROM $table WHERE id =$id");
@@ -128,7 +128,7 @@ class DBController extends Controller
 
     public function getEnrollments($request, $response, $args)
     {
-        $id = $request->getParam('id');
+        $id = (int) $request->getParam('id');
         $table = $request->getParam('type');
         switch ($table) {
             case 'students':
@@ -141,7 +141,7 @@ class DBController extends Controller
                             inner join users c_user on courses.user_id = c_user.id
                             inner join users s_user on students.user_id = s_user.id
                             inner join users e_user on enrollments.user_id = e_user.id
-                        where students.active = 1 and courses.active = 1 and students.id=:id;");
+                        where students.active = 1 and courses.active = 1 and students.id=:id");
                 $statement->execute(['id' => $id]);
                 $output = $statement->fetchAll();
                 break;
@@ -155,14 +155,17 @@ class DBController extends Controller
                             inner join users c_user on courses.user_id = c_user.id
                             inner join users s_user on students.user_id = s_user.id
                             inner join users e_user on enrollments.user_id = e_user.id
-                        where students.active = 1 and courses.active = 1 and courses.id=:id;");
+                        where students.active = 1 and courses.active = 1 and courses.id=:id");
                 $statement->execute(['id' => $id]);
                 $output = $statement->fetchAll();
                 break;
         }
         // $csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
         // $output["csrf"] = $csrf;
-        return $response->getBody()->write(json_encode($output));
+        return $response->getBody()->write(
+            //var_dump($id)
+            json_encode($output)
+        );
     }
 
 }

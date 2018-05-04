@@ -43,8 +43,8 @@ $app->group('', function () {
     //update/delete db entry
     $this->get('/updateEntry', 'DBController:updateEntry');
 
-        //update/delete db entry
-        $this->get('/getEnrollments', 'DBController:getEnrollments');
+    //update/delete db entry
+    $this->get('/getEnrollments', 'DBController:getEnrollments');
 
     //user update
     $this->get('/user_update', 'UserUpdate:populateForm')->setName('auth.user_update');
