@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\Controller;
+use App\Models\Course;
 
 class DBController extends Controller
 {
@@ -63,11 +64,11 @@ class DBController extends Controller
                 $statement = $pdo->prepare(
                     "SELECT enrollments.id, courses.name, students.name,enrollments.user_id
                         from courses
-                            inner join enrollments on courses.id = enrollments.course_id
-                            inner join students on students.id = enrollments.student_id
-                            inner join users c_user on courses.user_id = c_user.id
-                            inner join users s_user on students.user_id = s_user.id
-                            inner join users e_user on enrollments.user_id = e_user.id
+                            INNER JOIN enrollments on courses.id = enrollments.course_id
+                            INNER JOIN students on students.id = enrollments.student_id
+                            INNER JOIN users c_user on courses.user_id = c_user.id
+                            INNER JOIN users s_user on students.user_id = s_user.id
+                            INNER JOIN users e_user on enrollments.user_id = e_user.id
                         where students.active = 1 and courses.active = 1 and courses.id=:id");
                 $statement->execute(['id' => $id]);
                 $enrollemnts = $statement->fetchAll();
@@ -83,11 +84,11 @@ class DBController extends Controller
                 $statement = $pdo->prepare(
                     "SELECT enrollments.id, courses.name, students.name
                         from courses
-                            inner join enrollments on courses.id = enrollments.course_id
-                            inner join students on students.id = enrollments.student_id
-                            inner join users c_user on courses.user_id = c_user.id
-                            inner join users s_user on students.user_id = s_user.id
-                            inner join users e_user on enrollments.user_id = e_user.id
+                            INNER JOIN enrollments on courses.id = enrollments.course_id
+                            INNER JOIN students on students.id = enrollments.student_id
+                            INNER JOIN users c_user on courses.user_id = c_user.id
+                            INNER JOIN users s_user on students.user_id = s_user.id
+                            INNER JOIN users e_user on enrollments.user_id = e_user.id
                         where students.active = 1 and courses.active = 1 and students.id=:id");
                 $statement->execute(['id' => $id]);
                 $enrollemnts = $statement->fetchAll();
@@ -135,36 +136,48 @@ class DBController extends Controller
                 $pdo = $this->db2->getPdo();
                 $statement = $pdo->prepare(
                     "SELECT enrollments.id, courses.name, students.name
-                        from courses
-                            inner join enrollments on courses.id = enrollments.course_id
-                            inner join students on students.id = enrollments.student_id
-                            inner join users c_user on courses.user_id = c_user.id
-                            inner join users s_user on students.user_id = s_user.id
-                            inner join users e_user on enrollments.user_id = e_user.id
-                        where students.active = 1 and courses.active = 1 and students.id=:id");
+                    from courses
+                        INNER JOIN enrollments on courses.id = enrollments.course_id
+                        INNER JOIN students on students.id = enrollments.student_id
+                        INNER JOIN users c_user on courses.user_id = c_user.id
+                        INNER JOIN users s_user on students.user_id = s_user.id
+                        INNER JOIN users e_user on enrollments.user_id = e_user.id
+                    where students.active = 1 and courses.active = 1 and students.id=:id"
+                );
                 $statement->execute(['id' => $id]);
                 $output = $statement->fetchAll();
                 break;
             case 'courses':
                 $pdo = $this->db2->getPdo();
-                $statement = $pdo->prepare(
+                $statement = Course::select(
                     "SELECT enrollments.id, courses.name, students.name,enrollments.user_id
-                        from courses
-                            inner join enrollments on courses.id = enrollments.course_id
-                            inner join students on students.id = enrollments.student_id
-                            inner join users c_user on courses.user_id = c_user.id
-                            inner join users s_user on students.user_id = s_user.id
-                            inner join users e_user on enrollments.user_id = e_user.id
-                        where students.active = 1 and courses.active = 1 and courses.id=:id");
-                $statement->execute(['id' => $id]);
-                $output = $statement->fetchAll();
+                from courses
+                    INNER JOIN enrollments on courses.id = enrollments.course_id
+                    INNER JOIN students on students.id = enrollments.student_id
+                    INNER JOIN users c_user on courses.user_id = c_user.id
+                    INNER JOIN users s_user on students.user_id = s_user.id
+                    INNER JOIN users e_user on enrollments.user_id = e_user.id
+                where students.active = 1 and courses.active = 1 and courses.id=$id"
+                );
+                // $statement = Course::select('enrollments.id', 'courses.name', 'students.name', 'enrollments.user_id')
+                //     ->join('enrollments', 'courses.id', '=', 'enrollments.course_id')
+                //     ->join('students', 'students.id', '=', 'enrollments.student_id')
+                //     ->join('courses', 'courses.user_id', '=', 'c_user.id')
+                //     ->join('students', 'students.user_id', '=', 's_user.id')
+                //     ->join('users', 'enrollments.user_id', '=', 'e_user.id')
+                //     ->where('students.active', '=', 1)
+                //     ->where('courses.active', '=', 1)
+                //     ->where('courses.id', '=', $id)
+                //     ->get();
+                // $statement->execute(['id' => $id]);
+                //$output = $statement->fetchAll();
                 break;
         }
         // $csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
         // $output["csrf"] = $csrf;
         return $response->getBody()->write(
-            //var_dump($id)
-            json_encode($output)
+            //var_dump($query)
+            json_encode($statement)
         );
     }
 

@@ -65,7 +65,7 @@ listContainer.children().click(
                 function(e) {
                     var BtnClicked = event.target;
                     // console.log('BtnClicked id: ' + BtnClicked.id,'BtnClicked type: ' + BtnClicked.name,'BtnClicked do: ', BtnClicked.value);
-                    console.log(data);
+                    //console.log(data);
                     dataParsed = data;
                     if (BtnClicked.value == "del") {
                         editEntry(BtnClicked.name, BtnClicked.id, BtnClicked.value);
@@ -209,7 +209,7 @@ function setBtns(info, type) {
             break;
         case "students":
         case "courses":
-            console.log('logged: ', logged, 'data.id: ', data.id);
+            //console.log('logged: ', logged, 'data.id: ', data.id);
             container.html([
                 makeBtn(data.id, type, "enroll", "btn btn-default", "Enroll"),
                 makeBtn(data.id, type, "update", "btn btn-warning", "Update"),
@@ -232,7 +232,7 @@ setInterval(function() {
 }, 500);
 
 function makeBtn(btnId, btnType, btnValue, btnClassName, btnText) {
-    console.log(btnValue);
+    //console.log(btnValue);
     var btn = $('<button>', {
         id: btnId,
         name: btnType,
@@ -280,7 +280,7 @@ function editEntry(type, id, action) {
             console.log(e, status);
         },
         success: function(data, status) {
-            console.log(data, status);
+            console.log('data: ', data, 'status: ', status);
             //console.log('enrollments:', data.length);
             data.forEach(entry => {
                 obj = {
@@ -293,7 +293,7 @@ function editEntry(type, id, action) {
         dataType: "json",
         contentType: "application/json"
     });
-    console.log('enrollmentArray: ', enrollmentArray);
+    //console.log('enrollmentArray: ', enrollmentArray);
     return enrollmentArray ? enrollmentArray : '';
 }
 //graveeyard chunk 2
