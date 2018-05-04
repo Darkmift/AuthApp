@@ -168,3 +168,127 @@ ol {
     text-align: left;
     width: 10%;
 } */
+
+.responsive-width {
+    font-size: 0.75vw;
+}
+
+
+/* image btn css */
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.tableImg {
+    display: table;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+}
+
+.table-cell-img {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#mediaFile {
+    position: absolute;
+    top: -1500px;
+}
+
+#profile {
+    border-radius: 100%;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    position: relative;
+    top: 0px;
+    margin-bottom: -80px;
+    cursor: pointer;
+    background: #f4f4f4;
+    display: table;
+    background-size: cover;
+    background-position: center center;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.35);
+}
+
+#profile .dashes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 100%;
+    width: 100%;
+    height: 100%;
+    border: 4px dashed #ddd;
+    opacity: 1;
+}
+
+#profile label {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    padding: 0 30px;
+    color: grey;
+    opacity: 1;
+}
+
+#profile.dragging {
+    background-image: none !important;
+}
+
+#profile.dragging .dashes {
+    animation-duration: 10s;
+    animation-name: spin;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    opacity: 1 !important;
+}
+
+#profile.dragging label {
+    opacity: 0.5 !important;
+}
+
+#profile.hasImage .dashes,
+#profile.hasImage label {
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+.editable {
+    position: relative;
+}
+
+.editable i {
+    position: absolute;
+    top: 10px;
+    right: -20px;
+    opacity: 0.3;
+}
+
+button {
+    width: 100%;
+    -webkit-appearance: none;
+    line-height: 40px;
+    color: #fff;
+    border: none;
+    background-color: #ea4c89;
+    margin-top: 30px;
+    font-size: 13px;
+    -webkit-font-smoothing: antialiased;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}

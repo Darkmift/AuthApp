@@ -125,14 +125,27 @@
                         {#  image input #}
                         <div class="form-group {{ errors.image ? ' has-error' : '' }}">
                             <br>
-                            <div class="input-group input-file">
-                                <label style="font-size:0.75rem;max-height:40px;padding:10px;" class="btn btn-default btn-block col-md-offset-3">
-                                    Click to Upload Image
-                                    <input width="0" style="visibility:hidden" class="form-control" type="file" hidden="hidden" name="image" id="image">
-                                </label>
+                            {# <div class="input-group input-file">
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-2">
+                                        <label class="btn btn-default btn-lg btn-block responsive-width">
+                                            Click to Upload Image
+                                            <input width="0" style="visibility:hidden;" class="form-control" type="file" hidden="hidden" name="image" id="image">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div> #}
+                            <div id="profile">
+                                <div class="dashes"></div>
+                                <label>Click to browse or drag an image here</label>
                             </div>
+                            <input type="file" name="image" id="mediaFile"/>
                         </div>
                         {#  #}
+                        <br>
+                        <br>
+                        <br>
+                        <br>
                         <div class="form-group text-center">
                             <button style="width:100%" id="UpdateImg" name="UpdateImg" class="btn btn-default">Update Image</button>
                         </div>
@@ -151,17 +164,19 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Manage enrollments for
-                        {{headerEntityType}}:{{ name }}.
+                        {{headerEntityType}}:
+                        {{ name }}.
                     </div>
                     <div class="panel-body">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
+                            <div style="padding:2px 0 1px 4px;" class="panel-heading">
                                 {% if empty %}
                                     <h3>This list is Empty</h3>
                                 </div>
                                 <div class="panel-body">
                                 {% elseif enrollments %}
-                                    <h5>{{ name }}
+                                    <h5 style="margin-left:5px;">
+                                        {{ name }}
                                         is enrolled in these courses</h5>
                                 </div>
                                 <div class="panel-body">
@@ -171,6 +186,7 @@
                                                 <th>#</th>
                                                 <th>Enrollment ID</th>
                                                 <th>Course Name</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -179,6 +195,11 @@
                                                     <td>{{ counter }}</td>
                                                     <td>{{enrollment.enrollID}}</td>
                                                     <td>{{enrollment.courseName}}</td>
+                                                    <td>
+                                                        <button id="{{enrollment.enrollID}}" class="btn alert-danger">
+                                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                                 {% set counter = counter + 1 %}
                                             {% endfor %}
@@ -190,8 +211,8 @@
                         {% if courseToEnrollIn %}
                             {% set counter = 1 %}
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h5>
+                                <div style="padding:2px 0 1px 4px;" class="panel-heading">
+                                    <h5 style="margin-left:5px;">
                                         Available courses for
                                         {{ name }}:
                                     </h5>
@@ -203,6 +224,7 @@
                                                 <th>#</th>
                                                 <th>Course ID</th>
                                                 <th>Course Name</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -211,6 +233,11 @@
                                                     <td>{{ counter }}</td>
                                                     <td>{{enrollment.courseID}}</td>
                                                     <td>{{enrollment.courseName}}</td>
+                                                    <td>
+                                                        <button id="{{enrollment.courseID}}" class="btn alert-success">
+                                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                                 {% set counter = counter + 1 %}
                                             {% endfor %}

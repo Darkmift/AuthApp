@@ -42,13 +42,21 @@
                         </div>
                         {#  image input #}
                         <div class="form-group {{ errors.image ? ' has-error' : '' }}">
-                            <br>
-                            <div class="input-group input-file">
+                                <div id="profile">
+                                    <div class="dashes"></div>
+                                    <label>Click to browse or drag an image here</label>
+                                </div>
+                                <input type="file" name="image" id="mediaFile"/>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                            {# <div class="input-group input-file">
                                 <label style="max-height:40px;{{ errors.image ? 'border:1px solid red' : '' }}" class="btn btn-default">
                                     Click to Upload Image
                                     <input style="visibility:hidden" class="form-control" type="file" hidden="hidden" name="image" id="image">
                                 </label>
-                            </div>
+                            </div> #}
                             {# {% if errors.image %}
                                 <span style="margin-left:15%;max-width:75%;" class="help-block">{{ errors.image | first }}</span>
                             {% endif %} #}

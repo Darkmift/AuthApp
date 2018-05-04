@@ -54,8 +54,6 @@ class UserUpdate extends Controller
                 }
             }
 
-            // die();
-            //add empty logic factor if output is empty
             if (count($output) === 0) {
                 $userList["empty"] = 'empty';
             }
