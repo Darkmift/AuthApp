@@ -41,22 +41,20 @@ class UserUpdate extends Controller
             //get all courses
             $courseList = $this->db2->select("SELECT id as courseID,name as courseName FROM courses WHERE active = 1");
             //unset courses which student is enrolled in
-            for ($i = 0; $i < count($courseList) - 1; $i++) {
-                foreach ($output as $key => $value) {
-                    // var_dump(
-                    //     $courseList[$key],
-                    //     $output[$key]
-                    // );
-                    if ($output[$key] === $courseList[$key]) {
-                        var_dump(
-                            $courseList[$key]->courseID,
-                            $output[$key]['courseID']
-                        );
+
+            foreach ($output as $key => $value) {
+                for ($i = 0; $i < count($courseList); $i++) {
+                    if (
+                        isset($output[$key]['courseID']) &&
+                        isset($courseList[$i]->courseID) &&
+                        ($output[$key]['courseID'] === $courseList[$i]->courseID)
+                    ) {
                         unset($courseList[$i]);
                     }
                 }
             }
-            die();
+
+            // die();
             //add empty logic factor if output is empty
             if (count($output) === 0) {
                 $userList["empty"] = 'empty';
