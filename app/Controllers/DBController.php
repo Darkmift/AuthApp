@@ -146,6 +146,7 @@ class DBController extends Controller
                 );
                 $statement->execute(['id' => $id]);
                 $output = $statement->fetchAll();
+                $output = $this->db2->select("SELECT `id`,`name`,`email`,`phone` FROM $table WHERE id =$id");
                 break;
             case 'courses':
                 $pdo = $this->db2->getPdo();
@@ -159,6 +160,7 @@ class DBController extends Controller
                     INNER JOIN users e_user on enrollments.user_id = e_user.id
                 where students.active = 1 and courses.active = 1 and courses.id=$id"
                 );
+                $output = $this->db2->select("SELECT `id`,`name`,`email`,`phone` FROM $table WHERE id =$id");
                 // $statement = Course::select('enrollments.id', 'courses.name', 'students.name', 'enrollments.user_id')
                 //     ->join('enrollments', 'courses.id', '=', 'enrollments.course_id')
                 //     ->join('students', 'students.id', '=', 'enrollments.student_id')

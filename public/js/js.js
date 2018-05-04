@@ -58,7 +58,10 @@ listContainer.children().click(
         }).done(
             function(data) {
                 showEntry(data, table);
-                setBtns(data, table);
+            }
+        ).done(
+            function(data) {
+                setBtns(data, table)
             }
         ).done(
             $('#UpDelBtns').click(
@@ -76,7 +79,7 @@ listContainer.children().click(
                         }));
                         $('#UpDelBtns').empty();
                     }
-                    if (BtnClicked.value == "update") {
+                    if (BtnClicked.value == "update" || BtnClicked.value == "enroll") {
                         console.log("update: ", dataParsed.id, 'do:' + BtnClicked.value, 'table: ' + BtnClicked.name);
                         var url;
                         switch (BtnClicked.name) {
@@ -101,13 +104,11 @@ listContainer.children().click(
                         form.submit();
                         //graveyard chunk 01 here
                     }
-                    if (BtnClicked.value == "enroll") {
-                        $('#enrollmentList').html(
-                            JSON.stringify(
-                                editEntry(BtnClicked.name, BtnClicked.id, BtnClicked.value)
-                            )
-                        );
-                    }
+                    //     // $('#enrollmentList').html(
+                    //     //     JSON.stringify(
+                    //     //         editEntry(BtnClicked.name, BtnClicked.id, BtnClicked.value)
+                    //     //     )
+                    //     // );
                 }
             )
         );
@@ -117,7 +118,7 @@ listContainer.children().click(
 function showEntry(data, type) {
     container = detailsDisplay;
     data = JSON.parse(data);
-    //console.log('full: ', data);
+    console.log('full: ', data, 'type: ', type);
     enrolls = data['enrollments'];
     data = data['selectedEntity'][0];
     studentsInCourse = [];
@@ -128,19 +129,23 @@ function showEntry(data, type) {
         coursesForStudent.push(enroll[2]);
     });
     //console.log(coursesForStudent.length);
-    if (coursesForStudent.length == 0) {
-        coursesForStudent = 'no students enlisted';
-    } else {
-        //coursesForStudent = JSON.stringify(coursesForStudent);
-        coursesForStudent = enrollmentListTable(coursesForStudent, 'Students in this Course: ');
+    switch (type) {
+        case 'students':
+            if (studentsInCourse.length == 0) {
+                studentsInCourse = 'not enlisted to any courses';
+            } else {
+                studentsInCourse = enrollmentListTable(studentsInCourse, data.name + ' is enlisted in: ');
+            }
+            break;
+        case 'courses':
+            if (coursesForStudent.length == 0) {
+                coursesForStudent = 'no students enlisted';
+            } else {
+                coursesForStudent = enrollmentListTable(coursesForStudent, 'Students in this Course: ');
+            }
+            break;
     }
 
-    if (studentsInCourse.length == 0) {
-        studentsInCourse = 'not enlisted to any courses';
-    } else {
-        //studentsInCourse = JSON.stringify(studentsInCourse);
-        studentsInCourse = enrollmentListTable(studentsInCourse, data.name + ' is enlisted in: ');
-    }
     container.html($('<p>').append(
         $('<img>', {
             src: "images/" + type + "/" + data.id + ".jpg",
@@ -199,11 +204,10 @@ function setBtns(info, type) {
                 makeBtn(data.id, type, "update", "btn btn-warning", "Update"),
                 makeBtn(data.id, type, "del", "btn btn-danger", "Delete"),
             ]);
-            //hide buttons if user viewing themselves
-            if ((!data.id === logged) && table === "users") {
+            // hide buttons
+            // if user viewing themselves
+            if (data.id === logged && table === "users") {
                 //console.log('not allowed');
-                $('[name="users"]').css("display", "visible");
-            } else {
                 $('[name="users"]').css("display", "none");
             }
             break;
@@ -233,17 +237,17 @@ setInterval(function() {
 
 function makeBtn(btnId, btnType, btnValue, btnClassName, btnText) {
     //console.log(btnValue);
-    var btn = $('<button>', {
+    btn = $('<button>', {
         id: btnId,
         name: btnType,
         value: btnValue,
         class: btnClassName,
         text: btnText,
     });
-    if (btnValue === 'enroll') {
-        btn.attr('data-toggle', 'modal');
-        btn.attr('data-target', '#myModal');
-    }
+    // if (btnValue === 'enroll') {
+    //     btn.attr('data-toggle', 'modal');
+    //     btn.attr('data-target', '#myModal');
+    // }
     return btn;
 }
 
@@ -261,16 +265,16 @@ function editEntry(type, id, action) {
             "csrf_value": csrfValue.val()
         });
     }
-    if (action === "enroll") {
-        urlStr = "getEnrollments";
-        methodType = "GET";
-        info = {
-            type: type,
-            id: id,
-            action: action,
-        };
-        enrollmentArray = [];
-    }
+    // if (action === "enroll") {
+    //     urlStr = "getEnrollments";
+    //     methodType = "GET";
+    //     info = {
+    //         type: type,
+    //         id: id,
+    //         action: action,
+    //     };
+    //     enrollmentArray = [];
+    //}
 
     $.ajax({
         type: methodType,
@@ -299,10 +303,7 @@ function editEntry(type, id, action) {
 //graveeyard chunk 2
 
 function enrollmentListTable(enrollmentList, tableName) {
-    //var enrollments = JSON.parse(enrollmentList);
-    var enrollments = enrollmentList;
-    var trCount = 1;
-    table = $('<table>', {
+    var table = $('<table>', {
         class: 'table table-bordered table-hover table-striped',
     }).css('margin-top', '5px');
     thead = $('<thead>').append(
@@ -314,12 +315,11 @@ function enrollmentListTable(enrollmentList, tableName) {
     );
     table.append(thead);
     tbody = $('<tbody>');
-    enrollments.forEach(enroll => {
+    enrollmentList.forEach(enroll => {
         td = $('<td>').text(enroll);
         tr = $('<tr>').append(td);
         tbody.append(tr);
     });
     table.append(tbody);
-    //console.log(table[0].innerHTML, enrollments, tableName);
     return table;
 }

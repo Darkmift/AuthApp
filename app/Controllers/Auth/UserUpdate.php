@@ -16,11 +16,26 @@ class UserUpdate extends Controller
             $userList = array('user' => $this->db2->select("SELECT id,name,email,phone,role FROM $table WHERE id =$id"));
         }
         if ($table == "students") {
-            $userList = array('student' => $this->db2->select("SELECT id,name,email,phone FROM $table WHERE id =$id"));
+            $pdo = $this->db2->getPdo();
+            $statement = $pdo->prepare(
+                "SELECT enrollments.id, courses.name, students.name from courses
+                    INNER JOIN enrollments on courses.id = enrollments.course_id
+                    INNER JOIN students on students.id = enrollments.student_id
+                    INNER JOIN users c_user on courses.user_id = c_user.id
+                    INNER JOIN users s_user on students.user_id = s_user.id
+                    INNER JOIN users e_user on enrollments.user_id = e_user.id
+                where students.active = 1 and courses.active = 1 and students.id=:id"
+            );
+            $statement->execute(['id' => $id]);
+            $output = $statement->fetchAll();
+            $userList = array(
+                'student' => $this->db2->select("SELECT id,name,email,phone FROM $table WHERE id =$id"),
+                'enrollments' => $output,
+            );
         }
         return $this->view->render($response, 'auth/user_update.twig', $userList);
     }
-    
+
     public function submitForm($request, $response)
     {
         $id = $request->getParam('id');
