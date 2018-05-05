@@ -3,6 +3,7 @@ namespace App\Controllers\Auth;
 
 use App\Controllers\Controller;
 use App\Models\Course;
+use App\Models\Enrollment;
 use Respect\Validation\Validator as v;
 
 class CourseUpdate extends Controller
@@ -29,33 +30,18 @@ class CourseUpdate extends Controller
         );
         $statement->execute(['id' => $id]);
         $output = $statement->fetchAll();
-        //
-        // var_dump($output);
-        // die();
+
         //get all students
         $studentList = $this->db2->select("SELECT id as studentID,name as studentName FROM students WHERE active = 1");
         //unset courses which student is enrolled in
 
         foreach ($output as $key => $value) {
             for ($i = 0; $i < count($studentList); $i++) {
-                // if (
-                //     isset($output[$key]['studentID']) &&
-                //     isset($studentList[$i]->studentID)
-                // ) {
-                //     var_dump(
-                //         $output[$key]['studentID'],
-                //         $studentList[$i]->studentID
-                //     );
-                // }
                 if (
                     isset($output[$key]['studentID']) &&
                     isset($studentList[$i]->studentID) &&
                     ($output[$key]['studentID'] === $studentList[$i]->studentID)
                 ) {
-                    // var_dump(
-                    //     $output[$key]['studentID'],
-                    //     $studentList[$i]->studentID
-                    // );
                     unset($studentList[$i]);
                 }
             }
@@ -64,15 +50,11 @@ class CourseUpdate extends Controller
         $userList = array(
             'course' => $this->db2->select("SELECT * FROM courses WHERE id =$id"),
             'enrollments' => $output,
-            'courseToEnrollIn' => $studentList,
+            'studentsToEnrollIn' => $studentList,
         );
         if (count($output) === 0) {
             $userList["empty"] = 'empty';
         }
-        // echo '<pre>';
-        // var_dump($userList);
-        // echo '</pre>';
-        // die();
         return $this->view->render($response, 'auth\course_update.twig', $userList);
     }
 
@@ -139,5 +121,65 @@ class CourseUpdate extends Controller
         }
         $this->flash->addMessage('info', 'Image changed for ' . $name . ' successful!');
         return $response->withRedirect($this->router->pathFor('home'));
+    }
+
+    public function enrollmentManagmentForCourse($request, $response)
+    {
+        //eid is enrollid if unenroll or ccourse id if enroll
+        $eid = $request->getParam('eid');
+        $sid = $request->getParam('sid');
+        $cname = $request->getParam('sname');
+        $sname = $request->getParam('cname');
+        $action = $request->getParam('action');
+        echo '<pre>';
+        echo 'sname: ' . $sname;
+        echo ' sid: ' . $sid . '<hr>';
+        echo ' cname: ' . $cname;
+        echo ' eid: ' . $eid;
+        echo '</pre>';
+        // die();
+        //var_dump($sname, $cname, $eid, $sid, $action);
+        if ($action == 'unEnroll') {
+            Enrollment::where('id', $eid)
+                ->update([
+                    'active' => 0,
+                ]);
+            $this->flash->addMessage('info', $sname . ' was removed from: ' . $cname . ' successfully');
+        }
+        //die($sname . ' removed from ' . $cname);
+        if ($action == 'enroll') {
+            $pdo = $this->db2->getPdo();
+            $statement = $pdo->prepare("SELECT
+                `id`,
+                `active`
+            FROM
+                `enrollments`
+            WHERE
+                `student_id` = :sid AND `course_id` = :eid");
+            $statement->execute([
+                'sid' => $sid,
+                'eid' => $eid,
+            ]);
+            $result = $statement->fetch();
+            $enrollexists = $result['active'];
+            $enrollId = $result['id'];
+            if (is_null($enrollexists)) {
+                Enrollment::create([
+                    'student_id' => $sid,
+                    'course_id' => $eid,
+                    'user_id' => $this->auth->user()->id,
+                ]);
+                $this->flash->addMessage('info', $sname . ' was enrolled to: ' . $cname . ' successfully');
+            } else {
+                Enrollment::where('id', $enrollId)
+                    ->update([
+                        'active' => 1,
+                    ]);
+                $this->flash->addMessage('info', $sname . ' was re-enrolled to: ' . $cname . ' successfully');
+            }
+
+        }
+        return $response->withRedirect($this->router->pathFor('home'));
+        // die('enrollment deaactivated');
     }
 }

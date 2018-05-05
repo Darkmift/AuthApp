@@ -145,9 +145,9 @@
                             <div class="panel-body">
                             {% elseif enrollments %}
                                 <h5 style="margin-left:5px;">
+                                    The following students are enrolled in:
                                     {{ name }}
-                                    No one enrolled in
-                                    {{ name }}</h5>
+                                </h5>
                             </div>
                             <div class="panel-body">
                                 <table class="fixed_header table table-bordered table-hover table-striped">
@@ -155,7 +155,7 @@
                                         <tr class="active">
                                             <th>#</th>
                                             <th>Enrollment ID</th>
-                                            <th>Course Name</th>
+                                            <th>Student Name</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -178,12 +178,12 @@
                             {% endif %}
                         </div>
                     </div>
-                    {% if courseToEnrollIn %}
+                    {% if studentsToEnrollIn %}
                         {% set counter = 1 %}
                         <div class="panel panel-default">
                             <div style="padding:2px 0 1px 4px;" class="panel-heading">
                                 <h5 style="margin-left:5px;">
-                                    Available courses for
+                                    Available students for
                                     {{ name }}:
                                 </h5>
                             </div>
@@ -192,19 +192,19 @@
                                     <thead>
                                         <tr class="active">
                                             <th>#</th>
-                                            <th>Course ID</th>
-                                            <th>Course Name</th>
+                                            <th>Student ID</th>
+                                            <th>Student Name</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for courseAvailabe in courseToEnrollIn %}
+                                        {% for studentAvailable in studentsToEnrollIn %}
                                             <tr>
                                                 <td>{{ counter }}</td>
-                                                <td>{{courseAvailabe.courseID}}</td>
-                                                <td>{{courseAvailabe.studentName}}</td>
+                                                <td>{{studentAvailable.studentID}}</td>
+                                                <td>{{studentAvailable.studentName}}</td>
                                                 <td>
-                                                    <button id="{{courseAvailabe.courseID}}" name="{{courseAvailabe.studentName}}" data="{{ type }}" class="btn alert-success enroll">
+                                                    <button id="{{studentAvailable.studentID}}" name="{{studentAvailable.studentName}}" data="{{ type }}" class="btn alert-success enroll">
                                                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                                     </button>
                                                 </td>

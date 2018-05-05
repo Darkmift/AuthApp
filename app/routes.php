@@ -60,5 +60,5 @@ $app->group('', function () {
     //enroll management user
     $this->post('/user_enroll_management', 'UserUpdate:enrollmentManagmentForUser');
     //enroll management coursee
-    $this->post('/course_enroll_management', 'UserUpdate:enrollmentManagmentForCourse');
+    $this->post('/course_enroll_management', 'CourseUpdate:enrollmentManagmentForCourse');
 })->add(new AuthMiddleware($container));
