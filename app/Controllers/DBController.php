@@ -144,7 +144,6 @@ class DBController extends Controller
                 $statement = $statement->fetchAll();
                 break;
             case 'courses':
-                $pdo = $this->db2->getPdo();
                 $statement = Course::select(
                     "SELECT enrollments.id, courses.name, students.name,enrollments.user_id
                 from courses

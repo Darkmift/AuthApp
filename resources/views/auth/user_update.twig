@@ -187,7 +187,7 @@
                                                     <td>{{enrollment.enrollID}}</td>
                                                     <td>{{enrollment.courseName}}</td>
                                                     <td>
-                                                        <button id="{{enrollment.enrollID}}" name="{{enrollment.courseName}}" class="btn alert-danger unEnroll">
+                                                        <button id="{{enrollment.enrollID}}" name="{{enrollment.courseName}}" data="{{ type }}" class="btn alert-danger unEnroll">
                                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                         </button>
                                                     </td>
@@ -225,7 +225,7 @@
                                                     <td>{{courseAvailabe.courseID}}</td>
                                                     <td>{{courseAvailabe.courseName}}</td>
                                                     <td>
-                                                        <button id="{{courseAvailabe.courseID}}" name="{{courseAvailabe.courseName}}" class="btn alert-success enroll">
+                                                        <button id="{{courseAvailabe.courseID}}" name="{{courseAvailabe.courseName}}" data="{{ type }}" class="btn alert-success enroll">
                                                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                                         </button>
                                                     </td>

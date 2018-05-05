@@ -329,6 +329,7 @@ $('.enroll,.unEnroll').click(function(e) {
     btnClicked = event.target;
     var eid;
     var action;
+    var type = $(this).attr('data');
     //get existing enrollemnt id
     if ($(this).hasClass('unEnroll')) {
         //console.log('enrollmentID: ', $(this).attr('id'));
@@ -341,8 +342,18 @@ $('.enroll,.unEnroll').click(function(e) {
         eid = $(this).attr('id');
         action = 'enroll';
     }
-    var sid = $('[name="sid"]').val();
-    var Eurl = 'user_enroll_management';
+    if (type === "students") {
+        sid = $('[name="sid"]').val();
+        Eurl = 'user_enroll_management';
+    }
+    if (type === "courses") {
+        sid = $('[name="sid"]').val();
+        Eurl = 'course_enroll_management';
+    }
+    // console.log(sid, Eurl);
+    // return;
+    // var sid = $('[name="sid"]').val();
+    // var Eurl = 'user_enroll_management';
     csrfName = $('[name="csrf_name"]');
     csrfValue = $('[name="csrf_value"]');
     sname = $('[name="sname"]').val();

@@ -212,7 +212,7 @@ class UserUpdate extends Controller
                 ]);
                 $this->flash->addMessage('info', $sname . ' was enrolled to: ' . $cname . ' successfully');
             } else {
-                User::where('id', $enrollId)
+                Enrollment::where('id', $enrollId)
                     ->update([
                         'active' => 1,
                     ]);
@@ -224,11 +224,3 @@ class UserUpdate extends Controller
         // die('enrollment deaactivated');
     }
 }
-
-// Enrollment::where('id', $eid)
-// ->update([
-//     'student_id' => $sid,
-//     'course_id'=> $eid,
-//     'user_id'=> $this->auth->user()->id,
-//     'updated_at' => date("Y-m-d H:i:s"),
-// ]);

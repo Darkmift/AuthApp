@@ -11,10 +11,69 @@ class CourseUpdate extends Controller
     {
         $id = $request->getParam('id');
         $table = $request->getParam('type');
-        if ($table == "courses") {
-            $course = array('course' => $this->db2->select("SELECT id,name,description,start_date,end_date FROM $table WHERE id =$id"));
+        //get enrolled in this course
+        $pdo = $this->db2->getPdo();
+        $statement = $pdo->prepare(
+            "SELECT
+                enrollments.id as enrollID,
+                students.name as studentName,
+                courses.id as 'courseID',
+                students.id as 'studentID'
+            from courses
+                INNER JOIN enrollments on courses.id = enrollments.course_id
+                INNER JOIN students on students.id = enrollments.student_id
+                INNER JOIN users c_user on courses.user_id = c_user.id
+                INNER JOIN users s_user on students.user_id = s_user.id
+                INNER JOIN users e_user on enrollments.user_id = e_user.id
+            where students.active = 1 and courses.active = 1 and enrollments.active = 1 and courses.id= :id"
+        );
+        $statement->execute(['id' => $id]);
+        $output = $statement->fetchAll();
+        //
+        // var_dump($output);
+        // die();
+        //get all students
+        $studentList = $this->db2->select("SELECT id as studentID,name as studentName FROM students WHERE active = 1");
+        //unset courses which student is enrolled in
+
+        foreach ($output as $key => $value) {
+            for ($i = 0; $i < count($studentList); $i++) {
+                // if (
+                //     isset($output[$key]['studentID']) &&
+                //     isset($studentList[$i]->studentID)
+                // ) {
+                //     var_dump(
+                //         $output[$key]['studentID'],
+                //         $studentList[$i]->studentID
+                //     );
+                // }
+                if (
+                    isset($output[$key]['studentID']) &&
+                    isset($studentList[$i]->studentID) &&
+                    ($output[$key]['studentID'] === $studentList[$i]->studentID)
+                ) {
+                    // var_dump(
+                    //     $output[$key]['studentID'],
+                    //     $studentList[$i]->studentID
+                    // );
+                    unset($studentList[$i]);
+                }
+            }
         }
-        return $this->view->render($response, 'auth\course_update.twig', $course);
+        // die();
+        $userList = array(
+            'course' => $this->db2->select("SELECT * FROM courses WHERE id =$id"),
+            'enrollments' => $output,
+            'courseToEnrollIn' => $studentList,
+        );
+        if (count($output) === 0) {
+            $userList["empty"] = 'empty';
+        }
+        // echo '<pre>';
+        // var_dump($userList);
+        // echo '</pre>';
+        // die();
+        return $this->view->render($response, 'auth\course_update.twig', $userList);
     }
 
     public function submitForm($request, $response)
