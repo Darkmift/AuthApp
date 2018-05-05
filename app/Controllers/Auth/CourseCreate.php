@@ -39,7 +39,7 @@ class CourseCreate extends Controller
             'description' => $request->getParam('description'),
             'start_date' => $request->getParam('start_date'),
             'end_date' => $request->getParam('end_date'),
-            'created_by' => $this->auth->user()->name,
+            'user_id' => $this->auth->user()->id,
         ]);
         //Get the PDO object to bind the id as name to image
         $pdo = $this->db2->getPdo();

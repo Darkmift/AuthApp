@@ -125,16 +125,6 @@
                         {#  image input #}
                         <div class="form-group {{ errors.image ? ' has-error' : '' }}">
                             <br>
-                            {# <div class="input-group input-file">
-                                <div class="row">
-                                    <div class="col-md-4 col-lg-2">
-                                        <label class="btn btn-default btn-lg btn-block responsive-width">
-                                            Click to Upload Image
-                                            <input width="0" style="visibility:hidden;" class="form-control" type="file" hidden="hidden" name="image" id="image">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div> #}
                             <div id="profile">
                                 <div class="dashes"></div>
                                 <label>Click to browse or drag an image here</label>
@@ -158,6 +148,7 @@
         </div>
     </div>
     {% if student %}
+        <input type="hidden" name="sid" value="{{ id }}">
         {% set counter = counter + 1 %}
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
@@ -196,7 +187,7 @@
                                                     <td>{{enrollment.enrollID}}</td>
                                                     <td>{{enrollment.courseName}}</td>
                                                     <td>
-                                                        <button id="{{enrollment.enrollID}}" class="btn alert-danger">
+                                                        <button id="{{enrollment.enrollID}}" name="{{enrollment.courseName}}" class="btn alert-danger unEnroll">
                                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                         </button>
                                                     </td>
@@ -228,13 +219,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for enrollment in courseToEnrollIn %}
+                                            {% for courseAvailabe in courseToEnrollIn %}
                                                 <tr>
                                                     <td>{{ counter }}</td>
-                                                    <td>{{enrollment.courseID}}</td>
-                                                    <td>{{enrollment.courseName}}</td>
+                                                    <td>{{courseAvailabe.courseID}}</td>
+                                                    <td>{{courseAvailabe.courseName}}</td>
                                                     <td>
-                                                        <button id="{{enrollment.courseID}}" class="btn alert-success">
+                                                        <button id="{{courseAvailabe.courseID}}" name="{{courseAvailabe.courseName}}" class="btn alert-success enroll">
                                                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                                         </button>
                                                     </td>
@@ -246,15 +237,8 @@
                                 </div>
                             </div>
                         {% endif %}
-                        <form method="post" enctype="multipart/form-data" class="align-items-center" action="#">
-                            {#  #}
-                            <div class="form-group text-center">
-                                <button style="padding:3px;" name="SaveEnrolls" class="btn btn-default">Save Changes</button>
-                            </div>
-                            <input type="hidden" name="type" value="{{ type }}">
-                            <input type="hidden" name="id" value="{{ id }}">
-                            {{ csrf.field | raw }}
-                        </form>
+                        <input type="hidden" name="sname" value="{{ name }}">
+                        {{ csrf.field | raw }}
                     </div>
                 </div>
             </div>

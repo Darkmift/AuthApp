@@ -37,6 +37,12 @@
             new Date).getTime();
             document.getElementsByTagName('head')[0].appendChild(script);
             ///
+            //image upload js
+            var script = document.createElement('script');
+            script.src = "{{ base_url()}}/js/imgUploadJs.js?" + (
+            new Date).getTime();
+            document.getElementsByTagName('head')[0].appendChild(script);
+            ///
             var x = document.createElement("LINK");
             x.setAttribute("id", "CssSheet");
             x.setAttribute("rel", "stylesheet");

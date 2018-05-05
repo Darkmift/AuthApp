@@ -69,7 +69,7 @@ class DBController extends Controller
                             INNER JOIN users c_user on courses.user_id = c_user.id
                             INNER JOIN users s_user on students.user_id = s_user.id
                             INNER JOIN users e_user on enrollments.user_id = e_user.id
-                        where students.active = 1 and courses.active = 1 and courses.id=:id");
+                        where students.active = 1 and courses.active = 1 and enrollments.active = 1 and courses.id=:id");
                 $statement->execute(['id' => $id]);
                 $enrollemnts = $statement->fetchAll();
                 $output = $this->db2->select("SELECT id,name,description,start_date,end_date FROM $table WHERE id =$id");
@@ -80,7 +80,6 @@ class DBController extends Controller
             case 'students':
                 //fetch student enrollemnts
                 $pdo = $this->db2->getPdo();
-                //$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $statement = $pdo->prepare(
                     "SELECT enrollments.id, courses.name, students.name
                         from courses
@@ -89,19 +88,16 @@ class DBController extends Controller
                             INNER JOIN users c_user on courses.user_id = c_user.id
                             INNER JOIN users s_user on students.user_id = s_user.id
                             INNER JOIN users e_user on enrollments.user_id = e_user.id
-                        where students.active = 1 and courses.active = 1 and students.id=:id");
+                        where students.active = 1 and courses.active = 1 and enrollments.active = 1 and students.id=:id");
                 $statement->execute(['id' => $id]);
                 $enrollemnts = $statement->fetchAll();
                 $output = $this->db2->select("SELECT `id`,`name`,`email`,`phone` FROM $table WHERE id =$id");
                 break;
         }
-        //$csrf = array("csrf_name_value" => $this->container->csrf->getTokenName(), "csrf_value_value" => $this->container->csrf->getTokenValue());
         $data['logged'] = $this->auth->user()->id;
         $data['enrollments'] = $enrollemnts;
         $data['selectedEntity'] = $output;
         return $response->getBody()->write(json_encode($data));
-        // array_push($output, array("logged" => $this->auth->user()->id), $enrollemnts);
-        // return $response->getBody()->write(json_encode($output));
     }
 
     public function updateEntry($request, $response, $args)
@@ -142,11 +138,10 @@ class DBController extends Controller
                         INNER JOIN users c_user on courses.user_id = c_user.id
                         INNER JOIN users s_user on students.user_id = s_user.id
                         INNER JOIN users e_user on enrollments.user_id = e_user.id
-                    where students.active = 1 and courses.active = 1 and students.id=:id"
+                    where students.active = 1 and courses.active = 1 and enrollments.active = 1 and students.id=:id"
                 );
                 $statement->execute(['id' => $id]);
-                $output = $statement->fetchAll();
-                $output = $this->db2->select("SELECT `id`,`name`,`email`,`phone` FROM $table WHERE id =$id");
+                $statement = $statement->fetchAll();
                 break;
             case 'courses':
                 $pdo = $this->db2->getPdo();
@@ -158,9 +153,8 @@ class DBController extends Controller
                     INNER JOIN users c_user on courses.user_id = c_user.id
                     INNER JOIN users s_user on students.user_id = s_user.id
                     INNER JOIN users e_user on enrollments.user_id = e_user.id
-                where students.active = 1 and courses.active = 1 and courses.id=$id"
+                where students.active = 1 and courses.active = 1 and enrollments.active = 1 and courses.id=$id"
                 );
-                $output = $this->db2->select("SELECT `id`,`name`,`email`,`phone` FROM $table WHERE id =$id");
                 break;
         }
         return $response->getBody()->write(

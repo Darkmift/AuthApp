@@ -57,4 +57,6 @@ $app->group('', function () {
     $this->post('/course_update_submit', 'CourseUpdate:submitForm')->setName('auth.course_update_submit');
     $this->post('/course_update_image', 'CourseUpdate:ChangeImage')->setName('auth.course_update_image_submit');
 
+    //enroll management
+    $this->post('/user_enroll_management', 'UserUpdate:enrollmentManagmentForUser');
 })->add(new AuthMiddleware($container));

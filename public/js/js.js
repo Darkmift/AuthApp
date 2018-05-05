@@ -119,7 +119,7 @@ listContainer.children().click(
 function showEntry(data, type) {
     container = detailsDisplay;
     data = JSON.parse(data);
-    console.log('full: ', data, 'type: ', type);
+    //console.log('full: ', data, 'type: ', type);
     enrolls = data['enrollments'];
     data = data['selectedEntity'][0];
     studentsInCourse = [];
@@ -325,61 +325,40 @@ function enrollmentListTable(enrollmentList, tableName) {
     return table;
 }
 
-///image button JS
-// ----- On render -----
-$(function() {
-
-    $('#profile').addClass('dragging').removeClass('dragging');
-});
-
-$('#profile').on('dragover', function() {
-    $('#profile').addClass('dragging')
-}).on('dragleave', function() {
-    $('#profile').removeClass('dragging')
-}).on('drop', function(e) {
-    $('#profile').removeClass('dragging hasImage');
-
-    if (e.originalEvent) {
-        var file = e.originalEvent.dataTransfer.files[0];
-        console.log(file);
-
-        var reader = new FileReader();
-
-        //attach event handlers here...
-
-        reader.readAsDataURL(file);
-        reader.onload = function(e) {
-            console.log(reader.result);
-            $('#profile').css('background-image', 'url(' + reader.result + ')').addClass('hasImage');
-
-        }
-
+$('.enroll,.unEnroll').click(function(e) {
+    btnClicked = event.target;
+    var eid;
+    var action;
+    //get existing enrollemnt id
+    if ($(this).hasClass('unEnroll')) {
+        //console.log('enrollmentID: ', $(this).attr('id'));
+        eid = $(this).attr('id');
+        action = 'unEnroll';
     }
-})
-$('#profile').on('click', function(e) {
-    console.log('clicked')
-    $('#mediaFile').click();
-});
-window.addEventListener("dragover", function(e) {
-    e = e || event;
-    e.preventDefault();
-}, false);
-window.addEventListener("drop", function(e) {
-    e = e || event;
-    e.preventDefault();
-}, false);
-$('#mediaFile').change(function(e) {
-
-    var input = e.target;
-    if (input.files && input.files[0]) {
-        var file = input.files[0];
-
-        var reader = new FileReader();
-
-        reader.readAsDataURL(file);
-        reader.onload = function(e) {
-            console.log(reader.result);
-            $('#profile').css('background-image', 'url(' + reader.result + ')').addClass('hasImage');
-        }
+    //get course id to enroll student to
+    if ($(this).hasClass('enroll')) {
+        //console.log('courseID: ', $(this).attr('id'));
+        eid = $(this).attr('id');
+        action = 'enroll';
     }
-})
+    var sid = $('[name="sid"]').val();
+    var Eurl = 'user_enroll_management';
+    csrfName = $('[name="csrf_name"]');
+    csrfValue = $('[name="csrf_value"]');
+    sname = $('[name="sname"]').val();
+    cname = $(this).attr('name');
+    // console.log('sname: ', sname, 'cname: ', cname);
+    // return;
+    var Eform = $('<form action="' + Eurl + '" method="post">' +
+        '<input type="text" name="eid" value="' + eid + '" />' +
+        '<input type="text" name="sid" value="' + sid + '" />' +
+        '<input type="text" name="sname" value="' + sname + '" />' +
+        '<input type="text" name="cname" value="' + cname + '" />' +
+        '<input type="text" name="action" value="' + action + '" />' +
+        '<input type="text" name="csrf_name" value="' + csrfName.val() + '" />' +
+        '<input type="text" name="csrf_value" value="' + csrfValue.val() + '" />' +
+        '</form>');
+    //console.log(form);
+    $('body').append(Eform);
+    Eform.submit();
+});
